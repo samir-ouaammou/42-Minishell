@@ -1,4 +1,5 @@
 #include "Minishell.h"
+#include "../libft/libft.h"
 
 void    ft_delete_commits(t_parsing *shell)
 {
@@ -102,12 +103,12 @@ void    ft_split_args(t_parsing *shell)
             ft_check_double(shell);
         else if (shell->input[shell->i] == '|' || shell->input[shell->i] == '<'
             || shell->input[shell->i] == '>' || shell->input[shell->i] == '('
-            || shell->input[shell->i] == ')')
+            || shell->input[shell->i] == ')' || shell->input[shell->i] == '=')
             ft_check_single(shell, 1);
+        else if (shell->input[shell->i] == ';' || shell->input[shell->i] == '&')
+            ft_free_all(shell);
         else
             ft_check_single(shell, 0);
-        if (shell->input[shell->i] == ';')
-            ft_free_all(shell);
         if(shell->input[shell->i])
             shell->i++;
         if (shell->free == 1337)
@@ -116,5 +117,3 @@ void    ft_split_args(t_parsing *shell)
     if (shell->bol != 0)
         shell->cmds[shell->len] = '\0';
 }
-
-

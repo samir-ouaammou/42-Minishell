@@ -1,4 +1,4 @@
-#include "Parsing/Minishell.h"
+#include "parsing/Minishell.h"
 
 int main(int ac, char **av)
 {

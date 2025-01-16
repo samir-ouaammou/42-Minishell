@@ -25,11 +25,9 @@ typedef struct s_parsing
 }   t_parsing;
 
 
-char	*ft_strdup(const char *str);
 void    ft_parsing(t_parsing *shell);
 void    ft_free_all(t_parsing *shell);
 void    ft_split_args(t_parsing *shell);
-char	**ft_split(char const *s, char c);
 void    ft_delete_commits(t_parsing *shell);
 
 #endif
