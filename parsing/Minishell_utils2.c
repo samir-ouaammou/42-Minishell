@@ -28,3 +28,13 @@ void	ft_parentheses(t_parsing *shell)
 			ft_free_all(shell);
 	}
 }
+
+int	ft_check_operators(t_parsing *shell)
+{
+	if ((shell->input[shell->i] == '|' && shell->input[shell->i + 1] == '|')
+		|| (shell->input[shell->i] == '&' && shell->input[shell->i + 1] == '&')
+		|| (shell->input[shell->i] == '>' && shell->input[shell->i + 1] == '>')
+		|| (shell->input[shell->i] == '<' && shell->input[shell->i + 1] == '<'))
+		return (1);
+	return (0);
+}

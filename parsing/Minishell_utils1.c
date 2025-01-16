@@ -83,8 +83,8 @@ void	ft_check_remaining_errors(t_parsing *shell)
 		}
 		if ((shell->cmds[shell->i] == ';') || (shell->cmds[shell->i + 1]
 				&& shell->cmds[shell->i + 2] && shell->cmds[shell->i] != '&'
-				&& shell->cmds[shell->i + 1] == '&' && shell->cmds[shell->i
-				+ 2] != '&'))
+				&& shell->cmds[shell->i + 1] == '&'
+				&& shell->cmds[shell->i + 2] != '&'))
 		{
 			ft_free_all(shell);
 			return ;
@@ -100,12 +100,7 @@ void	ft_check_syntax_errors(t_parsing *shell)
 	{
 		if (shell->input[shell->i] == 34 || shell->input[shell->i] == 39)
 			ft_skip_string(shell);
-		else if ((shell->input[shell->i] == '|' && shell->input[shell->i
-				+ 1] == '|') || (shell->input[shell->i] == '&'
-				&& shell->input[shell->i + 1] == '&')
-			|| (shell->input[shell->i] == '>' && shell->input[shell->i
-				+ 1] == '>') || (shell->input[shell->i] == '<'
-				&& shell->input[shell->i + 1] == '<'))
+		else if (ft_check_operators(shell))
 			ft_check_double(shell);
 		else if (shell->input[shell->i] == '|' || shell->input[shell->i] == '<'
 			|| shell->input[shell->i] == '>' || shell->input[shell->i] == '('
