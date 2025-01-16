@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.42.fr>            +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:35:13 by aahaded           #+#    #+#             */
-/*   Updated: 2024/11/01 11:10:33 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/01/16 17:29:19 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	**free_prev(char **res, int i)
@@ -76,3 +77,4 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (ft_util(res, s, c, c_word));
 }
+
