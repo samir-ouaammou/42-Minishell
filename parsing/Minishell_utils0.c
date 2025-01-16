@@ -92,7 +92,7 @@ void	ft_parsing(t_parsing *shell)
 // 	while (1)
 // 	{
 // 		shell.input = readline
-//("\033[0;92m➜\033[0;39m\033[1m\033[96m  Minishell\033[0;39m ");
+// ("\033[0;92m➜\033[0;39m\033[1m\033[96m  Minishell\033[0;39m ");
 // 		ft_parsing(&shell);
 // 		shell.i = 0;
 // 		if (shell.cmds_split)

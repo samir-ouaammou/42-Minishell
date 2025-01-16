@@ -20,7 +20,7 @@ void	ft_check_single(t_parsing *shell, int bol)
 			shell->len += 1;
 		else
 		{
-			if (shell->input[shell->i] == ' ')
+			if (shell->input[shell->i] == ' ' || shell->input[shell->i] == '\t')
 				shell->cmds[shell->len++] = '\n';
 			else
 				shell->cmds[shell->len++] = shell->input[shell->i];
@@ -116,4 +116,6 @@ void	ft_check_syntax_errors(t_parsing *shell)
 	}
 	if (shell->bol != 0)
 		shell->cmds[shell->len] = '\0';
+	if (shell->free != 1337 && shell->cmds)
+		ft_check_operator_position(shell);
 }

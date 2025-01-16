@@ -30,5 +30,6 @@ void		ft_delete_commits(t_parsing *shell);
 int			ft_check_operators(t_parsing *shell);
 void		ft_check_syntax_errors(t_parsing *shell);
 void		ft_check_remaining_errors(t_parsing *shell);
+void		ft_check_operator_position(t_parsing *shell);
 
 #endif

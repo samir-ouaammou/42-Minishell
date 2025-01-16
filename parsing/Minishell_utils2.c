@@ -22,11 +22,24 @@ void	ft_parentheses(t_parsing *shell)
 	{
 		shell->j--;
 		while ((shell->j > 0) && (shell->cmds[shell->j] == ' '
+				|| shell->cmds[shell->j] == '\t'
 				|| shell->cmds[shell->j] == '\n'))
 			shell->j--;
 		if (shell->cmds[shell->j] == '|' || shell->cmds[shell->j] == '&')
 			ft_free_all(shell);
 	}
+}
+
+void	ft_check_operator_position(t_parsing *shell)
+{
+	if (!shell->cmds || !shell->cmds[0])
+		return ;
+	shell->i = 0;
+	while ((shell->cmds[shell->i]) && (shell->cmds[shell->i] == ' '
+			|| shell->cmds[shell->i] == '\t' || shell->cmds[shell->i] == '\n'))
+		shell->i++;
+	if (shell->cmds[shell->i] == '|' || shell->cmds[shell->i] == '&')
+		ft_free_all(shell);
 }
 
 int	ft_check_operators(t_parsing *shell)
