@@ -117,3 +117,4 @@ void    ft_split_args(t_parsing *shell)
     if (shell->bol != 0)
         shell->cmds[shell->len] = '\0';
 }
+
