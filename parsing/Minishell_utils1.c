@@ -116,6 +116,4 @@ void	ft_check_syntax_errors(t_parsing *shell)
 	}
 	if (shell->bol != 0)
 		shell->cmds[shell->len] = '\0';
-	if (shell->free != 1337 && shell->cmds)
-		ft_check_operator_position(shell);
 }

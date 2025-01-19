@@ -76,39 +76,41 @@ void	ft_parsing(t_parsing *shell)
 	if (shell->free == 1337)
 		return ;
 	shell->cmds_split = ft_split(shell->cmds, '\n');
+	if (shell->free != 1337)
+		ft_check_operator_position(shell);
 }
 
-// // *************** main test **********
+// *************** main test **********
 
-// int	main(int ac, char **av)
-// {
-// 	t_parsing	shell;
+int	main(int ac, char **av)
+{
+	t_parsing	shell;
 
-// 	if (ac != 1)
-// 	{
-// 		write(2, "Error: Invalid number of arguments.\n", 36);
-// 		exit(-1);
-// 	}
-// 	while (1)
-// 	{
-// 		shell.input = readline
-// ("\033[0;92m➜\033[0;39m\033[1m\033[96m  Minishell\033[0;39m ");
-// 		ft_parsing(&shell);
-// 		shell.i = 0;
-// 		if (shell.cmds_split)
-// 		{
-// 			while (shell.cmds_split[shell.i])
-// 			{
-// 				printf("%d ==> %s\n", shell.i, shell.cmds_split[shell.i]);
-// 				shell.i++;
-// 			}
-// 		}
-// 		//  ft_execution("tsna");
-// 		add_history(shell.input);
-// 		free(shell.input);
-// 		// ft_free_all(&shell);
-// 	}
-// 	rl_clear_history();
-// 	(void)av;
-// 	return (0);
-// }
+	if (ac != 1)
+	{
+		write(2, "Error: Invalid number of arguments.\n", 36);
+		exit(-1);
+	}
+	while (1)
+	{
+		shell.input = readline
+("\033[0;92m➜\033[0;39m\033[1m\033[96m  Minishell\033[0;39m ");
+		ft_parsing(&shell);
+		shell.i = 0;
+		if (shell.cmds_split)
+		{
+			while (shell.cmds_split[shell.i])
+			{
+				printf("%d ==> %s\n", shell.i, shell.cmds_split[shell.i]);
+				shell.i++;
+			}
+		}
+		//  ft_execution("tsna");
+		add_history(shell.input);
+		free(shell.input);
+		// ft_free_all(&shell);
+	}
+	rl_clear_history();
+	(void)av;
+	return (0);
+}
