@@ -25,11 +25,12 @@ typedef struct s_parsing
 
 void		ft_parsing(t_parsing *shell);
 void		ft_free_all(t_parsing *shell);
-void		ft_parentheses(t_parsing *shell);
-void		ft_delete_commits(t_parsing *shell);
-int			ft_check_operators(t_parsing *shell);
+void		ft_split_args(t_parsing *shell);
+void		ft_skip_string(t_parsing *shell);
+void		ft_count_len_args(t_parsing *shell);
 void		ft_check_syntax_errors(t_parsing *shell);
-void		ft_check_remaining_errors(t_parsing *shell);
+int			ft_check_single_operators(t_parsing *shell);
+int			ft_check_double_operators(t_parsing *shell);
 void		ft_check_operator_position(t_parsing *shell);
 
 #endif
