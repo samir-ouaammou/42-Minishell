@@ -20,12 +20,17 @@ void	ft_str_copy(t_parsing *shell)
 
 void	ft_this_condition_function(t_parsing *shell)
 {
-	if (shell->input[shell->i] == '=' || shell->input[shell->i] == '$'
-		|| shell->input[shell->i] == '~')
+	if (shell->input[shell->i] == '~' || shell->input[shell->i] == '$')
 	{
 		shell->cmds[shell->len++] = '\n';
 		shell->cmds[shell->len++] = '\n';
 		shell->cmds[shell->len++] = shell->input[shell->i];
+	}
+	else if (shell->input[shell->i] == '=' || shell->input[shell->i] == ':')
+	{
+		shell->cmds[shell->len++] = shell->input[shell->i];
+		shell->cmds[shell->len++] = '\n';
+		shell->cmds[shell->len++] = '\n';
 	}
 	else
 	{

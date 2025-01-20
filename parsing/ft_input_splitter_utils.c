@@ -6,7 +6,8 @@ int	ft_check_single_operators(t_parsing *shell)
 	if (shell->input[shell->i] == '|' || shell->input[shell->i] == '<'
 		|| shell->input[shell->i] == '>' || shell->input[shell->i] == '('
 		|| shell->input[shell->i] == ')' || shell->input[shell->i] == '='
-		|| shell->input[shell->i] == '~' || shell->input[shell->i] == '#')
+		|| shell->input[shell->i] == '~' || shell->input[shell->i] == '#'
+		|| shell->input[shell->i] == '&' || shell->input[shell->i] == ':')
 		return (1);
 	return (0);
 }

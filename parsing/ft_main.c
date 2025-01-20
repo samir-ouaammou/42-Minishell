@@ -45,37 +45,37 @@ void	ft_parsing(t_parsing *shell)
 	ft_check_syntax_errors(shell);
 }
 
-// // *************** main test **********
+// *************** main test **********
 
-// int	main(int ac, char **av)
-// {
-// 	t_parsing shell;
+int	main(int ac, char **av)
+{
+	t_parsing shell;
 
-// 	if (ac != 1)
-// 	{
-// 		write(2, "Error: Invalid number of arguments.\n", 36);
-// 		exit(-1);
-// 	}
-// 	while (1)
-// 	{
-// 		shell.input = readline("➜ Minishell ");
-// 		ft_parsing(&shell);
-// 		shell.i = 0;
-// 		if (shell.cmds_split)
-// 		{
-// 			while (shell.cmds_split[shell.i])
-// 			{
-// 				printf("%d ==> %s\n", shell.i, shell.cmds_split[shell.i]);
-// 				shell.i++;
-// 			}
-// 		}
-// 		//  ft_execution("tsna");
-// 		add_history(shell.input);
-// 		free(shell.input);
-// 		// if (shell.free != -1)
-// 		// 	ft_free_all(&shell);
-// 	}
-// 	rl_clear_history();
-// 	(void)av;
-// 	return (0);
-// }
+	if (ac != 1)
+	{
+		write(2, "Error: Invalid number of arguments.\n", 36);
+		exit(-1);
+	}
+	while (1)
+	{
+		shell.input = readline("➜ Minishell ");
+		ft_parsing(&shell);
+		shell.i = 0;
+		if (shell.cmds_split)
+		{
+			while (shell.cmds_split[shell.i])
+			{
+				printf("%d ==> %s\n", shell.i, shell.cmds_split[shell.i]);
+				shell.i++;
+			}
+		}
+		//  ft_execution("tsna");
+		add_history(shell.input);
+		free(shell.input);
+		// if (shell.free != -1)
+		// 	ft_free_all(&shell);
+	}
+	rl_clear_history();
+	(void)av;
+	return (0);
+}

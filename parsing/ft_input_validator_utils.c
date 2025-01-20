@@ -18,6 +18,7 @@ int	ft_is_logical_operators(t_parsing *shell, int index)
 	if (!shell->cmds_split[index])
 		return (0);
 	if (!ft_strcmp(shell->cmds_split[index], "|")
+		|| !ft_strcmp(shell->cmds_split[index], "&")
 		|| !ft_strcmp(shell->cmds_split[index], "||")
 		|| !ft_strcmp(shell->cmds_split[index], "&&"))
 		return (1);
