@@ -46,8 +46,7 @@ void	ft_check_operator_position(t_parsing *shell)
 	shell->i = 0;
 	while (shell->cmds_split && shell->cmds_split[shell->i])
 	{
-		if ((shell->i == 0 && (ft_is_logical_operators(shell, 0)
-					|| ft_is_redirections(shell, 0)))
+		if ((shell->i == 0 && ft_is_logical_operators(shell, 0))
 			|| ((!shell->cmds_split[shell->i + 1]
 					&& (ft_is_logical_operators(shell, shell->i)
 						|| ft_is_redirections(shell, shell->i))))
