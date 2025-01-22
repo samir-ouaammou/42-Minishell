@@ -17,7 +17,7 @@ void	ft_free_all(t_parsing *shell)
 {
 	if (shell->free == -1)
 		return ;
-	write(2, "Minishell: syntax error\n", 24);
+	write(2, "minishell: syntax error\n", 24);
 	shell->free = -1;
 	if (shell->cmds != NULL)
 		free(shell->cmds);
