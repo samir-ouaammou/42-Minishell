@@ -28,16 +28,17 @@ int	ft_is_logical_operators(t_parsing *shell, int index)
 void	ft_remainder_of_this_function(t_parsing *shell)
 {
 	if ((!ft_strcmp(shell->cmds_split[shell->i], "(")
-			&& (ft_is_logical_operators(shell, shell->i + 1)
-				|| ft_is_redirections(shell, shell->i + 1)))
+			&& (ft_is_logical_operators(shell, shell->i + 1)))
 		|| (!ft_strcmp(shell->cmds_split[shell->i + 1], ")")
 			&& (ft_is_logical_operators(shell, shell->i)
 				|| ft_is_redirections(shell, shell->i)))
 		|| (!ft_strcmp(shell->cmds_split[shell->i], "(")
-			&& !ft_strcmp(shell->cmds_split[shell->i + 1], ")")))
+			&& !ft_strcmp(shell->cmds_split[shell->i + 1], ")"))
+		|| (!ft_strcmp(shell->cmds_split[shell->i + 1], "|")
+			&& (ft_is_logical_operators(shell, shell->i)
+				|| ft_is_redirections(shell, shell->i))))
 		ft_free_all(shell);
 }
-
 
 void	ft_check_operator_position(t_parsing *shell)
 {
