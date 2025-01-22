@@ -38,15 +38,14 @@ void	ft_remainder_of_this_function(t_parsing *shell)
 		ft_free_all(shell);
 }
 
+
 void	ft_check_operator_position(t_parsing *shell)
 {
-	if (!shell->cmds_split || !shell->cmds_split[0])
+	if (shell->free == -1 ||!shell->cmds_split || !shell->cmds_split[0])
 		return ;
 	shell->i = 0;
 	while (shell->cmds_split && shell->cmds_split[shell->i])
 	{
-		if (shell->free == 1337)
-			return ;
 		if ((shell->i == 0 && (ft_is_logical_operators(shell, 0)
 					|| ft_is_redirections(shell, 0)))
 			|| ((!shell->cmds_split[shell->i + 1]
@@ -55,7 +54,8 @@ void	ft_check_operator_position(t_parsing *shell)
 			|| (ft_is_logical_operators(shell, shell->i))
 			&& (ft_is_logical_operators(shell, shell->i + 1))
 			|| (ft_is_redirections(shell, shell->i))
-			&& (ft_is_redirections(shell, shell->i + 1)))
+			&& (ft_is_redirections(shell, shell->i + 1))
+			|| (!ft_strcmp(shell->cmds_split[shell->i], "&")))
 		{
 			ft_free_all(shell);
 			return ;

@@ -45,6 +45,19 @@ void	ft_parsing(t_parsing *shell)
 	ft_check_syntax_errors(shell);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // *************** main test **********
 
 int	main(int ac, char **av)
