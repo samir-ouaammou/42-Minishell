@@ -19,7 +19,7 @@ typedef struct s_parsing
 	char	chr;
 	char	*cmds;
 	char	*input;
-	char	**cmds_split;
+	char	**tokens;
 
 }			t_parsing;
 

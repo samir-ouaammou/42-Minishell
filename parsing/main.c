@@ -10,7 +10,7 @@ void	ft_init_parsing(t_parsing *shell)
 	shell->free = 0;
 	shell->parentheses = 0;
 	shell->cmds = NULL;
-	shell->cmds_split = NULL;
+	shell->tokens = NULL;
 }
 
 void	ft_free_all(t_parsing *shell)
@@ -21,20 +21,20 @@ void	ft_free_all(t_parsing *shell)
 	shell->free = -1;
 	if (shell->cmds != NULL)
 		free(shell->cmds);
-	if (shell->cmds_split)
+	if (shell->tokens)
 	{
 		shell->i = 0;
-		while (shell->cmds_split[shell->i])
+		while (shell->tokens[shell->i])
 		{
-			if (shell->cmds_split[shell->i] != NULL)
+			if (shell->tokens[shell->i] != NULL)
 			{
-				free(shell->cmds_split[shell->i]);
-				shell->cmds_split[shell->i] = NULL;
+				free(shell->tokens[shell->i]);
+				shell->tokens[shell->i] = NULL;
 			}
 			shell->i++;
 		}
-		free(shell->cmds_split);
-		shell->cmds_split = NULL;
+		free(shell->tokens);
+		shell->tokens = NULL;
 	}
 }
 
@@ -61,11 +61,11 @@ void	ft_parsing(t_parsing *shell)
 // 		shell.input = readline("➜ Minishell ");
 // 		ft_parsing(&shell);
 // 		shell.i = 0;
-// 		if (shell.cmds_split)
+// 		if (shell.tokens)
 // 		{
-// 			while (shell.cmds_split[shell.i])
+// 			while (shell.tokens[shell.i])
 // 			{
-// 				printf("%d ==> %s\n", shell.i, shell.cmds_split[shell.i]);
+// 				printf("%d ==> %s\n", shell.i, shell.tokens[shell.i]);
 // 				shell.i++;
 // 			}
 // 		}
