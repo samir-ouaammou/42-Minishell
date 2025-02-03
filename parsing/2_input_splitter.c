@@ -15,7 +15,7 @@ void	ft_str_copy(t_parsing *shell)
 			return ;
 		}
 	}
-	ft_free_all(shell);
+	ft_free_args(shell);
 }
 
 void	ft_this_condition_function(t_parsing *shell)
@@ -43,7 +43,7 @@ void	ft_this_condition_function(t_parsing *shell)
 void	ft_args_copy(t_parsing *shell)
 {
 	if (!shell->input || !shell->input[0] || shell->bol == -1)
-		ft_free_all(shell);
+		ft_free_args(shell);
 	shell->i = 0;
 	shell->len = 0;
 	while (shell->input && shell->input[shell->i])
@@ -72,14 +72,14 @@ void	ft_args_copy(t_parsing *shell)
 void	ft_delete_commits(t_parsing *shell)
 {
 	shell->i = 0;
-	while (shell->tokens[shell->i])
+	while (shell->temp[shell->i])
 	{
-		if (!ft_strcmp(shell->tokens[shell->i], "#"))
+		if (!ft_strcmp(shell->temp[shell->i], "#"))
 		{
-			while (shell->tokens[shell->i])
+			while (shell->temp[shell->i])
 			{
-				free(shell->tokens[shell->i]);
-				shell->tokens[shell->i] = NULL;
+				free(shell->temp[shell->i]);
+				shell->temp[shell->i] = NULL;
 				shell->i++;
 			}
 			return ;
@@ -98,9 +98,9 @@ void	ft_split_args(t_parsing *shell)
 		return ;
 	ft_args_copy(shell);
 	shell->cmds[shell->len] = '\0';
-	shell->tokens = ft_split(shell->cmds, '\n');
-	if (!shell->tokens)
-		ft_free_all(shell);
+	shell->temp = ft_split(shell->cmds, '\n');
+	if (!shell->temp)
+		ft_free_args(shell);
 	if (shell->free == -1)
 		return ;
 	ft_delete_commits(shell);
