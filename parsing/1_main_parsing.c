@@ -17,26 +17,6 @@ void	ft_init_parsing(t_parsing *shell)
 	shell->lst_help2 = NULL;
 }
 
-int	ft_ast_contains_brackets(t_ast *node)
-{
-	int	i;
-
-	if (!node || !node->value)
-		return (0);
-	i = 0;
-	while (node->value[i])
-	{
-		if (node->value[i][0] == '(' || node->value[i][0] == ')')
-			return (1);
-		i++;
-	}
-	if (ft_ast_contains_brackets(node->left))
-		return (1);
-	if (ft_ast_contains_brackets(node->right))
-		return (1);
-	return (0);
-}
-
 int	ft_check_input_is_valid(t_parsing *shell)
 {
 	if (!shell || !shell->input)
@@ -59,6 +39,40 @@ int	ft_check_input_is_valid(t_parsing *shell)
 	return (0);
 }
 
+int ft_count_tree_nodes(t_ast *tree)
+{
+    if (!tree)
+        return (0);
+    return (1 + ft_count_tree_nodes(tree->left) + ft_count_tree_nodes(tree->right));
+}
+
+int ft_count_nodes_list(t_list *list)
+{
+    int count;
+    
+	count = 0;
+    while (list)
+    {
+        count++;
+        list = list->next;
+    }
+    return (count);
+}
+
+int ft_count_brackets(t_list *list)
+{
+    int count;
+    
+	count = 0;
+    while (list)
+    {
+		if (list->value && (!ft_strcmp(list->value[0], "(") || !ft_strcmp(list->value[0], ")")))
+        	count++;
+        list = list->next;
+    }
+    return (count);
+}
+
 void	ft_parsing(t_parsing *shell)
 {
 	ft_init_parsing(shell);
@@ -69,14 +83,40 @@ void	ft_parsing(t_parsing *shell)
 		shell->three = ft_creat_ast_three(shell);
 		if (!shell->three)
 			return ;
-		if (ft_ast_contains_brackets(shell->three))
+		
+		if (ft_count_tree_nodes(shell->three) != (ft_count_nodes_list(shell->tokens) - ft_count_brackets(shell->tokens)))
 			ft_free_parsing(shell);
+		if (shell->free != -1 && shell->three)	//	temp
+			print_ast(shell->three, 0, "root");  //	temp
+			printf("\n\n\n"); // -------------
 	}
-	// print_ast(shell->three, 0, "root");  //	temp
 }
 
 
 // *************** test parsing **********
+
+// if (ft_ast_contains_brackets(shell->three))
+// 	ft_free_parsing(shell);
+
+// int	ft_ast_contains_brackets(t_ast *node)
+// {
+// 	int	i;
+
+// 	if (!node || !node->value)
+// 		return (0);
+// 	i = 0;
+// 	while (node->value[i])
+// 	{
+// 		if (node->value[i][0] == '(' || node->value[i][0] == ')')
+// 			return (1);
+// 		i++;
+// 	}
+// 	if (ft_ast_contains_brackets(node->left))
+// 		return (1);
+// 	if (ft_ast_contains_brackets(node->right))
+// 		return (1);
+// 	return (0);
+// }
 
 void	print_ast(t_ast *node, int level, char *branch)
 {
