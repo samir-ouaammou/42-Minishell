@@ -10,7 +10,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <string.h>
- #include <fcntl.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "../libft/libft.h"
 #include "../parsing/Minishell.h"
 // #include "./pipex/pipex.h"
@@ -40,6 +42,7 @@ typedef struct s_data
     int save_index;
     int stdout_backup;
     int stdin_backup;
+    int err_status;
 } t_data;
 
 void exaction(t_ast *root, t_data *data, char **envp);

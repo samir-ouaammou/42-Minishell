@@ -210,7 +210,7 @@ int execute_command(char **cmd, t_data *data, char **envp)
         close(data->stdin_backup);
         dup2(data->stdout_backup, STDOUT_FILENO);
         close(data->stdout_backup);
-        ft_printf("Error: Command not found: %s\n", cmd[0]);
+        ft_printf("Minishell: %s: Command not found\n", cmd[0]);
         exit(FAILED);
     }
     else
@@ -392,11 +392,13 @@ int expand_Dollar(char *pattern, t_data *data, int *index)
 
     while (pattern[i])
     {
-        if (pattern[i] == '$')
+        if (pattern[i] == '$' && pattern[i] != '\0')
         {
             i++;
             char *v = &pattern[i];
             char *val = getenv(v);
+            if (!val)
+                return (-1);
             data->matches[*index] = ft_strdup(val);
             (*index)++;
             break;
@@ -428,10 +430,18 @@ int check_wildcards_Dollar(char **args, t_data *data, char **env)
     int match_index = 0;
     while (args[i])
     {
+        // printf("%s\n", args[i]);
         if (count_flag(args[i]) == 0)
             expand_wildcards(args[i], data, &match_index);
         else if (count_flag_Dollar(args[i]) == 0)
-            expand_Dollar(args[i], data, &match_index);
+        {
+            int e = expand_Dollar(args[i], data, &match_index);
+            if (e == -1)
+                data->err_status = -1;
+            else
+                data->err_status = 0;
+
+        }
         else
         {
             data->matches[match_index] = ft_strdup(args[i]);
@@ -452,10 +462,12 @@ int check_special_chars(char **args, t_data *data)
         int j = 0;
         while (args[i][j])
         {
-            if (args[i][j] == '*' || args[i][j] == '$')
+            if (args[i][j] == '*')
                 return (1);
-            // else if (args[i][j] == '$')
-            //     return (2);
+            else if (args[i][j] == '$' && args[i][j + 1] != '\0')
+                return (1);
+            else
+                return (0);
             j++;
         }
         i++;
@@ -510,6 +522,22 @@ void execute_redir_inp(t_ast *node, t_data *data, char **env)
     close(data->stdin_backup);
 }
 
+// int check_cmd()
+// {
+//     struct stat fileStat;
+
+//     if (stat("myfile.txt", &fileStat) == 0)
+//     {
+//         printf("File size: %ld bytes\n", fileStat.st_size);
+//         printf("File permissions: %o\n", fileStat.st_mode & 0777);
+//         printf("Last modified: %ld\n", fileStat.st_mtime);
+//     }
+//     else
+//     {
+//         perror("stat");
+//     }
+// }
+
 int execute_ast(t_ast *root, t_data *data, char **env)
 {
     (void)data;
@@ -546,7 +574,10 @@ int execute_ast(t_ast *root, t_data *data, char **env)
         if (check_special_chars(root->value, data) == 1)
         {
             check_wildcards_Dollar(root->value, data, env);
-            data->status = execute_command(data->matches, data, env);
+            if (data->err_status != -1)
+                data->status = execute_command(data->matches, data, env);
+            else
+                data->status = 0;
         }
         else
             data->status = execute_command(root->value, data, env);
@@ -616,6 +647,7 @@ void exaction(t_ast *root, t_data *data, char **envp)
 {
     (void)root;
     (void)envp;
+    data->err_status = 0;
     read_env(data, envp);
     builtin_exit(root);
     execute_ast(root, data, data->env);
