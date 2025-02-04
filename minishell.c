@@ -4,7 +4,7 @@
 int	main(int ac, char **av, char **env)
 {
 	t_parsing	shell;
-    t_data data = {NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    t_data data;
 
 	if (ac != 1)
 	{
@@ -13,6 +13,7 @@ int	main(int ac, char **av, char **env)
 	}
 	while (1)
 	{
+		memset(&data, 0, sizeof(t_data));
 		shell.input = readline("➜ Minishell ");
 		ft_parsing(&shell);
 		if (shell.free == -1 && (!shell.tokens || !shell.three))
