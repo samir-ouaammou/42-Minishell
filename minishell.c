@@ -19,7 +19,8 @@ int	main(int ac, char **av, char **env)
 			write(2, "minishell: syntax error\n", 24);
 		if (shell.input)
 		{
-		    exaction(shell.three, &data, env);
+			if (shell.three)
+				exaction(shell.three, &data, env);
 			add_history(shell.input);
 			ft_free_parsing(&shell);
 		}
