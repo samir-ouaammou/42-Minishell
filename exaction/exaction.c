@@ -12,143 +12,6 @@ int is_builtin(char *cmd)
             || ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "exit") == 0);
 }
 
-t_ast *create_node(char **data)
-{
-    t_ast *node = malloc(sizeof(t_ast));
-    if (!node)
-    {
-        perror("malloc failed");
-        exit(EXIT_FAILURE);
-    }
-    int count = 0;
-    while (data[count])
-        count++;
-    node->value = malloc(sizeof(char *) * (count + 1));
-    for (int i = 0; i < count; i++)
-        node->value[i] = strdup(data[i]);
-    node->value[count] = NULL;
-
-    node->left = NULL;
-    node->right = NULL;
-    return node;
-}
-
-t_ast *build_command_tree(char **tokens, t_data *data, int start, int end)
-{
-    if (start > end)
-        return (NULL);
-
-    if (tokens[start][0] == '(' && tokens[end][0] == ')')
-    {
-        data->check_parenthese = 1;
-        int balance = 1;
-        for (int i = start + 1; i < end; i++)
-        {
-            if (tokens[i][0] == '(')
-                balance++;
-            else if (tokens[i][0] == ')')
-                balance--;
-            if (balance == 0)
-                break;
-        }
-        if (balance == 1)
-            return build_command_tree(tokens, data, start + 1, end - 1);
-    }
-
-    int i;
-    int paren_depth = 0;
-
-    i = end;
-    while (i >= start)
-    {
-        if (tokens[i][0] == ')')
-            paren_depth++;
-        else if (tokens[i][0] == '(')
-            paren_depth--;
-        if (paren_depth == 0 && ft_strcmp(tokens[i], "<<") == 0)
-        {
-            t_ast *node = create_node((char *[]){tokens[i], NULL});
-            node->left = build_command_tree(tokens, data, start, i - 1);
-            node->right = build_command_tree(tokens, data, i + 1, end);
-            return node;
-        }
-        i--;
-    }
-
-    i = end;
-    paren_depth = 0;
-    while (i >= start)
-    {
-        if (tokens[i][0] == ')')
-            paren_depth++;
-        else if (tokens[i][0] == '(')
-            paren_depth--;
-        if (paren_depth == 0 && (is_operator(tokens[i])))
-        {
-            t_ast *node = create_node((char *[]){tokens[i], NULL});
-            node->left = build_command_tree(tokens, data, start, i - 1);
-            node->right = build_command_tree(tokens, data, i + 1, end);
-            return node;
-        }
-        i--;
-    }
-
-    i = end;
-    paren_depth = 0;
-    while (i >= start)
-    {
-        if (tokens[i][0] == ')')
-            paren_depth++;
-        else if (tokens[i][0] == '(')
-            paren_depth--;
-        if (paren_depth == 0 && ft_strcmp(tokens[i], "|") == 0)
-        {
-            t_ast *node = create_node((char *[]){tokens[i], NULL});
-            node->left = build_command_tree(tokens, data, start, i - 1);
-            node->right = build_command_tree(tokens, data, i + 1, end);
-            return node;
-        }
-        i--;
-    }
-
-    return create_node((char *[]){tokens[start], NULL});
-}
-
-char **split_input(char *input)
-{
-    char **tokens = malloc(sizeof(char *) * 20);
-    int count = 0;
-    char *token = strtok(input, " ");
-    while (token && count < 19)
-    {
-        if (strchr(token, '(') || strchr(token, ')'))
-        {
-            char *temp = token;
-            while (*temp)
-            {
-                if (*temp == '(' || *temp == ')')
-                {
-                    tokens[count++] = strndup(temp, 1);
-                    temp++;
-                }
-                else
-                {
-                    int len = 0;
-                    while (temp[len] && temp[len] != '(' && temp[len] != ')')
-                        len++;
-                    tokens[count++] = strndup(temp, len);
-                    temp += len;
-                }
-            }
-        }
-        else
-            tokens[count++] = strdup(token);
-        token = strtok(NULL, " ");
-    }
-    tokens[count] = NULL;
-    return tokens;
-}
-
 char *get_path_env_utils2(char **path, char *cmd)
 {
     char *path_arg;
@@ -462,12 +325,10 @@ int check_special_chars(char **args, t_data *data)
         int j = 0;
         while (args[i][j])
         {
-            if (args[i][j] == '*')
-                return (1);
-            else if (args[i][j] == '$' && args[i][j + 1] != '\0')
-                return (1);
-            else
+            if (args[i][j] == '$' && args[i][j + 1] == '\0')
                 return (0);
+            else if (args[i][j] == '*' || args[i][j] == '$')
+                return (1);
             j++;
         }
         i++;
@@ -596,34 +457,6 @@ void print_tree(t_ast *root, int depth)
     print_tree(root->right, depth + 1);
 }
 
-int ft_strlen_2d(char **arr)
-{
-    int len = 0;
-
-    while (arr[len] != NULL)
-        len++;
-    return (len);
-}
-
-t_ast *create_complex_command_tree()
-{
-    char *cmd1[] = {"cat", NULL};
-    char *cmd2[] = {"<", NULL};
-    char *cmd3[] = {"file_test", NULL};
-    // char *cmd4[] = {"wc", "-l", NULL};
-    // char *cmd5[] = {"ls", NULL};
-    //  char *cmd6[] = {"ls", NULL};
-    //  char *cmd7[] = {"ls", NULL};
-    t_ast *root = create_node(cmd2);
-    root->left = create_node(cmd1);
-    root->right = create_node(cmd3);
-    // root->left->left = create_node(cmd3);
-    // root->left->right = create_node(cmd5);
-    //  root->right->left = create_node(cmd4);
-    //  root->right->right = create_node(cmd5);
-    return (root);
-}
-
 void read_env(t_data *data, char **envp)
 {
     if (!*envp)
@@ -658,27 +491,3 @@ void exaction(t_ast *root, t_data *data, char **envp)
     //     i++;
     // }
 }
-
-// int main(int argc, char **argv, char **envp)
-// {
-//     (void)argc;
-//     (void)argv;
-//     (void)envp;
-//     char *input;
-//     while (1)
-//     {
-//         input = readline("minishell > ");
-//         if (!input)
-//             break;
-//         add_history(input);
-//         char **tokens = split_input(input);
-//         // chdir("/home/aahaded");
-//         t_data data = {NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-//         data.matches = NULL;
-//         t_ast *root = build_command_tree(tokens, &data, 0, ft_strlen_2d(tokens) - 1);
-//         // t_ast *root = create_complex_command_tree();
-//         // print_tree(root, 0);
-//         exaction(root, &data, envp);
-//     }
-//     return 0;
-// }
