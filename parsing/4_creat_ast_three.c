@@ -1,6 +1,14 @@
 #include "../libft/libft.h"
 #include "Minishell.h"
 
+int ft_count_tree_nodes(t_ast *tree)
+{
+    if (!tree)
+        return (0);
+    return (1 + ft_count_tree_nodes(tree->left)
+		+ ft_count_tree_nodes(tree->right));
+}
+
 int	ft_handle_brackets(t_parsing *shell, int start, int end)
 {
 	if (shell->start_node->value[0][0] == '('
