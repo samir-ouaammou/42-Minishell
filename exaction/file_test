@@ -1,8 +1,0 @@
-Makefile
-builtins
-exaction.c
-exaction.h
-exaction.o
-file_test
-pipex
-test
