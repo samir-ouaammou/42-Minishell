@@ -72,56 +72,37 @@ void	ft_parsing(t_parsing *shell)
 		if (ft_ast_contains_brackets(shell->three))
 			ft_free_parsing(shell);
 	}
-	// print_ast(shell->three, 0, "ROOT");  //	temp
+	// print_ast(shell->three, 0, "root");  //	temp
 }
 
 
-// *************** main test **********
+// *************** test parsing **********
 
 void	print_ast(t_ast *node, int level, char *branch)
 {
+	int	i;
+	int	j;
+
 	if (!node)
 		return ;
-	// طباعة المسافات حسب المستوى
-	for (int i = 0; i < level; i++)
+
+	i = 0;
+	while (i < level)
+	{
 		printf("   ");
-	// طباعة الفرع (LEFT / RIGHT) مع القيمة
+		i++;
+	}
 	printf("[%s]   ", branch);
 	if (node->value)
 	{
-		for (int j = 0; node->value[j]; j++)
+		j = 0;
+		while (node->value[j])
+		{
 			printf("%s ", node->value[j]);
+			j++;
+		}
 	}
 	printf("\n");
-	// استدعاء للطباعة للفرع الأيسر
-	print_ast(node->left, level + 1, "LEFT");
-	// استدعاء للطباعة للفرع الأيمن
-	print_ast(node->right, level + 1, "RIGHT");
+	print_ast(node->left, level + 1, "left");
+	print_ast(node->right, level + 1, "right");
 }
-
-// int	main(int ac, char **av)
-// {
-// 	t_parsing	shell;
-
-// 	if (ac != 1)
-// 	{
-// 		write(2, "Error: Invalid number of arguments.\n", 36);
-// 		exit(-1);
-// 	}
-// 	while (1)
-// 	{
-// 		shell.input = readline("➜ Minishell ");
-// 		ft_parsing(&shell);
-// 		if (shell.free == -1 && (!shell.tokens || !shell.three))
-// 			write(2, "minishell: syntax error\n", 24);
-// 		//	ft_ex();
-// 		if (shell.input)
-// 		{
-// 			add_history(shell.input);
-// 			ft_free_parsing(&shell);
-// 		}
-// 	}
-// 	rl_clear_history();
-// 	(void)av;
-// 	return (0);
-// }
