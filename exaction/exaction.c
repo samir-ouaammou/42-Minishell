@@ -303,7 +303,6 @@ int check_wildcards_Dollar(char **args, t_data *data, char **env)
                 data->err_status = -1;
             else
                 data->err_status = 0;
-
         }
         else
         {
@@ -348,6 +347,8 @@ int execute_builtin(t_ast *root, t_data *data, char **env)
         return (builtin_unset(root, data));
     else if (ft_strcmp(root->value[0], "export") == 0)
         return (builtin_export(root, data));
+    else if (ft_strcmp(root->value[0], "cd") == 0)
+        return (builtin_cd(root->value, data));
     return (0);
 }
 
@@ -484,10 +485,6 @@ void exaction(t_ast *root, t_data *data, char **envp)
     read_env(data, envp);
     builtin_exit(root);
     execute_ast(root, data, data->env);
-    // int i = 0;
-    // while (data->env[i])
-    // {
-    //     printf("%s\n", data->env[i]);
-    //     i++;
-    // }
+
+    
 }

@@ -43,6 +43,7 @@ typedef struct s_data
     int stdout_backup;
     int stdin_backup;
     int err_status;
+    char *name_pro;
 } t_data;
 
 void exaction(t_ast *root, t_data *data, char **envp);
@@ -51,5 +52,6 @@ int builtin_pwd();
 int builtin_echo(char **str, t_data *data);
 int builtin_unset(t_ast *node, t_data *data);
 int builtin_export(t_ast *node, t_data *data);
+int builtin_cd(char **args, t_data *data);
 
 #endif
