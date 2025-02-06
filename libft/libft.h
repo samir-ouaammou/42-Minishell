@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.42.fr>            +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:06:24 by aahaded           #+#    #+#             */
-/*   Updated: 2025/01/01 17:51:27 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/02/05 18:53:32 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_strstr(const char *big, const char *little);
-char *ft_strrstr(const char *haystack, const char *needle);
+char    *ft_strrstr(const char *haystack, const char *needle);
 int		ft_isdigit(int c);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
