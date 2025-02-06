@@ -68,6 +68,46 @@ void	ft_parsing(t_parsing *shell)
 		}
 	}
 }
+
+char	*ft_check_quots(char *str, int *quots, int *newline, char *input)
+{
+	int		i;
+	int		len;
+	char	*res;
+	char	*temp;
+
+	*newline = 1;
+	*quots = 2;
+	res = NULL;
+	len = ft_strlen(str);
+	if ((str && str[0] && str[len - 1])
+		&& ((str[0] == 34 && str[len - 1] == 34)
+		|| (str[0] == 39 && str[len - 1] == 39)))
+	{
+		if (str[0] == 39)
+			*quots = 1;
+		temp = ft_strstr(input, str);
+		if (!temp)
+			*newline = 1;
+		if ((temp && temp[0] && temp[len])
+			&& (temp[len] != ' ' && temp[len] != '\t' && temp[len] != '\n'))
+			newline = 0;
+		temp[0] = str[0];
+		i = 1;
+		while (temp && temp[i])
+		{
+			temp[i] = '\0';
+			i++;
+		}
+		res = ft_strtrim(str, temp);
+		free(temp);
+	}
+	if (!res)
+		res = ft_strdup(str);
+	return (res);
+
+}
+
 // *************** test parsing **********
 
 void	print_ast(t_ast *node, int level, char *branch)
