@@ -65,7 +65,7 @@ int execute_command(char **cmd, t_data *data)
         return (FAILED);
     else if (pid == 0)
     {
-        execve(get_path_env2(cmd[0], data), cmd, NULL);
+        execve(get_path_env2(cmd[0], data), cmd, data->env);
         dup2(data->stdin_backup, STDIN_FILENO);
         close(data->stdin_backup);
         dup2(data->stdout_backup, STDOUT_FILENO);
@@ -464,8 +464,6 @@ void exaction(t_ast *root, t_data *data, char **envp)
     (void)root;
     (void)envp;
     data->err_status = 0;
-
-    
     builtin_exit(root);
     execute_ast(root, data);
     // int i = 0;

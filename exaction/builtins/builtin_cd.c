@@ -14,9 +14,8 @@ int builtin_cd(char **args, t_data *data)
         data->name_pro = strdup("➜ ~ ");
         return (0);
     }
-    // else if (args[1] && ((ft_strcmp(args[0], "cd") == 0 && ft_strcmp(args[1], ".") == 0)
-    //     || (ft_strcmp(args[0], "cd") == 0 && ft_strcmp(args[1], "./") == 0)))
-    //     return (0);
+    else if (args[1] && ((ft_strcmp(args[0], "cd") == 0 && ft_strcmp(args[1], ".") == 0) || (ft_strcmp(args[0], "cd") == 0 && ft_strcmp(args[1], "./") == 0)))
+        return (0);
     else if (args[1] && ((ft_strcmp(args[0], "cd") == 0 && ft_strcmp(args[1], "..") == 0) || (ft_strcmp(args[0], "cd") == 0 && ft_strcmp(args[1], "../") == 0)))
     {
         char current_path[1024];
@@ -55,26 +54,31 @@ int builtin_cd(char **args, t_data *data)
     else if (args[1] && (ft_strcmp(args[0], "cd") == 0 && ft_strncmp(args[1], "../", 3) == 0))
     {
         char current_path[1024];
+        char current_path_test[1024];
+        getcwd(current_path_test, sizeof(current_path_test));
+        chdir("..");
         getcwd(current_path, sizeof(current_path));
-        char **split_str = ft_split(args[1], '/');
-        if (!split_str)
-            return (-1);
-        char *new_path = ft_strjoin(current_path, "/");
-        new_path = ft_strjoin(new_path, split_str[1]);
-            chdir(new_path);
-            data->name_pro = ft_strjoin(ft_strjoin("➜ ", split_str[1]), " ");
-        // if (access(new_path, F_OK) == 0)
-        // {
-        //     return (0);
-        // }
-        // else
-        // {
-        //     char *msg_error = ft_strjoin("Error: ", args[1]);
-        //     msg_error = ft_strjoin(msg_error, ": no such file or directory");
-        //     ft_putstr_fd(msg_error, 2);
-        //     ft_putstr_fd("\n", 2);
+        // char **split_str = ft_split(args[1], '/');
+        // if (!split_str)
         //     return (-1);
-        // }
+        char *new_path = ft_strjoin(current_path, "/");
+        new_path = ft_strjoin(new_path, (args[1] + 3));
+        printf("%s\n", (args[1] + 3));
+        if (access(new_path, F_OK) == 0)
+        {
+            chdir(new_path);
+            data->name_pro = ft_strjoin(ft_strjoin("➜ ", args[1]), " ");
+            return (0);
+        }
+        else
+        {
+            chdir(current_path_test);
+            char *msg_error = ft_strjoin("Error: ", args[1]);
+            msg_error = ft_strjoin(msg_error, ": no such file or directory");
+            ft_putstr_fd(msg_error, 2);
+            ft_putstr_fd("\n", 2);
+            return (-1);
+        }
         return (0);
     }
     else
@@ -85,5 +89,30 @@ int builtin_cd(char **args, t_data *data)
         ft_putstr_fd("\n", 2);
         return (-1);
     }
+    // else if (args[1] && ((ft_strcmp(args[0], "cd") == 0 && args[1]) || (ft_strcmp(args[0], "cd") == 0 && ft_strncmp(args[1], "./", 3) == 0)))
+    // {
+    //     char current_path[1024];
+    //     getcwd(current_path, sizeof(current_path));
+    //     char **split_str = ft_split(args[1], '/');
+    //     if (!split_str)
+    //         return (-1);
+    //     char *new_path = ft_strjoin(current_path, "/");
+    //     new_path = ft_strjoin(new_path, split_str[1]);
+    //     if (access(new_path, F_OK) == 0)
+    //     {
+    //         chdir(new_path);
+    //         data->name_pro = ft_strjoin(ft_strjoin("➜ ", split_str[1]), " ");
+    //         return (0);
+    //     }
+    //     else
+    //     {
+    //         char *msg_error = ft_strjoin("Error: ", args[1]);
+    //         msg_error = ft_strjoin(msg_error, ": no such file or directory");
+    //         ft_putstr_fd(msg_error, 2);
+    //         ft_putstr_fd("\n", 2);
+    //         return (-1);
+    //     }
+    //     return (0);
+    // }
     return (0);
 }

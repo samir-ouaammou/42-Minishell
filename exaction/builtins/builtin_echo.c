@@ -25,8 +25,8 @@ int builtin_echo(char **str, t_data *data)
     i = 1;
     while (str[i])
     {
-        // char *ss = ft_check_quots(str[i], &quots, &newline, data->input);
-        char *ss = "test";
+        char *ss = ft_check_quots(str[i], &quots, &newline, data->input);
+        // char *ss = "test";
         int j = 0;
         if (quots == 1)
             ft_putstr(ss);
@@ -58,8 +58,8 @@ int builtin_echo(char **str, t_data *data)
                 j++;
             }
         }
-        if (newline == 1)
-            write(1, "\n", 1);
+        // if (newline == 1)
+        //     write(1, " ", 1);
         // free(ss);
         i++;
     }
