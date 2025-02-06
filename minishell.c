@@ -12,6 +12,7 @@ int main(int ac, char **av, char **env)
 		exit(-1);
 	}
 	memset(&data, 0, sizeof(t_data));
+	read_env(&data, env);
 	data.name_pro = "➜ Minishell ";
 	while (1)
 	{
