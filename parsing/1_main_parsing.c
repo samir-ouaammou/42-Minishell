@@ -1,5 +1,5 @@
-#include "../libft/libft.h"
-#include "Minishell.h"
+
+#include "../minishell.h"
 
 void	ft_init_parsing(t_parsing *shell)
 {
@@ -69,7 +69,7 @@ void	ft_parsing(t_parsing *shell)
 	}
 }
 
-char	*ft_check_quots(char *str, int *quots, int *newline, char *input)
+char	*ft_check_quots(char *str, int *quots, int *newline, t_data *data)
 {
 	//int		i;
 	int		len;
@@ -79,18 +79,20 @@ char	*ft_check_quots(char *str, int *quots, int *newline, char *input)
 	*newline = 0;
 	*quots = 2;
 	res = NULL;
+	tmp = NULL;
 	len = ft_strlen(str);
-	if (str && str[0] && str[len - 1] && str[0] == 39 && str[len - 1] == 39)
+	if (str && str[0] && str[len - 1] && str[0] == 39 && str[len - 1] == 39)//               "1" "1"
 	{
 		*quots = 1;
-		tmp = ft_strstr(input, str);
+		tmp = ft_strstr(data->input, str);
+
 		if (tmp && tmp[0] && tmp[len] && (tmp[len] == ' ' || tmp[len] == '\t' || tmp[len] == '\n'))
 			*newline = 1;
 		res = ft_strtrim(str, "'");
 	}
 	else if (str && str[0] && str[len - 1] && str[0] == 34 && str[len - 1] == 34)
 	{
-		tmp = ft_strstr(input, str);
+		tmp = ft_strstr(data->input, str);
 		if (tmp && tmp[0] && tmp[len] && (tmp[len] == ' ' || tmp[len] == '\t' || tmp[len] == '\n'))
 			*newline = 1;
 		res = ft_strtrim(str, "\"");
@@ -100,6 +102,12 @@ char	*ft_check_quots(char *str, int *quots, int *newline, char *input)
 		res = ft_strdup(str);
 		*newline = 1;
 	}
+	// free(data->input);
+	// printf("len ->%d\n\ninput ->%s\n\n", len, data->input);
+	// if (tmp[len - 1])
+		// data->input = &tmp[len - 1];
+	// else
+	// 	data->input = &tmp[len];
 	return (res);
 }
 

@@ -1,5 +1,4 @@
-#include "parsing/Minishell.h"
-#include "exaction/exaction.h"
+#include "./minishell.h"
 
 int main(int ac, char **av, char **env)
 {
@@ -25,7 +24,7 @@ int main(int ac, char **av, char **env)
 		{
 			if (shell.three)
 				exaction(shell.three, &data, env);
-			add_history(data.input);
+			add_history(shell.input);
 			ft_free_parsing(&shell);
 		}
 	}

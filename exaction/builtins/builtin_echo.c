@@ -1,4 +1,9 @@
-#include "../exaction.h"
+#include "../../minishell.h"
+
+int ft_isalnum(int c)
+{
+    return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'));
+}
 
 int builtin_echo(char **str, t_data *data)
 {
@@ -25,13 +30,17 @@ int builtin_echo(char **str, t_data *data)
     i = 1;
     while (str[i])
     {
-        char *ss = ft_check_quots(str[i], &quots, &newline, data->input);
-        // char *ss = "test";
+        char *ss = ft_check_quots(str[i], &quots, &newline, data);
+        if (!ss)
+            return (-1);
         int j = 0;
         if (quots == 1)
             ft_putstr(ss);
         else if (quots == 2)
         {
+            int l = 0;
+                    int k = 0;
+                    // int aaa;
             j = 0;
             while (ss[j])
             {
@@ -46,20 +55,51 @@ int builtin_echo(char **str, t_data *data)
                 else if (ss[j] == '$')
                 {
                     j++;
-                    value = getenv(&ss[j]);
+                    int count = 0;
+                    while (ss[k])
+                    {
+                        if (ft_isalnum(ss[k]) == 1)
+                            count++;
+                        else 
+                            break;
+                        k++;
+                    }
+                    char *res = malloc(sizeof(char) * (count + 1));
+                    if (!res)
+                        return (-1);
+                    k = 0;
+                    k = j;
+                    // printf("->: {{{%s}}}\n", ss);
+                    while (ss[k])
+                    {
+                        if (ft_isalnum(ss[k]) == 1)
+                        {
+                            res[l] = ss[k];
+                            l++;
+                        }
+                        else
+                            break;
+                        k++;
+                    }
+                    res[l] = '\0';
+                    // printf("res: %s\n", res);
+                    value = getenv(res);
                     if (value)
                         ft_putstr_fd(value, 1);
                     else
                         ft_putstr_fd("", 1);
-                    break;
+                    // aaa = 1;
                 }
-                else
-                    ft_putchar(ss[j]);
+                // else if (aaa == 1)
+                //     ft_putchar(ss[j + l - 1]);
+                // else
+                    ft_putchar(ss[j + l]);
                 j++;
+                // aaa = 0;
             }
         }
-         if (newline == 1)
-             write(1, " ", 1);
+        if (newline == 1)
+            write(1, " ", 1);
         // free(ss);
         i++;
     }

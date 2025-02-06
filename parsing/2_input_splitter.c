@@ -1,5 +1,5 @@
-#include "../libft/libft.h"
-#include "Minishell.h"
+
+#include "../minishell.h"
 
 void	ft_str_copy(t_parsing *shell)
 {

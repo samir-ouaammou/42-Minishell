@@ -1,5 +1,5 @@
-#include "../libft/libft.h"
-#include "Minishell.h"
+
+#include "../minishell.h"
 
 int	ft_check_input_is_valid(t_parsing *shell)
 {
@@ -70,15 +70,25 @@ void	ft_count_len_args(t_parsing *shell)
 	while (shell->input && shell->input[shell->i])
 	{
 		if (shell->input[shell->i] == 34 || shell->input[shell->i] == 39)
+		{
 			ft_skip_string(shell);
+			continue;
+		}
 		else if (ft_check_double_operators(shell))
 		{
-			shell->i++;
+			shell->i += 2;
 			shell->len += 3;
 		}
 		else if (ft_check_single_operators(shell))
+		{
+			shell->i++;
 			shell->len += 2;
-		shell->i++;
-		shell->len++;
+		}
+		else
+		{
+			shell->i++;
+			shell->len++;
+		}
 	}
 }
+

@@ -1,5 +1,5 @@
-#include "../libft/libft.h"
-#include "Minishell.h"
+
+#include "../minishell.h"
 
 int	ft_ast_contains_brackets(t_ast *node)
 {

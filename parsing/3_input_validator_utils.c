@@ -1,5 +1,5 @@
-#include "../libft/libft.h"
-#include "Minishell.h"
+
+#include "../minishell.h"
 
 int	ft_is_redirections(t_parsing *shell, int index)
 {
