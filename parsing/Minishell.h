@@ -43,6 +43,8 @@ typedef struct s_parsing
 	t_list			*end_node;
 }					t_parsing;
 
+
+char	*ft_check_quots(char *str, int *quots, int *newline, char *input);
 void				ft_free_ast(t_ast *node);
 void				ft_parsing(t_parsing *shell);
 void				ft_free_args(t_parsing *shell);

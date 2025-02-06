@@ -71,41 +71,36 @@ void	ft_parsing(t_parsing *shell)
 
 char	*ft_check_quots(char *str, int *quots, int *newline, char *input)
 {
-	int		i;
+	//int		i;
 	int		len;
 	char	*res;
-	char	*temp;
+	char	*tmp;
 
-	*newline = 1;
+	*newline = 0;
 	*quots = 2;
 	res = NULL;
 	len = ft_strlen(str);
-	if ((str && str[0] && str[len - 1])
-		&& ((str[0] == 34 && str[len - 1] == 34)
-		|| (str[0] == 39 && str[len - 1] == 39)))
+	if (str && str[0] && str[len - 1] && str[0] == 39 && str[len - 1] == 39)
 	{
-		if (str[0] == 39)
-			*quots = 1;
-		temp = ft_strstr(input, str);
-		if (!temp)
+		*quots = 1;
+		tmp = ft_strstr(input, str);
+		if (tmp && tmp[0] && tmp[len] && (tmp[len] == ' ' || tmp[len] == '\t' || tmp[len] == '\n'))
 			*newline = 1;
-		if ((temp && temp[0] && temp[len])
-			&& (temp[len] != ' ' && temp[len] != '\t' && temp[len] != '\n'))
-			newline = 0;
-		temp[0] = str[0];
-		i = 1;
-		while (temp && temp[i])
-		{
-			temp[i] = '\0';
-			i++;
-		}
-		res = ft_strtrim(str, temp);
-		free(temp);
+		res = ft_strtrim(str, "'");
 	}
-	if (!res)
+	else if (str && str[0] && str[len - 1] && str[0] == 34 && str[len - 1] == 34)
+	{
+		tmp = ft_strstr(input, str);
+		if (tmp && tmp[0] && tmp[len] && (tmp[len] == ' ' || tmp[len] == '\t' || tmp[len] == '\n'))
+			*newline = 1;
+		res = ft_strtrim(str, "\"");
+	}
+	else
+	{
 		res = ft_strdup(str);
+		*newline = 1;
+	}
 	return (res);
-
 }
 
 // *************** test parsing **********

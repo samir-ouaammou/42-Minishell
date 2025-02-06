@@ -58,8 +58,8 @@ int builtin_echo(char **str, t_data *data)
                 j++;
             }
         }
-        // if (newline == 1)
-        //     write(1, " ", 1);
+         if (newline == 1)
+             write(1, " ", 1);
         // free(ss);
         i++;
     }
