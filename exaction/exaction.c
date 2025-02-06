@@ -7,9 +7,7 @@ int is_operator(char *str)
 
 int is_builtin(char *cmd)
 {
-    return (ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "echo") == 0
-            // || ft_strcmp(cmd, "env") == 0
-            || ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "exit") == 0);
+    return (ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "env") == 0 || ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "exit") == 0);
 }
 
 char *get_path_env_utils2(char **path, char *cmd)
@@ -29,7 +27,7 @@ char *get_path_env_utils2(char **path, char *cmd)
     return (NULL);
 }
 
-char *get_path_env2(char *cmd, char **env)
+char *get_path_env2(char *cmd, t_data *data)
 {
     int i;
     int check_path;
@@ -38,12 +36,12 @@ char *get_path_env2(char *cmd, char **env)
     i = 0;
     check_path = 0;
     path = NULL;
-    while (env[i])
+    while (data->env[i])
     {
-        if (ft_strncmp(env[i], "PATH=", 5) == 0)
+        if (ft_strncmp(data->env[i], "PATH=", 5) == 0)
         {
             check_path = 1;
-            path = ft_split(env[i] + 5, ':');
+            path = ft_split(data->env[i] + 5, ':');
             break;
         }
         i++;
@@ -57,9 +55,8 @@ char *get_path_env2(char *cmd, char **env)
     return (NULL);
 }
 
-int execute_command(char **cmd, t_data *data, char **envp)
+int execute_command(char **cmd, t_data *data)
 {
-    (void)envp;
     pid_t pid;
     int status;
 
@@ -68,7 +65,7 @@ int execute_command(char **cmd, t_data *data, char **envp)
         return (FAILED);
     else if (pid == 0)
     {
-        execve(get_path_env2(cmd[0], envp), cmd, NULL);
+        execve(get_path_env2(cmd[0], data), cmd, NULL);
         dup2(data->stdin_backup, STDIN_FILENO);
         close(data->stdin_backup);
         dup2(data->stdout_backup, STDOUT_FILENO);
@@ -90,9 +87,9 @@ int execute_command(char **cmd, t_data *data, char **envp)
     }
 }
 
-int execute_ast(t_ast *root, t_data *data, char **env);
+int execute_ast(t_ast *root, t_data *data);
 
-int execute_pipe(t_ast *node, t_data *data, char **env)
+int execute_pipe(t_ast *node, t_data *data)
 {
     int pipefd[2];
     int(status1), (status2);
@@ -107,7 +104,7 @@ int execute_pipe(t_ast *node, t_data *data, char **env)
         close(pipefd[0]);
         dup2(pipefd[1], STDOUT_FILENO);
         close(pipefd[1]);
-        execute_ast(node->left, data, env);
+        execute_ast(node->left, data);
         exit(data->status);
     }
     pid2 = fork();
@@ -118,7 +115,7 @@ int execute_pipe(t_ast *node, t_data *data, char **env)
         close(pipefd[1]);
         dup2(pipefd[0], STDIN_FILENO);
         close(pipefd[0]);
-        execute_ast(node->right, data, env);
+        execute_ast(node->right, data);
         exit(data->status);
     }
     close(pipefd[0]);
@@ -271,10 +268,9 @@ int expand_Dollar(char *pattern, t_data *data, int *index)
     return (0);
 }
 
-int check_wildcards_Dollar(char **args, t_data *data, char **env)
+int check_wildcards_Dollar(char **args, t_data *data)
 {
     (void)data;
-    (void)env;
     int i = 0;
     int count = 0;
 
@@ -293,13 +289,11 @@ int check_wildcards_Dollar(char **args, t_data *data, char **env)
     int match_index = 0;
     while (args[i])
     {
-        // printf("%s\n", args[i]);
         if (count_flag(args[i]) == 0)
             expand_wildcards(args[i], data, &match_index);
         else if (count_flag_Dollar(args[i]) == 0)
         {
-            int e = expand_Dollar(args[i], data, &match_index);
-            if (e == -1)
+            if (expand_Dollar(args[i], data, &match_index) == -1)
                 data->err_status = -1;
             else
                 data->err_status = 0;
@@ -335,10 +329,9 @@ int check_special_chars(char **args, t_data *data)
     return (0);
 }
 
-int execute_builtin(t_ast *root, t_data *data, char **env)
+int execute_builtin(t_ast *root, t_data *data)
 {
     (void)data;
-    (void)env;
     if (ft_strcmp(root->value[0], "pwd") == 0)
         return (builtin_pwd());
     else if (ft_strcmp(root->value[0], "echo") == 0)
@@ -349,10 +342,12 @@ int execute_builtin(t_ast *root, t_data *data, char **env)
         return (builtin_export(root, data));
     else if (ft_strcmp(root->value[0], "cd") == 0)
         return (builtin_cd(root->value, data));
+    else if (ft_strcmp(root->value[0], "env") == 0)
+        return (builtin_env(root->value, data));
     return (0);
 }
 
-void execute_redir_out(t_ast *node, t_data *data, char **env)
+void execute_redir_out(t_ast *node, t_data *data)
 {
     int fd_file = open(node->right->value[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
     if (fd_file == -1)
@@ -363,12 +358,12 @@ void execute_redir_out(t_ast *node, t_data *data, char **env)
     data->stdout_backup = dup(STDOUT_FILENO);
     dup2(fd_file, STDOUT_FILENO);
     close(fd_file);
-    execute_ast(node->left, data, env);
+    execute_ast(node->left, data);
     dup2(data->stdout_backup, STDOUT_FILENO);
     close(data->stdout_backup);
 }
 
-void execute_redir_inp(t_ast *node, t_data *data, char **env)
+void execute_redir_inp(t_ast *node, t_data *data)
 {
     int fd_file = open(node->right->value[0], O_RDONLY);
     if (fd_file == -1)
@@ -379,7 +374,7 @@ void execute_redir_inp(t_ast *node, t_data *data, char **env)
     data->stdin_backup = dup(STDIN_FILENO);
     dup2(fd_file, STDIN_FILENO);
     close(fd_file);
-    execute_ast(node->left, data, env);
+    execute_ast(node->left, data);
     dup2(data->stdin_backup, STDIN_FILENO);
     close(data->stdin_backup);
 }
@@ -400,10 +395,8 @@ void execute_redir_inp(t_ast *node, t_data *data, char **env)
 //     }
 // }
 
-int execute_ast(t_ast *root, t_data *data, char **env)
+int execute_ast(t_ast *root, t_data *data)
 {
-    (void)data;
-    (void)env;
     if (!root)
         return (FAILED);
     if (check_operator(root, data) == 1)
@@ -412,50 +405,39 @@ int execute_ast(t_ast *root, t_data *data, char **env)
     {
         if (ft_strcmp(root->value[0], "&&") == 0)
         {
-            execute_ast(root->left, data, env);
+            execute_ast(root->left, data);
             if (data->status == 0)
-                execute_ast(root->right, data, env);
+                execute_ast(root->right, data);
         }
         else if (ft_strcmp(root->value[0], "||") == 0)
         {
-            execute_ast(root->left, data, env);
+            execute_ast(root->left, data);
             if (data->status != 0)
-                execute_ast(root->right, data, env);
+                execute_ast(root->right, data);
         }
         else if (ft_strcmp(root->value[0], "|") == 0)
-            execute_pipe(root, data, env);
+            execute_pipe(root, data);
         else if (ft_strcmp(root->value[0], ">") == 0)
-            execute_redir_out(root, data, env);
+            execute_redir_out(root, data);
         else if (ft_strcmp(root->value[0], "<") == 0)
-            execute_redir_inp(root, data, env);
+            execute_redir_inp(root, data);
     }
     else if (is_builtin(root->value[0]))
-        data->status = execute_builtin(root, data, env);
+        data->status = execute_builtin(root, data);
     else
     {
         if (check_special_chars(root->value, data) == 1)
         {
-            check_wildcards_Dollar(root->value, data, env);
+            check_wildcards_Dollar(root->value, data);
             if (data->err_status != -1)
-                data->status = execute_command(data->matches, data, env);
+                data->status = execute_command(data->matches, data);
             else
                 data->status = 0;
         }
         else
-            data->status = execute_command(root->value, data, env);
+            data->status = execute_command(root->value, data);
     }
     return (data->status);
-}
-
-void print_tree(t_ast *root, int depth)
-{
-    if (root == NULL)
-        return;
-    for (int i = 0; i < depth; i++)
-        printf("  ");
-    printf("Node: %s\n", root->value[0]);
-    print_tree(root->left, depth + 1);
-    print_tree(root->right, depth + 1);
 }
 
 void read_env(t_data *data, char **envp)
@@ -482,9 +464,14 @@ void exaction(t_ast *root, t_data *data, char **envp)
     (void)root;
     (void)envp;
     data->err_status = 0;
-    read_env(data, envp);
-    builtin_exit(root);
-    execute_ast(root, data, data->env);
 
     
+    builtin_exit(root);
+    execute_ast(root, data);
+    // int i = 0;
+    // while (data->env[i])
+    // {
+    //     printf("-> %s\n", data->env[i]);
+    //     i++;
+    // }
 }

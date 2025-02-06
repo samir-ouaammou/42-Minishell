@@ -2,7 +2,10 @@
 
 int builtin_echo(char **str, t_data *data)
 {
+    (void)data;
     int i = 1;
+    int quots = 2;
+    int newline = 0;
     int check = 0;
     char *value = NULL;
 
@@ -13,42 +16,54 @@ int builtin_echo(char **str, t_data *data)
         check = 1;
         i++;
     }
+    int count_arg = 1;
+    while (str[count_arg])
+        count_arg++;
+    char **new_args = malloc(sizeof(char *) * (count_arg + 1));
+    if (!new_args)
+        return (0);
+    i = 1;
     while (str[i])
     {
-        if (str[i][0] == '\'')
-            ft_putstr_fd(str[i], 1);
-        else
+        // char *ss = ft_check_quots(str[i], &quots, &newline, data->input);
+        char *ss = "test";
+        int j = 0;
+        if (quots == 1)
+            ft_putstr(ss);
+        else if (quots == 2)
         {
-            int j = 0;
-            while (str[i][j])
+            j = 0;
+            while (ss[j])
             {
-                if (str[i][j] == '$' && str[i][j + 1] == '?')
+                if (ss[j] == '$' && ss[j + 1] == '?')
                 {
                     ft_putnbr_fd(data->exit_status, 1);
                     j += 2;
-                    if (str[i][j])
-                        ft_putstr_fd(&str[i][j], 1);
+                    if (ss[j])
+                        ft_putstr_fd(&ss[j], 1);
                     break;
                 }
-                else if (str[i][j] == '$')
+                else if (ss[j] == '$')
                 {
                     j++;
-                    if ((value = getenv(&str[i][j])))
+                    value = getenv(&ss[j]);
+                    if (value)
                         ft_putstr_fd(value, 1);
                     else
                         ft_putstr_fd("", 1);
                     break;
                 }
                 else
-                    ft_putchar_fd(str[i][j], 1);
+                    ft_putchar(ss[j]);
                 j++;
             }
         }
-        if (str[i + 1])
-            ft_putstr_fd(" ", 1);
+        if (newline == 1)
+            write(1, "\n", 1);
+        // free(ss);
         i++;
     }
     if (!check)
-        ft_putstr_fd("\n", 1);
+        ft_putchar_fd('\n', 1);
     return (1);
 }
