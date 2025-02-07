@@ -65,6 +65,7 @@ int execute_command(char **cmd, t_data *data)
         return (FAILED);
     else if (pid == 0)
     {
+        // printf("-----> %s, %s\n", cmd[0], cmd[1]);
         execve(get_path_env2(cmd[0], data), cmd, data->env);
         dup2(data->stdin_backup, STDIN_FILENO);
         close(data->stdin_backup);
@@ -365,7 +366,8 @@ void execute_redir_out(t_ast *node, t_data *data)
 
 void execute_redir_inp(t_ast *node, t_data *data)
 {
-    int fd_file = open(node->right->value[0], O_RDONLY);
+    char **args = node->right->value;
+    int fd_file = open(args[0], O_RDONLY);
     if (fd_file == -1)
     {
         perror("Error");
@@ -374,7 +376,13 @@ void execute_redir_inp(t_ast *node, t_data *data)
     data->stdin_backup = dup(STDIN_FILENO);
     dup2(fd_file, STDIN_FILENO);
     close(fd_file);
-    execute_ast(node->left, data);
+    int i = 0;
+    while (args[i])
+    {
+        args[i] = args[i + 1];
+        i++;
+    }
+    data->status = execute_command(args, data);
     dup2(data->stdin_backup, STDIN_FILENO);
     close(data->stdin_backup);
 }
@@ -399,8 +407,9 @@ int execute_ast(t_ast *root, t_data *data)
 {
     if (!root)
         return (FAILED);
-    if (check_operator(root, data) == 1)
-        return (FAILED);
+    // if (check_operator(root, data) == 1)
+    //     return (FAILED);
+    // printf("-----> %s, %s\n", root->value[0], root->value[1]);
     if (is_operator(root->value[0]))
     {
         if (ft_strcmp(root->value[0], "&&") == 0)
