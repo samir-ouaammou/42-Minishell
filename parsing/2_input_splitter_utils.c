@@ -71,24 +71,20 @@ void	ft_count_len_args(t_parsing *shell)
 	{
 		if (shell->input[shell->i] == 34 || shell->input[shell->i] == 39)
 		{
-			ft_skip_string(shell);
-			continue;
+			if (shell->input[shell->i] && shell->input[shell->i + 1])
+				ft_skip_string(shell);
+			else
+				ft_free_args(shell);
 		}
 		else if (ft_check_double_operators(shell))
 		{
-			shell->i += 2;
+			shell->i++;
 			shell->len += 3;
 		}
 		else if (ft_check_single_operators(shell))
-		{
-			shell->i++;
 			shell->len += 2;
-		}
-		else
-		{
+		if (shell->input[shell->i])
 			shell->i++;
-			shell->len++;
-		}
+		shell->len++;
 	}
 }
-
