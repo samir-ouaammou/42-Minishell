@@ -65,16 +65,14 @@ int execute_command(char **cmd, t_data *data)
         return (FAILED);
     else if (pid == 0)
     {
-        int check_path = 0;
-        if ((get_path_env2(cmd[0], data) != NULL))
-            check_path = 1;
         struct stat statbuf;
         if (stat(cmd[0], &statbuf) == 0 && S_ISDIR(statbuf.st_mode))
         {
-            // dup2(data->stdout_backup, STDOUT_FILENO);
-            // close(data->stdout_backup);
+            dup2(data->stdin_backup, STDIN_FILENO);
+            close(data->stdin_backup);
+            dup2(data->stdout_backup, STDOUT_FILENO);
+            close(data->stdout_backup);
             ft_printf("Error: %s: Is a directory\n", cmd[0]);
-            data->exit_status = 126;
             exit(126);
         }
         int i = 0;
@@ -85,23 +83,21 @@ int execute_command(char **cmd, t_data *data)
                 check_++;
             i++;
         }
-        if (check_path && check_ != 1 && cmd[0][1] != '/')
+        if ((get_path_env2(cmd[0], data) != NULL) && check_ != 1 && cmd[0][1] != '/')
             execve(get_path_env2(cmd[0], data), cmd, data->env);
         else
         {
             if (access(cmd[0], F_OK) == 0)
             {
                 if (access(cmd[0], X_OK) == 0)
-                {
-                    printf("a\n");
                     execve(cmd[0], cmd, data->env);
-                }
                 else
                 {
-                    // dup2(data->stdout_backup, STDOUT_FILENO);
-                    // close(data->stdout_backup);
+                    dup2(data->stdin_backup, STDIN_FILENO);
+                    close(data->stdin_backup);
+                    dup2(data->stdout_backup, STDOUT_FILENO);
+                    close(data->stdout_backup);
                     ft_printf("Error: %s: Permission denied\n", cmd[0]);
-                    data->exit_status = 126;
                     exit(126);
                 }
             }
@@ -109,105 +105,52 @@ int execute_command(char **cmd, t_data *data)
             {
                 if (check_)
                 {
-                    // dup2(data->stdout_backup, STDOUT_FILENO);
-                    // close(data->stdout_backup);
+                    dup2(data->stdin_backup, STDIN_FILENO);
+                    close(data->stdin_backup);
+                    dup2(data->stdout_backup, STDOUT_FILENO);
+                    close(data->stdout_backup);
                     ft_printf("Error: %s: No such file or directory\n", cmd[0]);
-                    data->exit_status = 127;
                     exit(127);
                 }
                 else
                 {
-                    // dup2(data->stdout_backup, STDOUT_FILENO);
-                    // close(data->stdout_backup);
+                    dup2(data->stdin_backup, STDIN_FILENO);
+                    close(data->stdin_backup);
+                    dup2(data->stdout_backup, STDOUT_FILENO);
+                    close(data->stdout_backup);
                     ft_printf("Error: %s: Command not found\n", cmd[0]);
-                    data->exit_status = 127;
                     exit(127);
                 }
             }
         }
-        exit(-1);
+        return (FAILED);
     }
-        else
+    else
     {
         wait(&status);
         if (WIFEXITED(status))
         {
-            data->exit_status = WEXITSTATUS(status);
             if (WEXITSTATUS(status) == 0)
+            {
+                data->exit_status = 0;
                 return (SUCCESS);
+            }
             else if (WEXITSTATUS(status) == 126)
             {
-                ft_printf("Error: %s: Permission denied\n", cmd[0]);
+                data->exit_status = 126;
                 return (FAILED);
             }
             else if (WEXITSTATUS(status) == 127)
-                return (FAILED);
-            else
             {
-                ft_printf("Error: %s: Execution failed\n", cmd[0]);
+                data->exit_status = 127;
                 return (FAILED);
             }
+            else
+               data->exit_status = 2; 
         }
-        // data->exit_status = 127;
-        // write(1, "s", 1);
         return (FAILED);
     }
 }
-
-// int execute_command(char **cmd, t_data *data)
-// {
-//     pid_t pid;
-//     int status;
-
-//     pid = fork();
-//     if (pid == -1)
-//         return (FAILED);
-//     else if (pid == 0)
-//     {
-//         if (cmd[0][0] == '/')
-//         {
-//             struct stat statbuf;
-//             if (stat(cmd[0], &statbuf) == -1)
-//             {
-//                 ft_printf("Error: %s: No such file or directory\n", cmd[0]);
-//                 exit(127);
-//             }
-//         }
-//         if (get_path_env2(cmd[0], data) == NULL)
-//         {
-//             ft_printf("Error: %s: Command not found\n", cmd[0]);
-//             exit(127);
-//         }
-//         execve(get_path_env2(cmd[0], data), cmd, data->env);
-//         exit(126);
-//     }
-//     else
-//     {
-//         wait(&status);
-//         if (WIFEXITED(status))
-//         {
-//             data->exit_status = WEXITSTATUS(status);
-//             if (WEXITSTATUS(status) == 0)
-//                 return (SUCCESS);
-//             else if (WEXITSTATUS(status) == 126)
-//             {
-//                 ft_printf("Error: %s: Permission denied\n", cmd[0]);
-//                 return (FAILED);
-//             }
-//             else if (WEXITSTATUS(status) == 127)
-//                 return (FAILED);
-//             else
-//             {
-//                 ft_printf("Error: %s: Execution failed\n", cmd[0]);
-//                 return (FAILED);
-//             }
-//         }
-//         ft_printf("Error: %s: Execution failed\n", cmd[0]);
-//         data->exit_status = 127;
-//         return (FAILED);
-//     }
-// }
-
 
 int execute_ast(t_ast *root, t_data *data);
 int execute_pipe(t_ast *node, t_data *data)
@@ -239,10 +182,10 @@ int execute_pipe(t_ast *node, t_data *data)
         execute_ast(node->right, data);
         exit(data->status);
     }
-    close(pipefd[0]);
-    close(pipefd[1]);
     wait(&status1);
     wait(&status2);
+    close(pipefd[0]);
+    close(pipefd[1]);
     if (WIFEXITED(status2))
         data->status = WEXITSTATUS(status2);
     return (SUCCESS);
