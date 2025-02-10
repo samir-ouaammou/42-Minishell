@@ -1,19 +1,19 @@
-
 #include "../minishell.h"
 
 void	ft_str_copy(t_parsing *shell)
 {
-	shell->cmds[shell->len++] = '\n';
+	// shell->cmds[shell->len++] = '\n';
 	shell->chr = shell->input[shell->i];
 	while (shell->input[shell->i])
 	{
-		shell->cmds[shell->len++] = shell->input[shell->i++];
-		if (shell->input[shell->i] == shell->chr)
+		if (shell->input[++shell->i] == shell->chr)
 		{
-			shell->cmds[shell->len++] = shell->input[shell->i];
-			shell->cmds[shell->len++] = '\n';
+			// shell->i++;
+			// shell->cmds[shell->len++] = shell->input[shell->i];
+			// shell->cmds[shell->len++] = '\n';
 			return ;
 		}
+		shell->cmds[shell->len++] = shell->input[shell->i];
 	}
 	ft_free_args(shell);
 }

@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 int	ft_check_input_is_valid(t_parsing *shell)
@@ -51,7 +50,7 @@ int	ft_check_double_operators(t_parsing *shell)
 
 void	ft_skip_string(t_parsing *shell)
 {
-	shell->len += 2;
+	shell->len -= 2;
 	shell->chr = shell->input[shell->i];
 	while (shell->input[shell->i])
 	{
