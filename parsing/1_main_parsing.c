@@ -60,12 +60,12 @@ void	ft_parsing(t_parsing *shell)
 					- ft_count_brackets(shell->tokens)))
 			|| ft_ast_contains_brackets(shell->three))
 			ft_free_parsing(shell);
-		// if (shell->free != -1 && shell->three)	//	temp
-		// {
-		// 	printf("\n----------Parsing----------\n\n");
-		// 	print_ast(shell->three, 0, "root");  //	temp
-		// 	printf("\n\n\n----------exacution----------\n\n");
-		// }
+		if (shell->free != -1 && shell->three)	//	temp
+		{
+			printf("\n----------Parsing----------\n\n");
+			print_ast(shell->three, 0, "root");  //	temp
+			printf("\n\n\n----------exacution----------\n\n");
+		}
 	}
 }
 

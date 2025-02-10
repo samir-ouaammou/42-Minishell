@@ -65,14 +65,72 @@ int execute_command(char **cmd, t_data *data)
         return (FAILED);
     else if (pid == 0)
     {
-        // printf("-----> %s, %s\n", cmd[0], cmd[1]);
-        execve(get_path_env2(cmd[0], data), cmd, data->env);
-        dup2(data->stdin_backup, STDIN_FILENO);
-        close(data->stdin_backup);
-        dup2(data->stdout_backup, STDOUT_FILENO);
-        close(data->stdout_backup);
-        ft_printf("Minishell: %s: Command not found\n", cmd[0]);
-        exit(FAILED);
+        int check_path = 0;
+        if ((get_path_env2(cmd[0], data) != NULL))
+            check_path = 1;
+        struct stat statbuf;
+        if (stat(cmd[0], &statbuf) == 0 && S_ISDIR(statbuf.st_mode))
+        {
+            dup2(data->stdin_backup, STDIN_FILENO);
+            close(data->stdin_backup);
+            dup2(data->stdout_backup, STDOUT_FILENO);
+            close(data->stdout_backup);
+            ft_printf("Error: %s: Is a directory\n", cmd[0]);
+            data->exit_status = 126;
+            exit(126);
+        }
+        int i = 0;
+        int check_ = 0;
+        while (cmd[0][i])
+        {
+            if (cmd[0][i] == '/')
+                check_++;
+            i++;
+        }
+        if (check_path && check_ != 1 && cmd[0][1] != '/')
+            execve(get_path_env2(cmd[0], data), cmd, data->env);
+        else
+        {
+            if (access(cmd[0], F_OK) == 0)
+            {
+                if (access(cmd[0], X_OK) == 0)
+                    execve(cmd[0], cmd, data->env);
+                else
+                {
+                    dup2(data->stdin_backup, STDIN_FILENO);
+                    close(data->stdin_backup);
+                    dup2(data->stdout_backup, STDOUT_FILENO);
+                    close(data->stdout_backup);
+                    ft_printf("Error: %s: Permission denied\n", cmd[0]);
+                    data->exit_status = 126;
+                    exit(126);
+                }
+            }
+            else
+            {
+                if (check_)
+                {
+                    dup2(data->stdin_backup, STDIN_FILENO);
+                    close(data->stdin_backup);
+                    dup2(data->stdout_backup, STDOUT_FILENO);
+                    close(data->stdout_backup);
+                    ft_printf("Error: %s: No such file or directory\n", cmd[0]);
+                    data->exit_status = 127;
+                    exit(127);
+                }
+                else
+                {
+                    dup2(data->stdin_backup, STDIN_FILENO);
+                    close(data->stdin_backup);
+                    dup2(data->stdout_backup, STDOUT_FILENO);
+                    close(data->stdout_backup);
+                    ft_printf("Error: %s: Command not found\n", cmd[0]);
+                    data->exit_status = 127;
+                    exit(127);
+                }
+            }
+        }
+        exit(-1);
     }
     else
     {
@@ -82,14 +140,11 @@ int execute_command(char **cmd, t_data *data)
             data->exit_status = WEXITSTATUS(status);
             return (SUCCESS);
         }
-        else
-            data->exit_status = 127;
         return (FAILED);
     }
 }
 
 int execute_ast(t_ast *root, t_data *data);
-
 int execute_pipe(t_ast *node, t_data *data)
 {
     int pipefd[2];
@@ -125,30 +180,6 @@ int execute_pipe(t_ast *node, t_data *data)
     wait(&status2);
     if (WIFEXITED(status2))
         data->status = WEXITSTATUS(status2);
-    return (SUCCESS);
-}
-
-int check_operator(t_ast *node, t_data *data)
-{
-    if (!node)
-        return (SUCCESS);
-    if (ft_strcmp(node->value[0], "exit") == 0)
-    {
-        ft_printf("exit from program\n");
-        exit(EXIT_SUCCESS);
-    }
-    if (is_operator(node->value[0]))
-    {
-        if (!node->left || !node->right)
-        {
-            ft_printf("Error: Parse error near `%s'\n", node->value[0]);
-            return (FAILED);
-        }
-    }
-    if (check_operator(node->left, data) == FAILED)
-        return (FAILED);
-    if (check_operator(node->right, data) == FAILED)
-        return (FAILED);
     return (SUCCESS);
 }
 
@@ -382,34 +413,59 @@ void execute_redir_inp(t_ast *node, t_data *data)
         args[i] = args[i + 1];
         i++;
     }
+    printf("s: %s\n", args[0]);
     data->status = execute_command(args, data);
     dup2(data->stdin_backup, STDIN_FILENO);
     close(data->stdin_backup);
 }
 
-// int check_cmd()
-// {
-//     struct stat fileStat;
-
-//     if (stat("myfile.txt", &fileStat) == 0)
-//     {
-//         printf("File size: %ld bytes\n", fileStat.st_size);
-//         printf("File permissions: %o\n", fileStat.st_mode & 0777);
-//         printf("Last modified: %ld\n", fileStat.st_mtime);
-//     }
-//     else
-//     {
-//         perror("stat");
-//     }
-// }
+void execute_redir_RightArrow(t_ast *node, t_data *data)
+{
+    int fd_file = open(node->right->value[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
+    if (fd_file == -1)
+    {
+        perror("Error");
+        return;
+    }
+    int count_left = 0;
+    while (node->left->value[count_left])
+        count_left++;
+    int i = 1;
+    int count_right = 0;
+    while (node->right->value[i])
+    {
+        count_right++;
+        i++;
+    }
+    char **res = malloc(sizeof(char *) * ((count_left + count_right) + 1));
+    if (!res)
+        return;
+    i = 0;
+    while (i < count_left)
+    {
+        res[i] = ft_strdup(node->left->value[i]);
+        i++;
+    }
+    i = 1;
+    while (node->right->value[i])
+    {
+        res[i + count_left - 1] = ft_strdup(node->right->value[i]);
+        i++;
+    }
+    res[count_left + count_right] = NULL;
+    node->left->value = res;
+    data->stdout_backup = dup(STDOUT_FILENO);
+    dup2(fd_file, STDOUT_FILENO);
+    close(fd_file);
+    execute_ast(node->left, data);
+    dup2(data->stdout_backup, STDOUT_FILENO);
+    close(data->stdout_backup);
+}
 
 int execute_ast(t_ast *root, t_data *data)
 {
     if (!root)
         return (FAILED);
-    // if (check_operator(root, data) == 1)
-    //     return (FAILED);
-    // printf("-----> %s, %s\n", root->value[0], root->value[1]);
     if (is_operator(root->value[0]))
     {
         if (ft_strcmp(root->value[0], "&&") == 0)
@@ -430,21 +486,23 @@ int execute_ast(t_ast *root, t_data *data)
             execute_redir_out(root, data);
         else if (ft_strcmp(root->value[0], "<") == 0)
             execute_redir_inp(root, data);
+        else if (ft_strcmp(root->value[0], ">>") == 0)
+            execute_redir_RightArrow(root, data);
     }
     else if (is_builtin(root->value[0]))
         data->status = execute_builtin(root, data);
     else
     {
-        if (check_special_chars(root->value, data) == 1)
-        {
-            check_wildcards_Dollar(root->value, data);
-            if (data->err_status != -1)
-                data->status = execute_command(data->matches, data);
-            else
-                data->status = 0;
-        }
-        else
-            data->status = execute_command(root->value, data);
+        // if (check_special_chars(root->value, data) == 1)
+        // {
+        //     check_wildcards_Dollar(root->value, data);
+        //     if (data->err_status != -1)
+        //         data->status = execute_command(data->matches, data);
+        //     else
+        //         data->status = 0;
+        // }
+        // else
+        data->status = execute_command(root->value, data);
     }
     return (data->status);
 }

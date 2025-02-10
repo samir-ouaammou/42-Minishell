@@ -1,0 +1,12 @@
+exaction
+libft
+ls
+Makefile
+minishell
+minishell.c
+minishell.h
+minishell.o
+out
+outfile
+parsing
+ww

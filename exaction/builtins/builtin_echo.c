@@ -62,7 +62,7 @@ int builtin_echo(char **str, t_data *data)
                         return (-1);
                     ft_strncpy(res, &ss[j], count);
                     res[count] = '\0';
-                    value = getenv(res);
+                    value = getenv(res); /// hadi 
                     if (value)
                         ft_putstr_fd(value, 1);
                     else

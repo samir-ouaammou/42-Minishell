@@ -13,6 +13,10 @@
         "type_traits": "c",
         "utility": "c",
         "minishell.h": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "string": "c",
+        "string_view": "c",
+        "span": "c",
+        "algorithm": "c"
     }
 }
