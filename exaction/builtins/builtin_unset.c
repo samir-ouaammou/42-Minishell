@@ -1,6 +1,6 @@
 #include "../../minishell.h"
 
-int ft_unset(t_ast *node, t_data *data)
+int builtin_unset(t_ast *node, t_data *data)
 {
     int i;
     int j;
