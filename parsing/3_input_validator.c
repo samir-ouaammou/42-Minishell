@@ -22,7 +22,7 @@ void	ft_check_the_brackets(t_parsing *shell)
 			shell->j++;
 		}
 		if (shell->brackets < 0)
-		{
+		{  
 			ft_free_args(shell);
 			return ;
 		}

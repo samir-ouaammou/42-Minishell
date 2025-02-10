@@ -71,10 +71,8 @@ int execute_command(char **cmd, t_data *data)
         struct stat statbuf;
         if (stat(cmd[0], &statbuf) == 0 && S_ISDIR(statbuf.st_mode))
         {
-            dup2(data->stdin_backup, STDIN_FILENO);
-            close(data->stdin_backup);
-            dup2(data->stdout_backup, STDOUT_FILENO);
-            close(data->stdout_backup);
+            // dup2(data->stdout_backup, STDOUT_FILENO);
+            // close(data->stdout_backup);
             ft_printf("Error: %s: Is a directory\n", cmd[0]);
             data->exit_status = 126;
             exit(126);
@@ -94,13 +92,14 @@ int execute_command(char **cmd, t_data *data)
             if (access(cmd[0], F_OK) == 0)
             {
                 if (access(cmd[0], X_OK) == 0)
+                {
+                    printf("a\n");
                     execve(cmd[0], cmd, data->env);
+                }
                 else
                 {
-                    dup2(data->stdin_backup, STDIN_FILENO);
-                    close(data->stdin_backup);
-                    dup2(data->stdout_backup, STDOUT_FILENO);
-                    close(data->stdout_backup);
+                    // dup2(data->stdout_backup, STDOUT_FILENO);
+                    // close(data->stdout_backup);
                     ft_printf("Error: %s: Permission denied\n", cmd[0]);
                     data->exit_status = 126;
                     exit(126);
@@ -110,20 +109,16 @@ int execute_command(char **cmd, t_data *data)
             {
                 if (check_)
                 {
-                    dup2(data->stdin_backup, STDIN_FILENO);
-                    close(data->stdin_backup);
-                    dup2(data->stdout_backup, STDOUT_FILENO);
-                    close(data->stdout_backup);
+                    // dup2(data->stdout_backup, STDOUT_FILENO);
+                    // close(data->stdout_backup);
                     ft_printf("Error: %s: No such file or directory\n", cmd[0]);
                     data->exit_status = 127;
                     exit(127);
                 }
                 else
                 {
-                    dup2(data->stdin_backup, STDIN_FILENO);
-                    close(data->stdin_backup);
-                    dup2(data->stdout_backup, STDOUT_FILENO);
-                    close(data->stdout_backup);
+                    // dup2(data->stdout_backup, STDOUT_FILENO);
+                    // close(data->stdout_backup);
                     ft_printf("Error: %s: Command not found\n", cmd[0]);
                     data->exit_status = 127;
                     exit(127);
@@ -132,17 +127,87 @@ int execute_command(char **cmd, t_data *data)
         }
         exit(-1);
     }
-    else
+        else
     {
         wait(&status);
-        if (WIFEXITED(status) && WEXITSTATUS(status) == 0)
+        if (WIFEXITED(status))
         {
             data->exit_status = WEXITSTATUS(status);
-            return (SUCCESS);
+            if (WEXITSTATUS(status) == 0)
+                return (SUCCESS);
+            else if (WEXITSTATUS(status) == 126)
+            {
+                ft_printf("Error: %s: Permission denied\n", cmd[0]);
+                return (FAILED);
+            }
+            else if (WEXITSTATUS(status) == 127)
+                return (FAILED);
+            else
+            {
+                ft_printf("Error: %s: Execution failed\n", cmd[0]);
+                return (FAILED);
+            }
         }
+        // data->exit_status = 127;
+        // write(1, "s", 1);
         return (FAILED);
     }
 }
+
+// int execute_command(char **cmd, t_data *data)
+// {
+//     pid_t pid;
+//     int status;
+
+//     pid = fork();
+//     if (pid == -1)
+//         return (FAILED);
+//     else if (pid == 0)
+//     {
+//         if (cmd[0][0] == '/')
+//         {
+//             struct stat statbuf;
+//             if (stat(cmd[0], &statbuf) == -1)
+//             {
+//                 ft_printf("Error: %s: No such file or directory\n", cmd[0]);
+//                 exit(127);
+//             }
+//         }
+//         if (get_path_env2(cmd[0], data) == NULL)
+//         {
+//             ft_printf("Error: %s: Command not found\n", cmd[0]);
+//             exit(127);
+//         }
+//         execve(get_path_env2(cmd[0], data), cmd, data->env);
+//         exit(126);
+//     }
+//     else
+//     {
+//         wait(&status);
+//         if (WIFEXITED(status))
+//         {
+//             data->exit_status = WEXITSTATUS(status);
+//             if (WEXITSTATUS(status) == 0)
+//                 return (SUCCESS);
+//             else if (WEXITSTATUS(status) == 126)
+//             {
+//                 ft_printf("Error: %s: Permission denied\n", cmd[0]);
+//                 return (FAILED);
+//             }
+//             else if (WEXITSTATUS(status) == 127)
+//                 return (FAILED);
+//             else
+//             {
+//                 ft_printf("Error: %s: Execution failed\n", cmd[0]);
+//                 return (FAILED);
+//             }
+//         }
+//         ft_printf("Error: %s: Execution failed\n", cmd[0]);
+//         data->exit_status = 127;
+//         return (FAILED);
+//     }
+// }
+
 
 int execute_ast(t_ast *root, t_data *data);
 int execute_pipe(t_ast *node, t_data *data)
@@ -397,26 +462,19 @@ void execute_redir_out(t_ast *node, t_data *data)
 
 void execute_redir_inp(t_ast *node, t_data *data)
 {
-    char **args = node->right->value;
-    int fd_file = open(args[0], O_RDONLY);
+    (void)data;
+    int fd_file = open(node->right->value[0], O_RDONLY);
     if (fd_file == -1)
     {
         perror("Error");
         return;
     }
-    data->stdin_backup = dup(STDIN_FILENO);
-    dup2(fd_file, STDIN_FILENO);
-    close(fd_file);
-    int i = 0;
-    while (args[i])
+    if (dup2(fd_file, STDIN_FILENO) == -1)
     {
-        args[i] = args[i + 1];
-        i++;
+        perror("Error redirecting stdin");
+        return;
     }
-    printf("s: %s\n", args[0]);
-    data->status = execute_command(args, data);
-    dup2(data->stdin_backup, STDIN_FILENO);
-    close(data->stdin_backup);
+    close(fd_file);
 }
 
 void execute_redir_RightArrow(t_ast *node, t_data *data)
