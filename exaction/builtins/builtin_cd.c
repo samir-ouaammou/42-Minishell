@@ -42,3 +42,38 @@ int builtin_cd(char **args, t_data *data)
     return (0);
 }
 
+// int builtin_cd(char **args, t_data *data)
+// {
+//     char    *cd;
+//     char    *str;
+//     char    *tmp;
+//     char    path[10000];
+
+//     if (!args || !args[0])
+//         return (-1);
+//     if (args[2])
+//     {
+//         write(2, "minishell: cd: too many arguments\n", 34);
+//         return (1);
+//     }
+//     else if (args[0] && !args[1])
+//         cd = getenv("HOME");
+//     else
+//         cd = args[1];
+//     if (chdir(cd) == -1)
+//     {
+//         perror("minishell: cd");
+//         return (-1);
+//     }
+//     getcwd(path, sizeof(path));
+//     if (path[0] == '/' && path[1] == '\0')
+//         str = ft_strdup("➜ /");
+//     else
+//         str = ft_strjoin("➜ ", ft_strrchr(path, '/') + 1);
+//     tmp = ft_strjoin(str, " ");
+//     free(str);
+//     data->name_pro = tmp;
+//     return (0);
+// }
+
+

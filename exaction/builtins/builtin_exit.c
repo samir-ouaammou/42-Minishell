@@ -31,16 +31,15 @@ int builtin_exit(t_ast *node)
             exit_code = ft_atoi(node->value[1]);
             if (is_numeric(node->value[1]) && node->value[2])
             {
-                ft_printf("❌ minishell: exit: too many arguments\n");
+                ft_printf("minishell: exit: too many arguments\n");
                 exit (2);
             }
             if (!is_numeric(node->value[1]) && !node->value[2])
             {
-                ft_printf("❌ minishell: exit: %s: numeric argument required\n", node->value[1]);
+                ft_printf("minishell: exit: %s: numeric argument required\n", node->value[1]);
                 exit(2);
             }
         }
-        ft_printf("✅ Goodbye! Have a great day! 👋\n");
         exit(exit_code);
     }
     return (SUCCESS);

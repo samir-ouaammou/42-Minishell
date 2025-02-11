@@ -21,7 +21,6 @@ int builtin_unset(t_ast *node, t_data *data)
                 return (-1);
             if (ft_strncmp(node->value[i], data->env[j], ft_strlen(node->value[i])) == 0)
             {
-                ft_printf("🔴 Unsetting environment variable: %s\n", node->value[i]);
                 while (data->env[j + 1])
                 {
                     data->env[j] = data->env[j + 1];
@@ -34,7 +33,6 @@ int builtin_unset(t_ast *node, t_data *data)
         }
         i++;
     }
-    ft_printf("✅ Successfully removed specified environment variables! 👋\n");
     return (0);
 }
 

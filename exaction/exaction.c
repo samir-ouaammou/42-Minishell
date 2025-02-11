@@ -72,7 +72,7 @@ int execute_command(char **cmd, t_data *data)
             close(data->stdin_backup);
             dup2(data->stdout_backup, STDOUT_FILENO);
             close(data->stdout_backup);
-            ft_printf("Error: %s: Is a directory\n", cmd[0]);
+            fprintf(stderr, "Error: %s: Is a directory\n", cmd[0]);
             exit(126);
         }
         int i = 0;
@@ -97,7 +97,7 @@ int execute_command(char **cmd, t_data *data)
                     close(data->stdin_backup);
                     dup2(data->stdout_backup, STDOUT_FILENO);
                     close(data->stdout_backup);
-                    ft_printf("Error: %s: Permission denied\n", cmd[0]);
+                    fprintf(stderr, "Error: %s: Permission denied\n", cmd[0]);
                     exit(126);
                 }
             }
@@ -109,7 +109,7 @@ int execute_command(char **cmd, t_data *data)
                     close(data->stdin_backup);
                     dup2(data->stdout_backup, STDOUT_FILENO);
                     close(data->stdout_backup);
-                    ft_printf("Error: %s: No such file or directory\n", cmd[0]);
+                    fprintf(stderr, "Error: %s: No such file or directory\n", cmd[0]);
                     exit(127);
                 }
                 else
@@ -118,7 +118,7 @@ int execute_command(char **cmd, t_data *data)
                     close(data->stdin_backup);
                     dup2(data->stdout_backup, STDOUT_FILENO);
                     close(data->stdout_backup);
-                    ft_printf("Error: %s: Command not found\n", cmd[0]);
+                    fprintf(stderr, "Error: %s: Command not found\n", cmd[0]);
                     exit(127);
                 }
             }
@@ -182,10 +182,10 @@ int execute_pipe(t_ast *node, t_data *data)
         execute_ast(node->right, data);
         exit(data->status);
     }
+    close(pipefd[1]);
+    close(pipefd[0]);
     wait(&status1);
     wait(&status2);
-    close(pipefd[0]);
-    close(pipefd[1]);
     if (WIFEXITED(status2))
         data->status = WEXITSTATUS(status2);
     return (SUCCESS);
