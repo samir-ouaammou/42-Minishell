@@ -11,7 +11,7 @@ void	ft_init_parsing(t_parsing *shell)
 	shell->brackets = 0;
 	shell->cmds = NULL;
 	shell->temp = NULL;
-	shell->three = NULL;
+	shell->tree = NULL;
 	shell->tokens = NULL;
 	shell->lst_help1 = NULL;
 	shell->lst_help2 = NULL;
@@ -52,20 +52,20 @@ void	ft_parsing(t_parsing *shell)
 	{
 		ft_split_args(shell);
 		ft_check_syntax_errors(shell);
-		shell->three = ft_creat_ast_three(shell);
-		if (!shell->three)
+		shell->tree = ft_creat_ast_tree(shell);
+		if (!shell->tree)
 			return ;
-		if ((ft_count_tree_nodes(shell->three)
+		if ((ft_count_tree_nodes(shell->tree)
 				!= (ft_count_nodes_list(shell->tokens)
 					- ft_count_brackets(shell->tokens)))
-			|| ft_ast_contains_brackets(shell->three))
+			|| ft_ast_contains_brackets(shell->tree))
 			ft_free_parsing(shell);
-		// if (shell->free != -1 && shell->three)	//	temp
-		// {
-		// 	printf("\n----------Parsing----------\n\n");
-		// 	print_ast(shell->three, 0, "root");  //	temp
-		// 	printf("\n\n\n----------exacution----------\n\n");
-		// }
+		if (shell->free != -1 && shell->tree)	//	temp
+		{
+			printf("\n----------Parsing----------\n\n");
+			print_ast(shell->tree, 0, "root");  //	temp
+			printf("\n\n\n----------exacution----------\n\n");
+		}
 	}
 }
 

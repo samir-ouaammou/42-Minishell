@@ -42,9 +42,7 @@ int	ft_check_double_operators(t_parsing *shell)
 			|| (shell->input[shell->i] == '&' && shell->input
 				[shell->i + 1] == '&') || (shell->input[shell->i] == '>'
 				&& shell->input[shell->i + 1] == '>')
-			|| (shell->input[shell->i] == '<' && shell->input
-				[shell->i + 1] == '<') || (shell->input[shell->i] == '$'
-				&& shell->input[shell->i + 1] == '?')))
+			|| (shell->input[shell->i] == '<' && shell->input[shell->i + 1] == '<')))
 		return (1);
 	return (0);
 }

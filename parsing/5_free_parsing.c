@@ -12,8 +12,8 @@ void	ft_free_parsing(t_parsing *shell)
 		ft_free_args(shell);
 	if (shell->tokens)
 		ft_free_tokens(shell);
-	if (shell->three)
-		ft_free_ast(shell->three);
+	if (shell->tree)
+		ft_free_ast(shell->tree);
 }
 
 void	ft_free_ast(t_ast *node)

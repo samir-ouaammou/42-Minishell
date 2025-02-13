@@ -3,8 +3,8 @@ NAME = minishell
 SRCS_EXACTION = minishell.c $(PATH_EXACTION)/exaction.c $(PATH_EXACTION)/builtins/builtin_echo.c $(PATH_EXACTION)/builtins/builtin_env.c  $(PATH_EXACTION)/builtins/builtin_cd.c\
 	$(PATH_EXACTION)/builtins/builtin_exit.c $(PATH_EXACTION)/builtins/builtin_export.c $(PATH_EXACTION)/builtins/builtin_pwd.c $(PATH_EXACTION)/builtins/builtin_unset.c
 SRCS_PARSING = $(PATH_PARSING)/1_main_parsing.c $(PATH_PARSING)/2_input_splitter_utils.c $(PATH_PARSING)/2_input_splitter.c \
-	$(PATH_PARSING)/3_input_validator_utils.c $(PATH_PARSING)/3_input_validator.c $(PATH_PARSING)/4_creat_ast_three_utils.c \
-	$(PATH_PARSING)/4_creat_ast_three.c $(PATH_PARSING)/5_free_parsing.c $(GET_NEXT_PATH)/get_next_line_utils.c $(GET_NEXT_PATH)/get_next_line.c
+	$(PATH_PARSING)/3_input_validator_utils.c $(PATH_PARSING)/3_input_validator.c $(PATH_PARSING)/4_creat_ast_tree_utils.c \
+	$(PATH_PARSING)/4_creat_ast_tree.c $(PATH_PARSING)/5_free_parsing.c $(GET_NEXT_PATH)/get_next_line_utils.c $(GET_NEXT_PATH)/get_next_line.c
 
 OBJS_EXACTION = $(SRCS_EXACTION:.c=.o)
 OBJS_PARSING = $(SRCS_PARSING:.c=.o)

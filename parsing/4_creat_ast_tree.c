@@ -93,7 +93,7 @@ t_ast	*ft_build_command_tree(t_parsing *shell, int start, int end)
 	return (ft_creat_ast_node(shell, shell->start_node->value));
 }
 
-t_ast	*ft_creat_ast_three(t_parsing *shell)
+t_ast	*ft_creat_ast_tree(t_parsing *shell)
 {
 	if (!shell || !shell->tokens || shell->free == -1)
 		return (NULL);

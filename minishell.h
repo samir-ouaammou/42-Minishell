@@ -46,7 +46,7 @@ typedef struct s_parsing
 	char			*cmds;
 	char			*input;
 	char			**temp;
-	t_ast			*three;
+	t_ast			*tree;
 	t_list			*tokens;
 	t_list			*lst_help1;
 	t_list			*lst_help2;
@@ -85,7 +85,7 @@ void				ft_skip_string(t_parsing *shell);
 void				ft_free_parsing(t_parsing *shell);
 void				ft_count_len_args(t_parsing *shell);
 int					ft_get_symbol_type(t_parsing *shell);
-t_ast				*ft_creat_ast_three(t_parsing *shell);
+t_ast				*ft_creat_ast_tree(t_parsing *shell);
 int					ft_ast_contains_brackets(t_ast *tree);
 void				ft_check_syntax_errors(t_parsing *shell);
 int					ft_check_input_is_valid(t_parsing *shell);

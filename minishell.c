@@ -18,12 +18,12 @@ int	main(int ac, char **av, char **env)
 		shell.input = readline(data.name_pro);
 		data.input = ft_strdup(shell.input);
 		ft_parsing(&shell);
-		if (shell.free == -1 && (!shell.tokens || !shell.three))
+		if (shell.free == -1 && (!shell.tokens || !shell.tree))
 			write(2, "minishell: syntax error\n", 24);
 		if (shell.input)
 		{
-			if (shell.three)
-				exaction(shell.three, &data, env);
+			if (shell.tree)
+				exaction(shell.tree, &data, env);
 			add_history(shell.input);
 			ft_free_parsing(&shell);
 		}
