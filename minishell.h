@@ -75,6 +75,7 @@ typedef struct s_data
 }					t_data;
 
 // p
+int ft_match_pattern(const char *wildcard, const char *filename);
 void				ft_free_ast(t_ast *node);
 void				ft_parsing(t_parsing *shell);
 void				ft_free_args(t_parsing *shell);

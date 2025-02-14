@@ -180,28 +180,6 @@ int execute_pipe(t_ast *node, t_data *data)
     return (SUCCESS);
 }
 
-int fmatch(char *pattern, char *filename)
-{
-    if (!pattern || !filename)
-        return (0);
-    if (strcmp(pattern, "*") == 0)
-    {
-        if (filename[0] == '.')
-            return (0);
-        else
-            return (1);
-    }
-    if (ft_strncmp(pattern, "*.", 2) == 0)
-    {
-        char *pattern_ext = pattern + 2;
-        char *filename_ext = strrchr(filename, '.');
-        if (!filename_ext || strcmp(filename_ext + 1, pattern_ext) != 0)
-            return (0);
-        else
-            return (1);
-    }
-    return (0);
-}
 
 int count_flag(char *pattern)
 {
@@ -248,7 +226,7 @@ int count_wildcards(char *str)
         return (1);
     while ((entry = readdir(dir)) != NULL)
     {
-        if (fmatch(str, entry->d_name))
+        if (ft_match_pattern(str, entry->d_name))
             count++;
     }
     closedir(dir);
@@ -265,7 +243,7 @@ int expand_wildcards(char *pattern, t_data *data, int *index)
         return (1);
     while ((entry = readdir(dir)) != NULL)
     {
-        if (fmatch(pattern, entry->d_name))
+        if (ft_match_pattern(pattern, entry->d_name))
         {
             data->matches[*index] = ft_strdup(entry->d_name);
             (*index)++;
