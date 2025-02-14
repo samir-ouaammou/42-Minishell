@@ -548,7 +548,12 @@ void execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
             i++;
         }
         res[i] = NULL;
+        // int new_fd = dup(STDOUT_FILENO);
+        // dup2(fd_file, STDOUT_FILENO);
+        // close(fd_file);
         data->status = execute_command(res, data);
+        // dup2(new_fd, STDOUT_FILENO);
+        // close(new_fd);
     }
     else
     {
@@ -595,6 +600,47 @@ char *ft_strcpy(char *dest, char *src)
     return (dest);
 }
 
+char *get_str_Dollars(char *str)
+{
+    int len = 0;
+    int i = 1;
+    while (str[i])
+    {
+        if (str[i] != '$')
+            len++;
+        i++;
+    }
+    char *res = malloc(len + 1);
+    if (!res)
+        return (NULL);
+    i = 1;
+    int j = 0;
+    while (str[i])
+    {
+        if (str[i] != '$')
+            res[j++] = str[i];
+        else
+            break;
+        i++;
+    }
+    res[j] = '\0';
+    return (res);
+}
+
+char *find_str_env(char *str, t_data *data)
+{
+    if (!str || !data->env)
+        return (NULL);
+    int i = 0;
+    while (data->env[i])
+    {
+        if (ft_strncmp(data->env[i], str, ft_strlen(str)) == 0)
+            return (data->env[i]);
+        i++;
+    }
+    return (NULL);
+}
+
 int process_strings(t_ast *root, t_data *data)
 {
     if (!root || !root->value || !data)
@@ -605,52 +651,90 @@ int process_strings(t_ast *root, t_data *data)
     char **res = malloc(sizeof(char *) * (count + 1));
     if (!res)
         return (-1);
-    char *exit_status_str = ft_itoa(data->exit_status);
-    if (!exit_status_str)
-        return (-1);
     int i = 0;
     while (i < count)
     {
         int x = 0;
-        // int len = 0;
-        // int y = 0;
+        size_t len = 0;
+
         while (root->value[i][x])
         {
             if (root->value[i][x] == '$' && root->value[i][x + 1] != '?')
             {
-                // char *start = extract_string_between_dollars(&root->value[i][x]);
-                char *start = strchr(&root->value[i][x], '$');
-                char *end = strchr(start + 1, '$');
-                printf("str: %s\n", end);
+                char *str = get_str_Dollars(&root->value[i][x]);
+                if (str)
+                {
+                    len += ft_strlen(str);
+                    char *s1 = find_str_env(ft_strjoin(str, "="), data);
+                    if (s1)
+                    {
+                        char *chrstr_path = ft_strchr(s1, '=');
+                        if (chrstr_path)
+                            len += ft_strlen(chrstr_path);
+                    }
+                }
+                x += ft_strlen(str) + 1;
             }
-            x++;
+            else if (root->value[i][x] == '$' && root->value[i][x + 1] == '?')
+            {
+                char *str = ft_itoa(data->exit_status);
+                if (str)
+                    len += ft_strlen(str);
+                x += 2;
+            }
+            else
+            {
+                len += 1;
+                x++;
+            }
         }
-        // printf("len: %d\nd: %d\n", len - y, data->exit_status);
-        //  res[i] = malloc(len + 1);
-        //  if (!res[i])
-        //      return (-1);
-        //  int j = 0;
-        //  x = 0;
-        //  while (root->value[i][x])
-        //  {
-        //      if (root->value[i][x] == '$' && root->value[i][x + 1] == '?')
-        //      {
-        //          ft_strcpy(&res[i][j], exit_status_str);
-        //          j += ft_strlen(exit_status_str);
-        //          x += 2;
-        //      }
-        //      else
-        //      {
-        //          res[i][j] = root->value[i][x];
-        //          x++;
-        //          j++;
-        //      }
-        //  }
-        //  res[i][j] = '\0';
+        res[i] = malloc(len + 1);
+        if (!res[i])
+            return (-1);
+        x = 0;
+        int y = 0;
+        while (root->value[i][x])
+        {
+            if (root->value[i][x] == '$' && root->value[i][x + 1] != '?')
+            {
+                char *str = get_str_Dollars(&root->value[i][x]);
+                if (str)
+                {
+                    char *s1 = find_str_env(ft_strjoin(str, "="), data);
+                    if (s1)
+                    {
+                        char *chrstr = ft_strchr(s1, '=');
+                        if (chrstr)
+                        {
+                            ft_strcpy(&res[i][y], chrstr + 1);
+                            y += ft_strlen(chrstr) - 1;
+                        }
+                    }
+                }
+                x += ft_strlen(str) + 1;
+            }
+            else if (root->value[i][x] == '$' && root->value[i][x + 1] == '?')
+            {
+                char *str = ft_itoa(data->exit_status);
+                if (str)
+                {
+                    ft_strcpy(&res[i][y], str);
+                    y += ft_strlen(str);
+                }
+                x += 2;
+            }
+            else
+            {
+                res[i][y] = root->value[i][x];
+                y++;
+                x++;
+            }
+        }
+        res[i][y] = '\0';
         i++;
     }
-    // res[count] = NULL;
-    // root->value = res;
+    res[count] = NULL;
+    root->value = res;
     return (0);
 }
 
@@ -687,6 +771,7 @@ int execute_ast(t_ast *root, t_data *data)
         data->status = execute_builtin(root, data);
     else
     {
+        
         if (check_special_chars(root->value, data) == 1)
         {
             check_wildcards_Dollar(root->value, data);
@@ -696,6 +781,7 @@ int execute_ast(t_ast *root, t_data *data)
                 data->status = 0;
         }
         else
+        
             data->status = execute_command(root->value, data);
         // printf("status: %d\n", data->status);
     }
