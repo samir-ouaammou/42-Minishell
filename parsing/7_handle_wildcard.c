@@ -86,4 +86,3 @@ int ft_match_pattern(const char *wildcard, const char *filename)
         i++;
     return (wildcard[i] == '\0' && filename[j] == '\0');
 }
-
