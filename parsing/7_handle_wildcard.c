@@ -43,7 +43,7 @@ int ft_match_pattern(const char *wildcard, const char *filename)
     if (ft_strcmp(wildcard, "*") == 0)
         return (filename[0] != '.');
     if (ft_strcmp(wildcard, ".*") == 0)
-        return (1);
+        return (filename[0] == '.');
     if (ft_strcmp(wildcard, "*.") == 0)
         return (0);
 
