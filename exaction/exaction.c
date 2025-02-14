@@ -548,12 +548,7 @@ void execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
             i++;
         }
         res[i] = NULL;
-        int new_fd = dup(STDOUT_FILENO);
-        dup2(fd_file, STDOUT_FILENO);
-        close(fd_file);
         data->status = execute_command(res, data);
-        dup2(new_fd, STDOUT_FILENO);
-        close(new_fd);
     }
     else
     {
