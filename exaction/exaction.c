@@ -352,81 +352,6 @@ int execute_builtin(t_ast *root, t_data *data)
         return (builtin_env(root->value, data));
     return (0);
 }
-
-// void execute_redir_out(t_ast *node, t_data *data)
-// {
-//     int fd_file = open(node->right->value[0], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-//     if (fd_file == -1)
-//     {
-//         perror("Error");
-//         return;
-//     }
-//     int count_left = 0;
-//     if (!node->left)
-//     {
-//         int i = 1;
-//         int count = 0;
-//         while (node->right->value[i])
-//         {
-//             count++;
-//             i++;
-//         }
-//         char **res = malloc(sizeof(char *) * (count + 1));
-//         if (!res)
-//             return;
-//         i = 1;
-//         int j = 0;
-//         while (j < count)
-//         {
-//             res[j] = ft_strdup(node->right->value[i]);
-//             j++;
-//             i++;
-//         }
-//         res[i] = NULL;
-//         int new_fd = dup(STDOUT_FILENO);
-//         dup2(fd_file, STDOUT_FILENO);
-//         close(fd_file);
-//         execute_command(res, data);
-//         dup2(new_fd, STDOUT_FILENO);
-//         close(new_fd);
-//     }
-//     else
-//     {
-//         while (node->left->value[count_left])
-//             count_left++;
-//         int i = 1;
-//         int count_right = 0;
-//         while (node->right->value[i])
-//         {
-//             count_right++;
-//             i++;
-//         }
-//         char **res = malloc(sizeof(char *) * ((count_left + count_right) + 1));
-//         if (!res)
-//             return;
-//         i = 0;
-//         while (i < count_left)
-//         {
-//             res[i] = ft_strdup(node->left->value[i]);
-//             i++;
-//         }
-//         i = 1;
-//         while (node->right->value[i])
-//         {
-//             res[i + count_left - 1] = ft_strdup(node->right->value[i]);
-//             i++;
-//         }
-//         res[count_left + count_right] = NULL;
-//         node->left->value = res;
-//         data->stdout_backup = dup(STDOUT_FILENO);
-//         dup2(fd_file, STDOUT_FILENO);
-//         close(fd_file);
-//         execute_ast(node->left, data);
-//         dup2(data->stdout_backup, STDOUT_FILENO);
-//         close(data->stdout_backup);
-//     }
-// }
-
 void execute_redir_inp(t_ast *node, t_data *data)
 {
     (void)data;
@@ -548,12 +473,7 @@ void execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
             i++;
         }
         res[i] = NULL;
-        // int new_fd = dup(STDOUT_FILENO);
-        // dup2(fd_file, STDOUT_FILENO);
-        // close(fd_file);
         data->status = execute_command(res, data);
-        // dup2(new_fd, STDOUT_FILENO);
-        // close(new_fd);
     }
     else
     {
@@ -781,9 +701,7 @@ int execute_ast(t_ast *root, t_data *data)
                 data->status = 0;
         }
         else
-        
             data->status = execute_command(root->value, data);
-        // printf("status: %d\n", data->status);
     }
     return (data->status);
 }
