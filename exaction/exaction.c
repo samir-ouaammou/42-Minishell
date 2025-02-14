@@ -297,7 +297,11 @@ int check_wildcards_Dollar(char **args, t_data *data)
     while (args[i])
     {
         if (count_flag(args[i]) == 0)
+        {
             expand_wildcards(args[i], data, &match_index);
+            if (data->matches == NULL)
+                return (-1);
+        }
         else if (count_flag_Dollar(args[i]) == 0)
         {
             if (expand_Dollar(args[i], data, &match_index) == -1)
