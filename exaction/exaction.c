@@ -602,68 +602,77 @@ char *ft_strcpy(char *dest, char *src)
     return (dest);
 }
 
+int process_strings(t_ast *root, t_data *data)
+{
+    if (!root || !root->value || !data)
+        return (-1);
+    int count = 0;
+    while (root->value[count])
+        count++;
+    char **res = malloc(sizeof(char *) * (count + 1));
+    if (!res)
+        return (-1);
+    char *exit_status_str = ft_itoa(data->exit_status);
+    if (!exit_status_str)
+        return (-1);
+    int i = 0;
+    while (i < count)
+    {
+        int x = 0;
+        int len = 0;
+        int y = 0;
+        while (root->value[i][x])
+        {
+            if (root->value[i][x] == '$' && root->value[i][x + 1] == '?')
+                len += ft_strlen(ft_itoa(data->exit_status));
+            else if (root->value[i][x] == '$' && root->value[i][x + 1] != '?')
+            {
+                while (root->value[i][y])
+                {
+                    if (root->value[i][y] == '$' && root->value[i][y + 1] == '?')
+                        break;
+                    y++;
+                }
+                printf("dd:%d\n", y);
+            }
+            else
+                len++;
+            x++;
+        }
+        printf("len: %d\nd: %d\n", len - y, data->exit_status);
+        // res[i] = malloc(len + 1);
+        // if (!res[i])
+        //     return (-1);
+        // int j = 0;
+        // x = 0;
+        // while (root->value[i][x])
+        // {
+        //     if (root->value[i][x] == '$' && root->value[i][x + 1] == '?')
+        //     {
+        //         ft_strcpy(&res[i][j], exit_status_str);
+        //         j += ft_strlen(exit_status_str);
+        //         x += 2;
+        //     }
+        //     else
+        //     {
+        //         res[i][j] = root->value[i][x];
+        //         x++;
+        //         j++;
+        //     }
+        // }
+        // res[i][j] = '\0';
+        i++;
+    }
+    // res[count] = NULL;
+    // root->value = res;
+    return (0);
+}
+
 int execute_ast(t_ast *root, t_data *data)
 {
     if (!root)
         return (FAILED);
-    int i = 1;
-    int check = 0;
-    while (root->value[i])
-    {
-        int j = 0;
-        while (root->value[i][j])
-        {
-            if (root->value[i][j] == '$' && root->value[i][j + 1] == '?')
-                check++;
-            j++;
-        }
-        i++;
-    }
-    if (check)
-    {
-        int count = 0;
-        while (root->value[count])
-            count++;
-        char **res = malloc(sizeof(char *) * (count + 1));
-        if (!res)
-            return (-1);
-        int i = 0;
-        while (i < count)
-        {
-            int x = 0;
-            int len = 0;
-            while (root->value[i][x])
-            {
-                if (root->value[i][x] == '$' && root->value[i][x + 1] == '?')
-                    len += ft_strlen(ft_itoa(data->exit_status));
-                else
-                    len++;
-                x++;
-            }
-            res[i] = malloc(len + 1);
-            int j = 0;
-            x = 0;
-            while (root->value[i][x])
-            {
-                if (root->value[i][x] == '$' && root->value[i][x + 1] == '?')
-                {
-                    ft_strcpy(&res[i][j], ft_itoa(data->exit_status));
-                    j += ft_strlen(ft_itoa(data->exit_status));
-                    x += 2;
-                }
-                else
-                {
-                    res[i][j] = root->value[i][x];
-                    j++;
-                    x++;
-                }
-            }
-            res[i][j] = '\0';
-            i++;
-        }
-        res[count] = NULL;
-        root->value = res;
-    }
+    process_strings(root, data);
     if (is_operator(root->value[0]))
     {
         if (ft_strcmp(root->value[0], "&&") == 0)
