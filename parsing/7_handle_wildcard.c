@@ -8,7 +8,7 @@ char *ft_compress_wildcards(const char *input)
 
     if (!input || !input[0])
         return (NULL);
-    res = (char *)malloc(strlen(input) + 1);
+    res = (char *)malloc(ft_strlen(input) + 1);
     if (!res)
         return (NULL);
     i = 0;
@@ -37,27 +37,15 @@ int ft_match_pattern(const char *wildcard, const char *filename)
 
     if (!wildcard || !wildcard[0] || !filename || !filename[0])
         return 0;
-
     wildcard = ft_compress_wildcards(wildcard);
     if (!wildcard || !wildcard[0])
         return (0);
-
-    if (strcmp(wildcard, "*") == 0)
+    if (ft_strcmp(wildcard, "*") == 0)
         return (filename[0] != '.');
-
-    if (strcmp(wildcard, ".*") == 0)
+    if (ft_strcmp(wildcard, ".*") == 0)
         return (1);
-
-    if (strncmp(wildcard, "*.", 2) == 0)
-    {
-        const char *wildcard_ext = wildcard + 2;
-        const char *filename_ext = strrchr(filename, '.');
-
-        if (!filename_ext || strcmp(filename_ext + 1, wildcard_ext) != 0)
-            return 0;
-
-        return (filename[0] != '.');
-    }
+    if (ft_strcmp(wildcard, "*.") == 0)
+        return (0);
 
     while (filename[j] != '\0')
     {
@@ -84,5 +72,5 @@ int ft_match_pattern(const char *wildcard, const char *filename)
 
     while (wildcard[i] == '*')
         i++;
-    return (wildcard[i] == '\0' && filename[j] == '\0');
+    return (wildcard[i] == '\0' && filename[j] == '\0' && (wildcard[0] == '.' || filename[0] != '.'));
 }
