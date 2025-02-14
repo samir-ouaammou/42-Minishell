@@ -180,7 +180,6 @@ int execute_pipe(t_ast *node, t_data *data)
     return (SUCCESS);
 }
 
-
 int count_flag(char *pattern)
 {
     int i = 0;
@@ -297,11 +296,7 @@ int check_wildcards_Dollar(char **args, t_data *data)
     while (args[i])
     {
         if (count_flag(args[i]) == 0)
-        {
             expand_wildcards(args[i], data, &match_index);
-            if (data->matches == NULL)
-                return (-1);
-        }
         else if (count_flag_Dollar(args[i]) == 0)
         {
             if (expand_Dollar(args[i], data, &match_index) == -1)
@@ -509,7 +504,7 @@ void execute_redir_inp(t_ast *node, t_data *data)
 void execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
 {
     (void)data;
-    int fd_file;
+    int fd_file = 0;
     if (ft_strcmp(type, "RightArrow") == 0)
     {
         fd_file = open(node->right->value[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -529,6 +524,9 @@ void execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
         }
     }
     int count_left = 0;
+    int stdout_backup = dup(STDOUT_FILENO);
+    dup2(fd_file, STDOUT_FILENO);
+    close(fd_file);
     if (!node->left)
     {
         int i = 1;
@@ -584,15 +582,11 @@ void execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
             i++;
         }
         res[count_left + count_right] = NULL;
-
         node->left->value = res;
-        data->stdout_backup = dup(STDOUT_FILENO);
-        dup2(fd_file, STDOUT_FILENO);
-        close(fd_file);
         execute_ast(node->left, data);
-        dup2(data->stdout_backup, STDOUT_FILENO);
-        close(data->stdout_backup);
     }
+    dup2(stdout_backup, STDOUT_FILENO);
+    close(stdout_backup);
 }
 
 char *ft_strcpy(char *dest, char *src)
@@ -623,48 +617,41 @@ int process_strings(t_ast *root, t_data *data)
     while (i < count)
     {
         int x = 0;
-        int len = 0;
-        int y = 0;
+        // int len = 0;
+        // int y = 0;
         while (root->value[i][x])
         {
-            if (root->value[i][x] == '$' && root->value[i][x + 1] == '?')
-                len += ft_strlen(ft_itoa(data->exit_status));
-            else if (root->value[i][x] == '$' && root->value[i][x + 1] != '?')
+            if (root->value[i][x] == '$' && root->value[i][x + 1] != '?')
             {
-                while (root->value[i][y])
-                {
-                    if (root->value[i][y] == '$' && root->value[i][y + 1] == '?')
-                        break;
-                    y++;
-                }
-                printf("dd:%d\n", y);
+                // char *start = extract_string_between_dollars(&root->value[i][x]);
+                char *start = strchr(&root->value[i][x], '$');
+                char *end = strchr(start + 1, '$');
+                printf("str: %s\n", end);
             }
-            else
-                len++;
             x++;
         }
-        printf("len: %d\nd: %d\n", len - y, data->exit_status);
-        // res[i] = malloc(len + 1);
-        // if (!res[i])
-        //     return (-1);
-        // int j = 0;
-        // x = 0;
-        // while (root->value[i][x])
-        // {
-        //     if (root->value[i][x] == '$' && root->value[i][x + 1] == '?')
-        //     {
-        //         ft_strcpy(&res[i][j], exit_status_str);
-        //         j += ft_strlen(exit_status_str);
-        //         x += 2;
-        //     }
-        //     else
-        //     {
-        //         res[i][j] = root->value[i][x];
-        //         x++;
-        //         j++;
-        //     }
-        // }
-        // res[i][j] = '\0';
+        // printf("len: %d\nd: %d\n", len - y, data->exit_status);
+        //  res[i] = malloc(len + 1);
+        //  if (!res[i])
+        //      return (-1);
+        //  int j = 0;
+        //  x = 0;
+        //  while (root->value[i][x])
+        //  {
+        //      if (root->value[i][x] == '$' && root->value[i][x + 1] == '?')
+        //      {
+        //          ft_strcpy(&res[i][j], exit_status_str);
+        //          j += ft_strlen(exit_status_str);
+        //          x += 2;
+        //      }
+        //      else
+        //      {
+        //          res[i][j] = root->value[i][x];
+        //          x++;
+        //          j++;
+        //      }
+        //  }
+        //  res[i][j] = '\0';
         i++;
     }
     // res[count] = NULL;
