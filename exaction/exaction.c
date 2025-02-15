@@ -10,6 +10,16 @@ int is_builtin(char *cmd)
     return (ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "env") == 0 || ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "exit") == 0);
 }
 
+int ft_fprintf(int fd, char *msg, char *arg)
+{
+    if (!msg || !arg)
+        return (-1);
+    char *str_j = ft_strjoin("Minishell: ", arg);
+    str_j = ft_strjoin(str_j, msg);
+    ft_putstr_fd(str_j, fd);
+    return (0);
+}
+
 char *get_path_env_utils2(char **path, char *cmd)
 {
     char *path_arg;
@@ -36,6 +46,8 @@ char *get_path_env2(char *cmd, t_data *data)
     i = 0;
     check_path = 0;
     path = NULL;
+    if (!data->env)
+        return (NULL);
     while (data->env[i])
     {
         if (ft_strncmp(data->env[i], "PATH=", 5) == 0)
@@ -79,7 +91,7 @@ int execute_command(char **cmd, t_data *data)
                 check_++;
             i++;
         }
-        if ((get_path_env2(cmd[0], data) != NULL) && check_ != 1 && cmd[0][1] != '/')
+        if ((get_path_env2(cmd[0], data) != NULL) && !check_)
             execve(get_path_env2(cmd[0], data), cmd, data->env);
         else
         {
@@ -130,7 +142,7 @@ int execute_command(char **cmd, t_data *data)
                 return (FAILED);
             }
             else
-                data->exit_status = 2;
+                data->exit_status = 1;
         }
         return (FAILED);
     }
@@ -509,15 +521,10 @@ void execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
     close(stdout_backup);
 }
 
-char *ft_strcpy(char *dest, char *src)
+void ft_strcpy(char *dest, char *src)
 {
-    int i = 0;
-    while (src[i])
-    {
-        dest[i] = src[i];
-        i++;
-    }
-    return (dest);
+    while ((*dest++ = *src++))
+        ;
 }
 
 char *get_str_Dollars(char *str)
@@ -691,7 +698,7 @@ int execute_ast(t_ast *root, t_data *data)
         data->status = execute_builtin(root, data);
     else
     {
-        
+
         if (check_special_chars(root->value, data) == 1)
         {
             check_wildcards_Dollar(root->value, data);
@@ -708,34 +715,52 @@ int execute_ast(t_ast *root, t_data *data)
 
 void read_env(t_data *data, char **envp)
 {
-    if (!*envp)
-        return;
-    int count = 0;
-    while (envp[count])
-        count++;
-    data->env = malloc(sizeof(char *) * (count + 1));
-    if (!data->env)
-        return;
-    int i = 0;
-    while (envp[i])
+    if (*envp)
     {
-        data->env[i] = envp[i];
-        i++;
+        int count = 0;
+        while (envp[count])
+            count++;
+        data->env = malloc(sizeof(char *) * (count + 1));
+        if (!data->env)
+            return;
+        int i = 0;
+        while (envp[i])
+        {
+            data->env[i] = envp[i];
+            i++;
+        }
+        data->env[count] = NULL;
     }
-    data->env[count] = NULL;
+    else
+    {
+        char path[1024];
+        int add_num = 0;
+        char *pwd_path = getcwd(path, sizeof(path));
+
+        if (pwd_path)
+            add_num = 1;
+        else
+        {
+            perror("minishell: pwd: error");
+            return;
+        }
+        data->env = malloc(sizeof(char *) * (2 + add_num + 1));
+        if (!data->env)
+        {
+            perror("Minishell: malloc");
+            return;
+        }
+        if (add_num)
+            data->env[0] = ft_strdup(ft_strjoin("PATH=", pwd_path));
+        data->env[add_num] = ft_strdup("SHLVL=1");
+        data->env[add_num + 1] = ft_strdup("_=/usr/bin/env");
+        data->env[add_num + 2] = NULL;
+    }
 }
 
-void exaction(t_ast *root, t_data *data, char **envp)
+void exaction(t_ast *root, t_data *data)
 {
-    (void)root;
-    (void)envp;
     data->err_status = 0;
     builtin_exit(root);
     execute_ast(root, data);
-    // int i = 0;
-    // while (data->env[i])
-    // {
-    //     printf("-> %s\n", data->env[i]);
-    //     i++;
-    // }
 }

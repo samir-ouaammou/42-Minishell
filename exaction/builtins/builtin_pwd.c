@@ -7,12 +7,12 @@ int builtin_pwd(void)
     if (getcwd(path, sizeof(path)))
     {
         ft_printf("%s\n", path);
-        return (1);
+        return (0);
     }
     else
     {
         perror("minishell: pwd: error");
-        return (0);
+        return (1);
     }
 }
 

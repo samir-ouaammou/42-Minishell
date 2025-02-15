@@ -4,16 +4,23 @@ int builtin_export(t_ast *node, t_data *data)
 {
     if (!node || !data || !data->env)
         return (1);
+    
     int i = 1;
     while (node->value[i])
     {
+        char *str = ft_strchr(node->value[i], '=');
+        if (!str)
+        {
+            i++;
+            continue;
+        }
         int j = 0;
         int found = 0;
         while (data->env[j])
         {
-            if (ft_strncmp(node->value[i], data->env[j], ft_strchr(node->value[i], '=') - node->value[i]) == 0)
+            if (ft_strncmp(data->env[j], node->value[i], (str - node->value[i])) == 0)
             {
-                data->env[j] = node->value[i];
+                data->env[j] = ft_strdup(node->value[i]);
                 found = 1;
                 break;
             }
