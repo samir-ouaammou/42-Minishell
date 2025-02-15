@@ -74,7 +74,9 @@ typedef struct s_data
 	char			*input;
 }					t_data;
 
+
 // p
+void    ft_remove_quots(char **str);
 void				ft_free_ast(t_ast *node);
 void				ft_parsing(t_parsing *shell);
 void				ft_free_args(t_parsing *shell);
@@ -98,11 +100,12 @@ t_ast				*ft_creat_ast_node(t_parsing *shell, char **value);
 int					ft_is_logical_operators(t_parsing *shell, int index);
 t_ast				*ft_build_command_tree(t_parsing *shell, int start, int end);
 int					ft_handle_wildcard(const char *wildcard, const char *filename);
-char				*ft_check_quots(char *str, int *quots, int *newline, t_data *data);
+// char				*ft_check_quots(char *str, int *quots, int *newline, t_data *data);
 t_ast				*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
 
 void				print_ast(t_ast *node, int level, char *branch); //temp
 // e
+
 
 int					builtin_pwd(void);
 int					builtin_exit(t_ast *node);
@@ -112,6 +115,11 @@ int					builtin_env(char **args, t_data *data);
 int					builtin_echo(char **str, t_data *data);
 int					builtin_unset(t_ast *node, t_data *data);
 int					builtin_export(t_ast *node, t_data *data);
-void				exaction(t_ast *root, t_data *data, char **envp);
+void				exaction(t_ast *root, t_data *data);
 
 #endif
+
+/*
+
+
+*/

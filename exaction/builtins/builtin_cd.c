@@ -5,7 +5,7 @@ int builtin_cd(char **args, t_data *data)
     (void)data;
     if (args[2])
     {
-        ft_fprintf(2, ": too many arguments\n", "cd");
+        ft_printf("minishell: %s: too many arguments\n", args[0]);
         return (-1);
     }
     if ((args[0] && (ft_strcmp(args[0], "cd") == 0 && !args[1])) || (ft_strcmp(args[0], "cd") == 0 && ft_strcmp(args[1], "~") == 0))
@@ -13,7 +13,7 @@ int builtin_cd(char **args, t_data *data)
         char *home_path = getenv("HOME");
         if (!home_path)
         {
-            ft_fprintf(2, ": HOME not set\n", "cd");
+            ft_printf("minishell: %s: HOME not set\n", args[0]);
             return (1);
         }
         chdir(home_path);
@@ -22,7 +22,7 @@ int builtin_cd(char **args, t_data *data)
     }
     else if (chdir(args[1]) <= -1)
     {
-        ft_fprintf(2, ": No such file or directory\n", args[1]);
+        ft_printf("minishell: %s: No such file or directory\n", args[1]);
         return (-1);
     }
     else

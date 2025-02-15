@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **env)
 		if (shell.input)
 		{
 			if (shell.tree)
-				exaction(shell.tree, &data, env);
+				exaction(shell.tree, &data);
 			add_history(shell.input);
 			ft_free_parsing(&shell);
 		}

@@ -352,8 +352,8 @@ int execute_builtin(t_ast *root, t_data *data)
     (void)data;
     if (ft_strcmp(root->value[0], "pwd") == 0)
         return (builtin_pwd());
-    // else if (ft_strcmp(root->value[0], "echo") == 0)
-    //     return (builtin_echo());
+    else if (ft_strcmp(root->value[0], "echo") == 0)
+        return (builtin_echo(root->value, data));
     else if (ft_strcmp(root->value[0], "unset") == 0)
         return (builtin_unset(root, data));
     else if (ft_strcmp(root->value[0], "export") == 0)
@@ -695,20 +695,29 @@ int execute_ast(t_ast *root, t_data *data)
             execute_redir_RightArrow_redirout(root, data, "RightArrow");
     }
     else if (is_builtin(root->value[0]))
+    {
+        ft_remove_quots(root->value);
         data->status = execute_builtin(root, data);
+    }
     else
     {
-
+        
         if (check_special_chars(root->value, data) == 1)
         {
             check_wildcards_Dollar(root->value, data);
             if (data->err_status != -1)
+            {
+                ft_remove_quots(root->value);
                 data->status = execute_command(data->matches, data);
+            }
             else
                 data->status = 0;
         }
         else
+        {
+            ft_remove_quots(root->value);
             data->status = execute_command(root->value, data);
+        }
     }
     return (data->status);
 }
