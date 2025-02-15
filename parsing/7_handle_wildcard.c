@@ -75,5 +75,5 @@ int ft_handle_wildcard(const char *wildcard, const char *filename)
     return (wildcard[i] == '\0' && filename[j] == '\0' && (wildcard[0] == '.' || filename[0] != '.'));
 }
 
-    // if (!ft_remaining_func_handle_wildcard())
-    //     return (0);
+// if (!ft_remaining_func_handle_wildcard())
+//     return (0);
