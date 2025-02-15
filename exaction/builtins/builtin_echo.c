@@ -26,7 +26,7 @@ int builtin_echo(char **str, t_data *data)
     {
         ft_putstr_fd(str[i], 2);
         if (str[i + 1])
-            write (1, " ", 1);
+            write (2, " ", 1);
         i++;
     }
     if (newline)
