@@ -70,4 +70,5 @@ void    ft_echo_str(t_parsing *shell)
     }
 }
 
-//      "123"   echo "hh|hh"
+//      "123"   echo "hh|hh"    
+

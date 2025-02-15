@@ -3,7 +3,7 @@
 
 void	ft_str_copy(t_parsing *shell)
 {
-	shell->cmds[shell->len++] = '\n';
+	shell->cmds[shell->len++] = '\t';
 	shell->chr = shell->input[shell->i];
 	while (shell->input[shell->i])
 	{
@@ -11,7 +11,7 @@ void	ft_str_copy(t_parsing *shell)
 		if (shell->input[shell->i] == shell->chr)
 		{
 			shell->cmds[shell->len++] = shell->input[shell->i];
-			shell->cmds[shell->len++] = '\n';
+			shell->cmds[shell->len++] = '\t';
 			return ;
 		}
 	}
@@ -22,21 +22,21 @@ void	ft_this_condition_function(t_parsing *shell)
 {
 	if (shell->input[shell->i] == '~' || shell->input[shell->i] == '$')
 	{
-		shell->cmds[shell->len++] = '\n';
-		shell->cmds[shell->len++] = '\n';
+		shell->cmds[shell->len++] = '\t';
+		shell->cmds[shell->len++] = '\t';
 		shell->cmds[shell->len++] = shell->input[shell->i];
 	}
 	else if (shell->input[shell->i] == '=' || shell->input[shell->i] == ':')
 	{
 		shell->cmds[shell->len++] = shell->input[shell->i];
-		shell->cmds[shell->len++] = '\n';
-		shell->cmds[shell->len++] = '\n';
+		shell->cmds[shell->len++] = '\t';
+		shell->cmds[shell->len++] = '\t';
 	}
 	else
 	{
-		shell->cmds[shell->len++] = '\n';
+		shell->cmds[shell->len++] = '\t';
 		shell->cmds[shell->len++] = shell->input[shell->i];
-		shell->cmds[shell->len++] = '\n';
+		shell->cmds[shell->len++] = '\t';
 	}
 }
 
@@ -52,16 +52,16 @@ void	ft_args_copy(t_parsing *shell)
 			ft_str_copy(shell);
 		else if (ft_check_double_operators(shell))
 		{
-			shell->cmds[shell->len++] = '\n';
+			shell->cmds[shell->len++] = '\t';
 			shell->cmds[shell->len++] = shell->input[shell->i];
 			shell->cmds[shell->len++] = shell->input[++shell->i];
-			shell->cmds[shell->len++] = '\n';
+			shell->cmds[shell->len++] = '\t';
 		}
 		else if (ft_check_single_operators(shell))
 			ft_this_condition_function(shell);
 		else if (shell->input[shell->i] == ' '
 			|| shell->input[shell->i] == '\t')
-			shell->cmds[shell->len++] = '\n';
+			shell->cmds[shell->len++] = '\t';
 		else
 			shell->cmds[shell->len++] = shell->input[shell->i];
 		if (shell->input[shell->i])
@@ -98,7 +98,7 @@ void	ft_split_args(t_parsing *shell)
 		return ;
 	ft_args_copy(shell);
 	shell->cmds[shell->len] = '\0';
-	shell->temp = ft_split(shell->cmds, '\n');
+	shell->temp = ft_split(shell->cmds, '\t');
 	if (!shell->temp)
 		ft_free_args(shell);
 	if (shell->free == -1)

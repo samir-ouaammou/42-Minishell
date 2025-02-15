@@ -8,8 +8,8 @@ int	ft_check_input_is_valid(t_parsing *shell)
 	shell->i = 0;
 	while (shell->input && shell->input[shell->i])
 	{
-		if (shell->input[shell->i] != ' ' && shell->input[shell->i] != '\t'
-			&& shell->input[shell->i] != '\n')
+		if (shell->input[shell->i] != ' '
+			&& shell->input[shell->i] != '\t')
 			break ;
 		shell->i++;
 	}
@@ -28,9 +28,8 @@ int	ft_check_single_operators(t_parsing *shell)
 	if ((shell->input[shell->i]) && (shell->input[shell->i] == '|'
 			|| shell->input[shell->i] == '<' || shell->input[shell->i] == '>'
 			|| shell->input[shell->i] == '(' || shell->input[shell->i] == ')'
-			|| shell->input[shell->i] == '=' || shell->input[shell->i] == '~'
-			|| shell->input[shell->i] == '#' || shell->input[shell->i] == '&'
-			|| shell->input[shell->i] == ':'))
+			|| shell->input[shell->i] == '~' || shell->input[shell->i] == ':'
+			|| shell->input[shell->i] == '#' || shell->input[shell->i] == '&'))
 		return (1);
 	return (0);
 }
