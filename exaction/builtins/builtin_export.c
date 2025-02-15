@@ -4,7 +4,6 @@ int builtin_export(t_ast *node, t_data *data)
 {
     if (!node || !data || !data->env)
         return (1);
-    
     int i = 1;
     while (node->value[i])
     {
