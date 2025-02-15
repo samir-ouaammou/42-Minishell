@@ -225,7 +225,7 @@ int count_wildcards(char *str)
         return (1);
     while ((entry = readdir(dir)) != NULL)
     {
-        if (ft_match_pattern(str, entry->d_name))
+        if (ft_handle_wildcard(str, entry->d_name))
             count++;
     }
     closedir(dir);
@@ -242,7 +242,7 @@ int expand_wildcards(char *pattern, t_data *data, int *index)
         return (1);
     while ((entry = readdir(dir)) != NULL)
     {
-        if (ft_match_pattern(pattern, entry->d_name))
+        if (ft_handle_wildcard(pattern, entry->d_name))
         {
             data->matches[*index] = ft_strdup(entry->d_name);
             (*index)++;

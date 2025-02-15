@@ -75,7 +75,6 @@ typedef struct s_data
 }					t_data;
 
 // p
-int ft_match_pattern(const char *wildcard, const char *filename);
 void				ft_free_ast(t_ast *node);
 void				ft_parsing(t_parsing *shell);
 void				ft_free_args(t_parsing *shell);
@@ -95,13 +94,14 @@ int					ft_check_double_operators(t_parsing *shell);
 void				ft_check_operator_position(t_parsing *shell);
 t_list				*ft_get_list_node(t_list *tokens, int index);
 int					ft_is_redirections(t_parsing *shell, int index);
-void				print_ast(t_ast *node, int level, char *branch); //temp
 t_ast				*ft_creat_ast_node(t_parsing *shell, char **value);
 int					ft_is_logical_operators(t_parsing *shell, int index);
 t_ast				*ft_build_command_tree(t_parsing *shell, int start, int end);
+int					ft_handle_wildcard(const char *wildcard, const char *filename);
 char				*ft_check_quots(char *str, int *quots, int *newline, t_data *data);
 t_ast				*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
 
+void				print_ast(t_ast *node, int level, char *branch); //temp
 // e
 
 int					builtin_pwd(void);

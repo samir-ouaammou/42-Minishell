@@ -28,7 +28,7 @@ char *ft_compress_wildcards(const char *input)
     return res;
 }
 
-int ft_match_pattern(const char *wildcard, const char *filename)
+int ft_handle_wildcard(const char *wildcard, const char *filename)
 {
     int i = 0;
     int j = 0;
@@ -70,7 +70,10 @@ int ft_match_pattern(const char *wildcard, const char *filename)
             return 0;
     }
 
-    while (wildcard[i] == '*')
+    if (wildcard[i] == '*')
         i++;
     return (wildcard[i] == '\0' && filename[j] == '\0' && (wildcard[0] == '.' || filename[0] != '.'));
 }
+
+    // if (!ft_remaining_func_handle_wildcard())
+    //     return (0);
