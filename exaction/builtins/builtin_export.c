@@ -40,7 +40,7 @@ int builtin_export(t_ast *node, t_data *data)
                 new_env[k] = data->env[k];
                 k++;
             }
-            new_env[k] = node->value[i];
+            new_env[k] = ft_strdup(node->value[i]);
             new_env[k + 1] = NULL;
             data->env = new_env;
         }
