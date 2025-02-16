@@ -7,13 +7,14 @@ PATH_BUILTINS = ./builtins
 SRCS_PARSING = $(PATH_PARSING)/1_main_parsing.c \
                $(PATH_PARSING)/2_input_splitter_utils.c \
                $(PATH_PARSING)/2_input_splitter.c  \
-               $(PATH_PARSING)/8_handle_wildcard.c  \
-               $(PATH_PARSING)/6_remove_qouts.c \
                $(PATH_PARSING)/3_input_validator_utils.c \
                $(PATH_PARSING)/3_input_validator.c \
                $(PATH_PARSING)/4_creat_ast_tree_utils.c \
                $(PATH_PARSING)/4_creat_ast_tree.c \
                $(PATH_PARSING)/5_free_parsing.c \
+               $(PATH_PARSING)/6_remove_qouts.c \
+               $(PATH_PARSING)/7_here_doc.c \
+               $(PATH_PARSING)/8_handle_wildcard.c  \
                $(GET_NEXT_PATH)/get_next_line_utils.c \
                $(GET_NEXT_PATH)/get_next_line.c
 

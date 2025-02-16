@@ -76,8 +76,10 @@ typedef struct s_data
 
 
 // p
-void    ft_remove_quots(char **str);
+void ft_here_doc(t_parsing *shell, char *str);
+
 void				ft_free_ast(t_ast *node);
+void				ft_remove_quots(char **str);
 void				ft_parsing(t_parsing *shell);
 void				ft_free_args(t_parsing *shell);
 void				ft_split_args(t_parsing *shell);

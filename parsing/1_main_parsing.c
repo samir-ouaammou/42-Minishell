@@ -50,6 +50,7 @@ void	ft_parsing(t_parsing *shell)
 	ft_init_parsing(shell);
 	if (ft_check_input_is_valid(shell))
 	{
+		// ft_here_doc(shell, shell->input);
 		ft_split_args(shell);
 		ft_check_syntax_errors(shell);
 		shell->tree = ft_creat_ast_tree(shell);
