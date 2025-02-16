@@ -101,7 +101,7 @@ int					ft_is_redirections(t_parsing *shell, int index);
 t_ast				*ft_creat_ast_node(t_parsing *shell, char **value);
 int					ft_is_logical_operators(t_parsing *shell, int index);
 t_ast				*ft_build_command_tree(t_parsing *shell, int start, int end);
-int					ft_handle_wildcard(const char *wildcard, const char *filename);
+int					is_wildcard_match(const char *wildcard, const char *filename);
 // char				*ft_check_quots(char *str, int *quots, int *newline, t_data *data);
 t_ast				*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
 
