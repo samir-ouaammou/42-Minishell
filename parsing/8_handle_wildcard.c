@@ -28,7 +28,7 @@ char *ft_compress_wildcards(const char *input)
     return res;
 }
 
-int is_wildcard_match(const char *wildcard, const char *filename)
+int ft_handle_wildcard(const char *wildcard, const char *filename)
 {
     int i = 0;
     int j = 0;

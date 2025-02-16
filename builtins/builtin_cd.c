@@ -10,13 +10,13 @@ int builtin_cd(char **args, t_data *data)
     }
     if ((args[0] && (ft_strcmp(args[0], "cd") == 0 && !args[1])) || (ft_strcmp(args[0], "cd") == 0 && ft_strcmp(args[1], "~") == 0))
     {
-        char *home_path = find_str_env("HOME=", data);
+        char *home_path = getenv("HOME");
         if (!home_path)
         {
             ft_printf("minishell: %s: HOME not set\n", args[0]);
             return (1);
         }
-        chdir(ft_strchr(home_path, '=') + 1);
+        chdir(home_path);
         data->name_pro = strdup("➜ ~ ");
         return (0);
     }
