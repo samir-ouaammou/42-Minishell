@@ -1,4 +1,4 @@
-#include "../../minishell.h"
+#include "../minishell.h"
 
 int builtin_export(t_ast *node, t_data *data)
 {

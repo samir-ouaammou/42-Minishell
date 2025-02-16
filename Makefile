@@ -1,49 +1,80 @@
-NAME = minishell
-
-SRCS_EXACTION = minishell.c $(PATH_EXACTION)/exaction.c $(PATH_EXACTION)/builtins/builtin_echo.c $(PATH_EXACTION)/builtins/builtin_env.c  $(PATH_EXACTION)/builtins/builtin_cd.c\
-	$(PATH_EXACTION)/builtins/builtin_exit.c $(PATH_EXACTION)/builtins/builtin_export.c $(PATH_EXACTION)/builtins/builtin_pwd.c $(PATH_EXACTION)/builtins/builtin_unset.c
-SRCS_PARSING = $(PATH_PARSING)/1_main_parsing.c $(PATH_PARSING)/2_input_splitter_utils.c $(PATH_PARSING)/2_input_splitter.c  $(PATH_PARSING)/8_handle_wildcard.c  $(PATH_PARSING)/6_remove_qouts.c\
-	$(PATH_PARSING)/3_input_validator_utils.c $(PATH_PARSING)/3_input_validator.c $(PATH_PARSING)/4_creat_ast_tree_utils.c \
-	$(PATH_PARSING)/4_creat_ast_tree.c $(PATH_PARSING)/5_free_parsing.c $(GET_NEXT_PATH)/get_next_line_utils.c $(GET_NEXT_PATH)/get_next_line.c
-
-OBJS_EXACTION = $(SRCS_EXACTION:.c=.o)
-OBJS_PARSING = $(SRCS_PARSING:.c=.o)
-
-# PATH EXACTION
-PATH_EXACTION = ./exaction
-
-# PATH PARSING
+# Directories for parsing, execution, and builtins
 PATH_PARSING = ./parsing
+PATH_EXACTION = ./exaction
+PATH_BUILTINS = ./builtins
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address
+# SRCS_PARSING
+SRCS_PARSING = $(PATH_PARSING)/1_main_parsing.c \
+               $(PATH_PARSING)/2_input_splitter_utils.c \
+               $(PATH_PARSING)/2_input_splitter.c  \
+               $(PATH_PARSING)/8_handle_wildcard.c  \
+               $(PATH_PARSING)/6_remove_qouts.c \
+               $(PATH_PARSING)/3_input_validator_utils.c \
+               $(PATH_PARSING)/3_input_validator.c \
+               $(PATH_PARSING)/4_creat_ast_tree_utils.c \
+               $(PATH_PARSING)/4_creat_ast_tree.c \
+               $(PATH_PARSING)/5_free_parsing.c \
+               $(GET_NEXT_PATH)/get_next_line_utils.c \
+               $(GET_NEXT_PATH)/get_next_line.c
 
-# PATH LIBFT
+# SRCS_EXACTION
+SRCS_EXACTION = minishell.c $(PATH_EXACTION)/exaction.c
+
+# SRCS_BUILTINS
+SRCS_BUILTINS = $(PATH_BUILTINS)/builtin_echo.c \
+                $(PATH_BUILTINS)/builtin_env.c  \
+                $(PATH_BUILTINS)/builtin_cd.c\
+                $(PATH_BUILTINS)/builtin_exit.c \
+                $(PATH_BUILTINS)/builtin_export.c \
+                $(PATH_BUILTINS)/builtin_pwd.c \
+                $(PATH_BUILTINS)/builtin_unset.c
+
+# OBJS: Object files
+OBJS_PARSING = $(SRCS_PARSING:.c=.o)
+OBJS_EXACTION = $(SRCS_EXACTION:.c=.o)
+OBJS_BUILTINS = $(SRCS_BUILTINS:.c=.o)
+
+# LIBFT: Paths
 LIBFT_PATH = ./libft
 LIBFT_AR = $(LIBFT_PATH)/libft.a
 
-# PATH PRINTF
+# PRINTF: Paths
 PRINTF_PATH = $(LIBFT_PATH)/printf
 PRINTF_AR = $(PRINTF_PATH)/libftprintf.a
 
-# PATH PRINTF
+# GET_NEXT: Path
 GET_NEXT_PATH = $(LIBFT_PATH)/get_next_line
 
-all:	$(NAME)
 
-$(NAME):	$(OBJS_EXACTION) $(OBJS_PARSING)
+# Final executable name
+NAME = minishell
+
+# Compiler and flags
+CC = cc
+CFLAGS = -Wall -Wextra -Werror # -g3 -fsanitize=address
+
+# Default target
+all: $(NAME)
+
+# Build the final executable (minishell)
+$(NAME): $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS)
+	# Build libft and libftprintf libraries first
 	@make -C $(LIBFT_PATH)
 	@make -C $(PRINTF_PATH)
-	$(CC) $(CFLAGS) $(OBJS_EXACTION) $(OBJS_PARSING) $(LIBFT_AR) $(PRINTF_AR) -o $(NAME) -lreadline
+	# Link object files and libraries to create the executable
+	$(CC) $(CFLAGS) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(LIBFT_AR) $(PRINTF_AR) -o $(NAME) -lreadline
 
+# Clean: Remove object files
 clean:
 	@make clean -C $(LIBFT_PATH)
 	@make clean -C $(PRINTF_PATH)
-	@rm -r $(OBJS_EXACTION) $(OBJS_PARSING)
+	@rm -r $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS)
 
+# Fclean: Remove object files and the final executable
 fclean: clean
 	@make fclean -C $(LIBFT_PATH)
 	@make fclean -C $(PRINTF_PATH)
 	@rm -r $(NAME)
 
+# Rebuild: Clean and then build the program again
 re: fclean all

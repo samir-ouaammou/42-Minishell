@@ -1,4 +1,4 @@
-#include "../../minishell.h"
+#include "../minishell.h"
 
 int builtin_echo(char **str, t_data *data)
 {

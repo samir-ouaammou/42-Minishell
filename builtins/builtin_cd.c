@@ -1,4 +1,4 @@
-#include "../../minishell.h"
+#include "../minishell.h"
 
 int builtin_cd(char **args, t_data *data)
 {
