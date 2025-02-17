@@ -9,59 +9,54 @@ int ft_is(char c)
 
 void ft_move_input(t_parsing *shell, char *str)
 {
-    int     i, j, k, h;
-    char    *res = NULL;
-    char    *name;
-    char    *temp;
-
     if (!shell || !str)
         return ;
-
-    i = 0;
-    j = 0;
-    k = 1;
-    while (str[i])
+    shell->help = NULL;
+    shell->i = 0;
+    shell->j = 0;
+    shell->nbr = 1;
+    while (str[shell->i])
     {
-        if (str[i] == '\t')
+        if (str[shell->i] == '\t')
         {
-            j++;
-            while (str[i] && str[i] == '\t')
-                i++;
+            shell->j++;
+            while (str[shell->i] && str[shell->i] == '\t')
+                shell->i++;
         }
-        i++;
+        shell->i++;
     }
-    if (j == 0)
+    if (shell->j == 0)
         return;
-    res = malloc(ft_strlen(str) + (j * 15) + 1);
-    if (!res)
+    shell->help = malloc(ft_strlen(str) + (shell->j * 15) + 1);
+    if (!shell->help)
         return ;
-    j = 0;
-    i = 0;
-    while (str[i])
+    shell->j = 0;
+    shell->i = 0;
+    while (str[shell->i])
     {
-        if (str[i] == '\t')
+        if (str[shell->i] == '\t')
         {
-            temp = ft_itoa(k);
-            name = ft_strjoin("/tmp/heredoc", temp);
-            free(temp);
+            shell->itoa = ft_itoa(shell->nbr);
+            shell->name = ft_strjoin("/tmp/heredoc", shell->itoa);
+            free(shell->itoa);
 
-            while (str[i] && str[i] == '\t')
-                i++;
-            h = 0;
-            while (name[h])
+            while (str[shell->i] && str[shell->i] == '\t')
+                shell->i++;
+            shell->len = 0;
+            while (shell->name[shell->len])
             {
-                res[j++] = name[h];
-                h++;
+                shell->help[shell->j++] = shell->name[shell->len];
+                shell->len++;
             }
-            free(name);
-            k++;
+            free(shell->name);
+            shell->nbr++;
         }
-        res[j++] = str[i];
-        i++;
+        shell->help[shell->j++] = str[shell->i];
+        shell->i++;
     }
     free(shell->input);
-    res[j] = '\0';
-    shell->input = res;
+    shell->help[shell->j] = '\0';
+    shell->input = shell->help;
 }
 
 

@@ -54,6 +54,7 @@ typedef struct s_parsing
 	char			**stop;
 	char			*line;
 	char			*history;
+	char			*help;
 	char			**temp;
 	t_ast			*tree;
 	t_list			*tokens;
