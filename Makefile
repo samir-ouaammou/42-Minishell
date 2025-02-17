@@ -24,7 +24,8 @@ SRCS_EXACTION = minishell.c $(PATH_EXACTION)/exaction.c \
     $(PATH_EXACTION)/is_operator.c $(PATH_EXACTION)/env_path.c \
     $(PATH_EXACTION)/command_execution.c $(PATH_EXACTION)/execution_pipes.c \
     $(PATH_EXACTION)/wildcard_expansion.c $(PATH_EXACTION)/output_redirection.c \
-    $(PATH_EXACTION)/input_redirection.c 
+    $(PATH_EXACTION)/input_redirection.c $(PATH_EXACTION)/execution_handler_AST.c \
+    $(PATH_EXACTION)/env_handler.c $(PATH_EXACTION)/process_variables.c
 
 # SRCS_BUILTINS
 SRCS_BUILTINS = $(PATH_BUILTINS)/builtin_echo.c \

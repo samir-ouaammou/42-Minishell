@@ -12,10 +12,24 @@
 
 #include "../minishell.h"
 
+static int	count_args_value(t_ast *node, char *type)
+{
+	int	count;
 
-//------------------------------------------------------
+	count = 0;
+	if (ft_strcmp(type, "left") == 0)
+	{
+		while (node->left->value[count])
+			count++;
+	}
+	else if (ft_strcmp(type, "right") == 0)
+	{
+		while (node->right->value[count])
+			count++;
+	}
+	return (count);
+}
 
-//------------------------------------------------------
 static int	open_file(t_ast *node, char *type)
 {
 	int	fd_file;

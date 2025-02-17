@@ -77,7 +77,6 @@ typedef struct s_data
 	int				save_index;
 	int				stdout_backup;
 	int				stdin_backup;
-	int				err_status;
 	char			*name_pro;
 	char			*input;
 }					t_data;
@@ -118,7 +117,7 @@ void				print_ast(t_ast *node, int level, char *branch); //temp
 
 
 int					builtin_pwd(void);
-int					builtin_exit(t_ast *node);
+int builtin_exit(t_ast *node, t_data *data);
 void				read_env(t_data *data, char **envp);
 int					builtin_cd(char **args, t_data *data);
 int					builtin_env(char **args, t_data *data);
@@ -140,9 +139,15 @@ int				execute_ast(t_ast *root, t_data *data);
 
 void	execute_redir_inp(t_ast *node, t_data *data);
 
-int	count_args_value(t_ast *node, char *type);
 
 void	execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type);
+
+void	read_env(t_data *data, char **envp);
+
+char	*find_str_env(char *str, t_data *data);
+
+void	process_strings(t_ast *root, t_data *data);
+
 
 int	is_operator(char *str);
 int	is_builtin(char *cmd);

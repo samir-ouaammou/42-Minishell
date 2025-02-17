@@ -50,16 +50,16 @@ static int handle_exit_args(t_ast *node, int *exit_code)
 	return (0);
 }
 
-int builtin_exit(t_ast *node)
+int builtin_exit(t_ast *node, t_data *data)
 {
 	int exit_code;
 
 	exit_code = 0;
 	if (!node)
-		return (SUCCESS);
+		return (1);
 	ft_printf("exit\n");
 	exit_code = handle_exit_args(node, &exit_code);
 	if (!exit_code)
-		exit (0);
+		exit (data->status);
 	return (0);
 }
