@@ -53,6 +53,7 @@ typedef struct s_parsing
 	char			*itoa;
 	char			**stop;
 	char			*line;
+	char			*history;
 	char			**temp;
 	t_ast			*tree;
 	t_list			*tokens;

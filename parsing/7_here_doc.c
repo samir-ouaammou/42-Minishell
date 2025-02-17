@@ -30,6 +30,8 @@ void ft_move_input(t_parsing *shell, char *str)
         }
         i++;
     }
+    if (j == 0)
+        return;
     res = malloc(ft_strlen(str) + (j * 15) + 1);
     if (!res)
         return ;
@@ -57,12 +59,9 @@ void ft_move_input(t_parsing *shell, char *str)
         res[j++] = str[i];
         i++;
     }
+    free(shell->input);
     res[j] = '\0';
-    
-    if (shell->input)
-        free(shell->input);
     shell->input = res;
-    // printf("\n%s\n\n", shell->input);
 }
 
 
