@@ -67,7 +67,7 @@ void	ft_parsing(t_parsing *shell)
 	{
 		shell->history = ft_strdup(shell->input);
 		ft_here_doc(shell, shell->input);
-		fprintf(stderr, "\ninput => [%s]\n\n", shell->input);
+		fprintf(stderr, "\ninput => [%s]\n\n", shell->input);   ///  pint input
 		ft_split_args(shell);
 		ft_check_syntax_errors(shell);
 		shell->tree = ft_creat_ast_tree(shell);
