@@ -84,8 +84,7 @@ typedef struct s_data
 }					t_data;
 
 
-// p
-void ft_here_doc(t_parsing *shell, char *str);
+// Functions Pxaction
 
 void				ft_free_ast(t_ast *node);
 void				ft_remove_quots(char **str);
@@ -101,6 +100,7 @@ int					ft_get_symbol_type(t_parsing *shell);
 t_ast				*ft_creat_ast_tree(t_parsing *shell);
 int					ft_ast_contains_brackets(t_ast *tree);
 void				ft_check_syntax_errors(t_parsing *shell);
+void				ft_here_doc(t_parsing *shell, char *str);
 int					ft_check_input_is_valid(t_parsing *shell);
 int					ft_check_single_operators(t_parsing *shell);
 int					ft_check_double_operators(t_parsing *shell);
@@ -111,15 +111,15 @@ t_ast				*ft_creat_ast_node(t_parsing *shell, char **value);
 int					ft_is_logical_operators(t_parsing *shell, int index);
 t_ast				*ft_build_command_tree(t_parsing *shell, int start, int end);
 int					is_wildcard_match(const char *wildcard, const char *filename);
-// char				*ft_check_quots(char *str, int *quots, int *newline, t_data *data);
 t_ast				*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
 
 void				print_ast(t_ast *node, int level, char *branch); //temp
-// e
 
+
+// Functions Exaction
 
 int					builtin_pwd(void);
-int builtin_exit(t_ast *node, t_data *data);
+int					builtin_exit(t_ast *node, t_data *data);
 void				read_env(t_data *data, char **envp);
 int					builtin_cd(char **args, t_data *data);
 int					builtin_env(char **args, t_data *data);
@@ -127,31 +127,18 @@ int					builtin_echo(char **str, t_data *data);
 int					builtin_unset(t_ast *node, t_data *data);
 int					builtin_export(t_ast *node, t_data *data);
 void				exaction(t_ast *root, t_data *data);
-char *find_str_env(char *str, t_data *data);
-
-char	*get_path_env(char *cmd, t_data *data);
-
-int	execute_command(char **cmd, t_data *data);
-
-int	execute_pipe(t_ast *node, t_data *data);
-
-int	handle_wildcards(char **args, t_data *data);
-
-int				execute_ast(t_ast *root, t_data *data);
-
-void	execute_redir_inp(t_ast *node, t_data *data);
-
-
-void	execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type);
-
-void	read_env(t_data *data, char **envp);
-
-char	*find_str_env(char *str, t_data *data);
-
-void	process_strings(t_ast *root, t_data *data);
-
-
-int	is_operator(char *str);
-int	is_builtin(char *cmd);
+char				*find_str_env(char *str, t_data *data);
+char				*get_path_env(char *cmd, t_data *data);
+int					execute_command(char **cmd, t_data *data);
+int					execute_pipe(t_ast *node, t_data *data);
+int					handle_wildcards(char **args, t_data *data);
+int					execute_ast(t_ast *root, t_data *data);
+void				execute_redir_inp(t_ast *node, t_data *data);
+void				execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type);
+void				read_env(t_data *data, char **envp);
+char				*find_str_env(char *str, t_data *data);
+void				process_strings(t_ast *root, t_data *data);
+int					is_operator(char *str);
+int					is_builtin(char *cmd);
 
 #endif
