@@ -30,8 +30,8 @@ int	ft_print_ptr(unsigned long ptr)
 
 	print_count = 0;
 	if (!ptr)
-		return (write(1, "0x0", 3));
-	print_count += write(1, "0x", 2);
+		return (write(2, "0x0", 3));
+	print_count += write(2, "0x", 2);
 	print_count += ft_lkmala_ta3ptr(ptr);
 	return (print_count);
 }

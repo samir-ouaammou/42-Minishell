@@ -17,7 +17,7 @@ int	ft_print_num(int nb)
 
 	print_count = 0;
 	if (nb == -2147483648)
-		return (write(1, "-2147483648", 11));
+		return (write(2, "-2147483648", 11));
 	if (nb > 9)
 		print_count += ft_print_num((nb / 10));
 	if (nb < 0)

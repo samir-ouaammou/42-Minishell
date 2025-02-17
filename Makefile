@@ -1,4 +1,5 @@
-# Directories for parsing, execution, and builtins
+NAME = minishell
+
 PATH_PARSING = ./parsing
 PATH_EXACTION = ./exaction
 PATH_BUILTINS = ./builtins
@@ -19,7 +20,11 @@ SRCS_PARSING = $(PATH_PARSING)/1_main_parsing.c \
                $(GET_NEXT_PATH)/get_next_line.c
 
 # SRCS_EXACTION
-SRCS_EXACTION = minishell.c $(PATH_EXACTION)/exaction.c
+SRCS_EXACTION = minishell.c $(PATH_EXACTION)/exaction.c \
+    $(PATH_EXACTION)/is_operator.c $(PATH_EXACTION)/env_path.c \
+    $(PATH_EXACTION)/command_execution.c $(PATH_EXACTION)/execution_pipes.c \
+    $(PATH_EXACTION)/wildcard_expansion.c $(PATH_EXACTION)/output_redirection.c \
+    $(PATH_EXACTION)/input_redirection.c 
 
 # SRCS_BUILTINS
 SRCS_BUILTINS = $(PATH_BUILTINS)/builtin_echo.c \
@@ -47,35 +52,24 @@ PRINTF_AR = $(PRINTF_PATH)/libftprintf.a
 GET_NEXT_PATH = $(LIBFT_PATH)/get_next_line
 
 
-# Final executable name
-NAME = minishell
-
-# Compiler and flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror # -g3 -fsanitize=address
 
-# Default target
 all: $(NAME)
 
-# Build the final executable (minishell)
 $(NAME): $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS)
-	# Build libft and libftprintf libraries first
 	@make -C $(LIBFT_PATH)
 	@make -C $(PRINTF_PATH)
-	# Link object files and libraries to create the executable
 	$(CC) $(CFLAGS) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(LIBFT_AR) $(PRINTF_AR) -o $(NAME) -lreadline
 
-# Clean: Remove object files
 clean:
 	@make clean -C $(LIBFT_PATH)
 	@make clean -C $(PRINTF_PATH)
 	@rm -r $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS)
 
-# Fclean: Remove object files and the final executable
 fclean: clean
 	@make fclean -C $(LIBFT_PATH)
 	@make fclean -C $(PRINTF_PATH)
 	@rm -r $(NAME)
 
-# Rebuild: Clean and then build the program again
 re: fclean all

@@ -109,7 +109,7 @@ int					ft_is_redirections(t_parsing *shell, int index);
 t_ast				*ft_creat_ast_node(t_parsing *shell, char **value);
 int					ft_is_logical_operators(t_parsing *shell, int index);
 t_ast				*ft_build_command_tree(t_parsing *shell, int start, int end);
-int					ft_handle_wildcard(const char *wildcard, const char *filename);
+int					is_wildcard_match(const char *wildcard, const char *filename);
 // char				*ft_check_quots(char *str, int *quots, int *newline, t_data *data);
 t_ast				*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
 
@@ -126,10 +126,25 @@ int					builtin_echo(char **str, t_data *data);
 int					builtin_unset(t_ast *node, t_data *data);
 int					builtin_export(t_ast *node, t_data *data);
 void				exaction(t_ast *root, t_data *data);
+char *find_str_env(char *str, t_data *data);
+
+char	*get_path_env(char *cmd, t_data *data);
+
+int	execute_command(char **cmd, t_data *data);
+
+int	execute_pipe(t_ast *node, t_data *data);
+
+int	handle_wildcards(char **args, t_data *data);
+
+int				execute_ast(t_ast *root, t_data *data);
+
+void	execute_redir_inp(t_ast *node, t_data *data);
+
+int	count_args_value(t_ast *node, char *type);
+
+void	execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type);
+
+int	is_operator(char *str);
+int	is_builtin(char *cmd);
 
 #endif
-
-/*
-
-
-*/

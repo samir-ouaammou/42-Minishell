@@ -1,35 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/16 15:43:21 by aahaded           #+#    #+#             */
+/*   Updated: 2025/02/16 15:46:32 by aahaded          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "../minishell.h"
 
-int builtin_echo(char **str, t_data *data)
+static int	handle_newline_option(char **str, int *i)
 {
-    (void)data;
-    int     i;
-    size_t     j;
-    int     newline;
+	size_t	j;
 
-    if (!str || !str[0])
-        return (1);
-    i = 1;
-    j = 1;
-    newline = 1;
-    if (str[1][0] == '-' && str[1][1] == 'n')
-    {
-        while (str[1][0] == '-' && str[1][j] == 'n')
-            j++;
-        if (j == ft_strlen(str[1]))
-        {
-            newline = 0;
-            i = 2;
-        }
-    }
-    while (str[i])
-    {
-        ft_putstr_fd(str[i], 2);
-        if (str[i + 1])
-            write (2, " ", 1);
-        i++;
-    }
-    if (newline)
-        write (1, "\n", 1);
-    return (0);
+	j = 1;
+	if (str[1][0] == '-' && str[1][1] == 'n')
+	{
+		while (str[1][0] == '-' && str[1][j] == 'n')
+			j++;
+		if (j == ft_strlen(str[1]))
+		{
+			*i = 2;
+			return (0);
+		}
+	}
+	return (1);
+}
+
+static void	print_arguments(char **str, int i)
+{
+	while (str[i])
+	{
+		ft_putstr_fd(str[i], 2);
+		if (str[i + 1])
+			write(2, " ", 1);
+		i++;
+	}
+}
+
+int	builtin_echo(char **str, t_data *data)
+{
+	int	i;
+	int	newline;
+
+	(void)data;
+	if (!str || !str[0])
+		return (1);
+	i = 1;
+	newline = 1;
+	if (str[1] && str[1][0] == '-' && str[1][1] == 'n')
+		newline = handle_newline_option(str, &i);
+	print_arguments(str, i);
+	if (newline)
+		write(1, "\n", 1);
+	return (0);
 }

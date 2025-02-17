@@ -28,7 +28,7 @@ char *ft_compress_wildcards(const char *input)
     return res;
 }
 
-int ft_handle_wildcard(const char *wildcard, const char *filename)
+int is_wildcard_match(const char *wildcard, const char *filename)
 {
     int i = 0;
     int j = 0;
@@ -46,7 +46,6 @@ int ft_handle_wildcard(const char *wildcard, const char *filename)
         return (filename[0] == '.');
     if (ft_strcmp(wildcard, "*.") == 0)
         return (0);
-
     while (filename[j] != '\0')
     {
         if (wildcard[i] == '*')

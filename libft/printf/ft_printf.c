@@ -49,7 +49,7 @@ int	ft_lkmala_2(const char *str, va_list args, int i, int print_count)
 		}
 		else
 		{
-			ret = write(1, &str[i], 1);
+			ret = write(2, &str[i], 1);
 			if (ret == -1)
 				return (-1);
 			print_count++;
@@ -69,7 +69,7 @@ int	ft_printf(const char *str, ...)
 	i = 0;
 	print_count = 0;
 	va_start(args, str);
-	if (!str || write(1, 0, 0) == -1)
+	if (!str)
 		return (-1);
 	print_count += ft_lkmala_2(str, args, i, print_count);
 	va_end(args);
