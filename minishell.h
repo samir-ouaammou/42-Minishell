@@ -141,6 +141,7 @@ void				execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
 void				read_env(t_data *data, char **envp);
 char				*find_str_env(char *str, t_data *data);
 void				process_strings(t_ast *root, t_data *data);
+int				check_special_chars(char **args);
 int					is_operator(char *str);
 int					is_builtin(char *cmd);
 
