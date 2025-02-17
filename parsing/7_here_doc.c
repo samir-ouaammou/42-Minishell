@@ -154,7 +154,7 @@ void ft_here_doc(t_parsing *shell, char *str)
             {
                 while (shell->start < shell->end)
                 {
-                    str[shell->start] = '\t';
+                    str[shell->start] = '\t';///            ls > o -l -s < o -w 
                     shell->start++;
                 }
                 shell->bol = 0;
