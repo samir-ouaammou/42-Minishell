@@ -1,25 +1,5 @@
 #include "../minishell.h"
 
-static int	check_special_chars(char **args)
-{
-	int(i), (j);
-	i = 0;
-	while (args[i])
-	{
-		j = 0;
-		while (args[i][j])
-		{
-			if (args[i][j] == '$' && args[i][j + 1] == '\0')
-				return (0);
-			else if (args[i][j] == '*')
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
 static int	execute_builtin(t_ast *root, t_data *data)
 {
 	if (ft_strcmp(root->value[0], "pwd") == 0)
@@ -92,7 +72,6 @@ int	execute_ast(t_ast *root, t_data *data)
 {
 	if (!root)
 		return (FAILED);
-	
 	if (is_operator(root->value[0]))
 		handle_operator(root, data);
 	else if (is_builtin(root->value[0]))
