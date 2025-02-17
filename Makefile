@@ -23,7 +23,7 @@ SRCS_PARSING = $(PATH_PARSING)/1_main_parsing.c \
                $(GET_NEXT_PATH)/get_next_line.c
 
 # SRCS_EXACTION
-SRCS_EXACTION = minishell.c $(PATH_EXACTION)/exaction.c \
+SRCS_EXACTION = $(PATH_EXACTION)/exaction.c \
     $(PATH_EXACTION)/is_operator.c $(PATH_EXACTION)/env_path.c \
     $(PATH_EXACTION)/command_execution.c $(PATH_EXACTION)/execution_pipes.c \
     $(PATH_EXACTION)/wildcard_expansion.c $(PATH_EXACTION)/output_redirection.c \
