@@ -32,6 +32,7 @@ typedef struct s_ast
 	struct s_ast	*right;
 }					t_ast;
 
+// struct Pxaction
 typedef struct s_parsing
 {
 	int				i;
@@ -64,6 +65,8 @@ typedef struct s_parsing
 	t_list			*end_node;
 }					t_parsing;
 
+
+// struct Exaction
 typedef struct s_data
 {
 	char			**matches;
