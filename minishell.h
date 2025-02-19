@@ -123,29 +123,38 @@ void				print_ast(t_ast *node, int level, char *branch); //temp
 
 // Functions Exaction
 
-int					builtin_pwd(void);
-int					builtin_exit(t_ast *node, t_data *data);
-void				read_env(t_data *data, char **envp);
-int					builtin_cd(char **args, t_data *data);
-int					builtin_env(char **args, t_data *data);
-int					builtin_echo(char **str, t_data *data);
-int					builtin_unset(t_ast *node, t_data *data);
-int					builtin_export(t_ast *node, t_data *data);
-void				exaction(t_ast *root, t_data *data);
-char				*find_str_env(char *str, t_data *data);
-char				*get_path_env(char *cmd, t_data *data);
-int					execute_command(char **cmd, t_data *data);
-int					execute_pipe(t_ast *node, t_data *data);
-int					handle_wildcards(char **args, t_data *data);
-int					execute_ast(t_ast *root, t_data *data);
-void				execute_redir_inp(t_ast *node, t_data *data);
-void				execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type);
-void				read_env(t_data *data, char **envp);
-char				*find_str_env(char *str, t_data *data);
-void				process_strings(t_ast *root, t_data *data);
-int				check_special_chars(char **args);
-int					is_operator(char *str);
-int					is_builtin(char *cmd);
+int builtin_pwd(void);
+int builtin_exit(char **args, t_data *data);
+void read_env(t_data *data, char **envp);
+int builtin_cd(char **args, t_data *data);
+int builtin_env(char **args, t_data *data);
+int builtin_echo(char **str, t_data *data);
+int builtin_unset(char **args, t_data *data);
+int builtin_export(char **args, t_data *data);
+void exaction(t_ast *root, t_data *data);
+char *find_str_env(char *str, t_data *data);
+char *get_path_env(char *cmd, t_data *data);
+int execute_command(char **cmd, t_data *data);
+int execute_pipe(t_ast *node, t_data *data);
+int handle_wildcards(char **args, t_data *data);
+int execute_ast(t_ast *root, t_data *data);
+int execute_redir_inp(t_ast *node, t_data *data);
+int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type);
+void read_env(t_data *data, char **envp);
+char *find_str_env(char *str, t_data *data);
+void process_strings(t_ast *root, t_data *data);
+int check_special_chars(char **args);
+int is_operator(char *str);
+int is_builtin(char *cmd);
+void copy_string(char *str, char *res);
+size_t handle_env_var_length(char *str, t_data *data, int *index);
+size_t handle_exit_status_length(t_data *data, int *index);
+char	*get_str_Dollars(char *str);
+int	open_input_file(t_ast *node);
+char	**copy_args(char **args, int start, int count);
+int execute_heredoc(t_ast *node, t_data *data);
+int	count_args(char **args, int start);
+char	**merge_command_args(t_ast *node, int count_left, int count_right);
 
 #endif
 
