@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 
@@ -24,7 +23,6 @@ void	ft_init_parsing(t_parsing *shell)
 	shell->temp = NULL;
 	shell->tree = NULL;
 	shell->tokens = NULL;
-	shell->history = NULL;
 	shell->lst_help1 = NULL;
 	shell->lst_help2 = NULL;
 	shell->start_node = NULL;
@@ -60,14 +58,14 @@ int	ft_count_brackets(t_list *list)
 	return (count);
 }
 
-void	ft_parsing(t_parsing *shell)
+void	ft_parsing(t_parsing *shell, int bol)
 {
 	ft_init_parsing(shell);
 	if (ft_check_input_is_valid(shell))
 	{
-		shell->history = ft_strdup(shell->input);
+		// if (bol)
 		ft_here_doc(shell, shell->input);
-		fprintf(stderr, "\ninput => [%s]\n\n", shell->input);   ///  pint input
+		//fprintf(stderr, "\ninput => [%s]\n\n", shell->input);   ///  pint input
 		ft_split_args(shell);
 		ft_check_syntax_errors(shell);
 		shell->tree = ft_creat_ast_tree(shell);
@@ -78,13 +76,25 @@ void	ft_parsing(t_parsing *shell)
 					- ft_count_brackets(shell->tokens)))
 			|| ft_ast_contains_brackets(shell->tree))
 			ft_free_parsing(shell);
-		// if (shell->free != -1 && shell->tree)	//	temp
-		// {
-		// 	printf("\n----------Parsing----------\n\n");
-		// 	print_ast(shell->tree, 0, "root");  //	temp
-		// 	printf("\n\n\n----------exacution----------\n\n");
-		// }
+		
 	}
+	(void)bol;
+	// if (!bol)
+	// {
+	// 	bol++;
+	// 	ft_pars_redirections(shell, shell->tokens);
+	// 	ft_parsing(shell, bol);
+	// }
+	// else ////-------------------
+	// {
+	// 	if (shell->free != -1 && shell->tree)	//	temp
+	// 	{
+	// 		printf("\n----------Parsing----------\n\n");
+	// 		print_ast(shell->tree, 0, "root");  //	temp
+	// 		printf("\n\n\n----------exacution----------\n\n");
+	// 	}
+	// }   //-------------------
+	// bol++;
 }
 
 // *************** test parsing **********

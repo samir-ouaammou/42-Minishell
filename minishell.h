@@ -89,9 +89,10 @@ typedef struct s_data
 
 // Functions Pxaction
 
+void    ft_pars_redirections(t_parsing *shell, t_list *list);
+
 void				ft_free_ast(t_ast *node);
 void				ft_remove_quots(char **str);
-void				ft_parsing(t_parsing *shell);
 void				ft_free_args(t_parsing *shell);
 void				ft_split_args(t_parsing *shell);
 void				ft_free_tokens(t_parsing *shell);
@@ -101,6 +102,7 @@ void				ft_free_parsing(t_parsing *shell);
 void				ft_count_len_args(t_parsing *shell);
 int					ft_get_symbol_type(t_parsing *shell);
 t_ast				*ft_creat_ast_tree(t_parsing *shell);
+void				ft_parsing(t_parsing *shell, int bol);
 int					ft_ast_contains_brackets(t_ast *tree);
 void				ft_check_syntax_errors(t_parsing *shell);
 void				ft_here_doc(t_parsing *shell, char *str);
@@ -146,3 +148,4 @@ int					is_operator(char *str);
 int					is_builtin(char *cmd);
 
 #endif
+

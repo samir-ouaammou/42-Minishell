@@ -88,7 +88,7 @@ void ft_here_doc(t_parsing *shell, char *str)
         {
             shell->i += 2;
             shell->chr = ' ';
-            while (str[shell->i] && (str[shell->i] == ' ' || str[shell->i] == '\n'))
+            while (str[shell->i] && (str[shell->i] == ' ' /*|| str[shell->i] == '\n'*/))
                 shell->i++;
             if (ft_is(str[shell->i]) || !str[shell->i])
             {
