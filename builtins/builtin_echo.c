@@ -33,9 +33,9 @@ static void	print_arguments(char **str, int i)
 {
 	while (str[i])
 	{
-		ft_putstr_fd(str[i], 2);
+		ft_putstr_fd(str[i], 1);
 		if (str[i + 1])
-			write(2, " ", 1);
+			write(1, " ", 1);
 		i++;
 	}
 }

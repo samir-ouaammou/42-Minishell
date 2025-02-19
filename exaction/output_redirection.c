@@ -12,9 +12,9 @@
 
 #include "../minishell.h"
 
-static int	count_args_value(t_ast *node, char *type)
+static int count_args_value(t_ast *node, char *type)
 {
-	int	count;
+	int count;
 
 	count = 0;
 	if (ft_strcmp(type, "left") == 0)
@@ -30,16 +30,16 @@ static int	count_args_value(t_ast *node, char *type)
 	return (count);
 }
 
-static int	open_file(t_ast *node, char *type)
+static int open_file(t_ast *node, char *type)
 {
-	int	fd_file;
+	int fd_file;
 
 	if (ft_strcmp(type, "RightArrow") == 0)
 		fd_file = open(node->right->value[0], O_WRONLY | O_CREAT | O_APPEND,
-				0644);
+					   0644);
 	else if (ft_strcmp(type, "redirout") == 0)
 		fd_file = open(node->right->value[0], O_WRONLY | O_CREAT | O_TRUNC,
-				0644);
+					   0644);
 	else
 		fd_file = -1;
 	if (fd_file == -1)
@@ -47,9 +47,9 @@ static int	open_file(t_ast *node, char *type)
 	return (fd_file);
 }
 
-static char	**create_args_without_left(t_ast *node)
+static char **create_args_without_left(t_ast *node)
 {
-	char	**res;
+	char **res;
 
 	int(i), (j), (count_right);
 	i = 1;
@@ -61,6 +61,8 @@ static char	**create_args_without_left(t_ast *node)
 	j = 0;
 	while (j < count_right)
 	{
+		if (i >= count_right)
+			break ;
 		res[j] = ft_strdup(node->right->value[i]);
 		j++;
 		i++;
@@ -69,9 +71,9 @@ static char	**create_args_without_left(t_ast *node)
 	return (res);
 }
 
-static char	**create_args_with_left(t_ast *node)
+static char **create_args_with_left(t_ast *node)
 {
-	char	**res;
+	char **res;
 
 	int(i), (count_left), (count_right);
 	i = 1;
@@ -98,32 +100,43 @@ static char	**create_args_with_left(t_ast *node)
 	return (res);
 }
 
-void	execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
+int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
 {
-	char	**res;
+	char **res;
 
-	int(fd_file), (stdout_backup);
-	fd_file = open_file(node, type);
-	if (fd_file == -1)
-		return ;
-	stdout_backup = dup(STDOUT_FILENO);
-	dup2(fd_file, STDOUT_FILENO);
-	close(fd_file);
+	data->fd_file = open_file(node, type);
+	if (data->fd_file == -1)
+		return (1);
+	data->stdout_backup = dup(STDOUT_FILENO);
+	dup2(data->fd_file, STDOUT_FILENO);
+	close(data->fd_file);
 	if (!node->left)
 	{
 		res = create_args_without_left(node);
-		if (!res)
-			return ;
+		// if (!res)
+		// {
+		// 	data->status = execute_command(res, data);
+		// 	dup2(data->stdout_backup, STDOUT_FILENO);
+		// 	close(data->stdout_backup);
+		// 	return (1);
+		// }
+		// int i = 0;
+		// while (res[i])
+		// {
+		// 	printf("res: %s\n", res[i]);
+		// 	i++;
+		// }
 		data->status = execute_command(res, data);
 	}
 	else
 	{
 		res = create_args_with_left(node);
 		if (!res)
-			return ;
+			return (1);
 		node->left->value = res;
 		execute_ast(node->left, data);
 	}
-	dup2(stdout_backup, STDOUT_FILENO);
-	close(stdout_backup);
+	dup2(data->stdout_backup, STDOUT_FILENO);
+	close(data->stdout_backup);
+	return (0);
 }

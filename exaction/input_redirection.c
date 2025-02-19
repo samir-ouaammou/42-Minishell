@@ -12,34 +12,6 @@
 
 #include "../minishell.h"
 
-static int	open_input_file(t_ast *node)
-{
-	int	fd_file;
-
-	fd_file = open(node->right->value[0], O_RDONLY);
-	if (fd_file == -1)
-		perror("Error");
-	return (fd_file);
-}
-
-static char	**copy_args(char **args, int start, int count)
-{
-	int		i;
-	char	**res;
-
-	i = 0;
-	res = malloc(sizeof(char *) * (count + 1));
-	if (!res)
-		return (NULL);
-	while (i < count)
-	{
-		res[i] = ft_strdup(args[start + i]);
-		i++;
-	}
-	res[count] = NULL;
-	return (res);
-}
-
 static void	execute_without_left_redirection(int fd_file, char **args,
 		t_data *data)
 {
@@ -61,7 +33,7 @@ static void	execute_with_redirection(t_ast *node, int fd_file, t_data *data)
 	close(stdin_backup);
 }
 
-static char	**merge_command_args(t_ast *node, int count_left, int count_right)
+char	**merge_command_args(t_ast *node, int count_left, int count_right)
 {
 	int		i;
 	char	**res;
@@ -85,7 +57,7 @@ static char	**merge_command_args(t_ast *node, int count_left, int count_right)
 	return (res);
 }
 
-static int	count_args(char **args, int start)
+int	count_args(char **args, int start)
 {
 	int	count;
 
@@ -98,20 +70,20 @@ static int	count_args(char **args, int start)
 	return (count);
 }
 
-void	execute_redir_inp(t_ast *node, t_data *data)
+int	execute_redir_inp(t_ast *node, t_data *data)
 {
 	char	**res;
 
 	int(fd_file), (count_left), (count_right);
 	fd_file = open_input_file(node);
 	if (fd_file == -1)
-		return ;
+		return (1);
 	if (!node->left)
 	{
 		res = copy_args(node->right->value, 1, count_args(node->right->value,
 					1));
 		if (!res)
-			return ;
+			return (1);
 		execute_without_left_redirection(fd_file, res, data);
 	}
 	else
@@ -119,7 +91,9 @@ void	execute_redir_inp(t_ast *node, t_data *data)
 		count_left = count_args(node->left->value, 0);
 		count_right = count_args(node->right->value, 1);
 		res = merge_command_args(node, count_left, count_right);
-		node->left->value = res;
+		if (!res)
+			node->left->value = res;
 		execute_with_redirection(node, fd_file, data);
 	}
+	return (0);
 }

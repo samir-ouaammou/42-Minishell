@@ -56,11 +56,34 @@ static void	handle_exec_failure(char *cmd, int check_)
 	exit(127);
 }
 
+static int	handle_exit_status(t_data *data, int status)
+{
+	
+	if (WEXITSTATUS(status) == 0)
+	{
+		data->exit_status = 0;
+		return (SUCCESS);
+	}
+	else if (WEXITSTATUS(status) == 126)
+	{
+		data->exit_status = 126;
+		return (FAILED);
+	}
+	else if (WEXITSTATUS(status) == 127)
+	{
+		data->exit_status = 127;
+		return (FAILED);
+	}
+	else
+		data->exit_status = 1;
+	return (FAILED);
+}
+
 int	execute_command(char **cmd, t_data *data)
 {
 	pid_t	pid;
-	int		status;
-
+	int		status, exit_s;
+	
 	pid = fork();
 	if (pid == -1)
 		return (FAILED);
@@ -76,23 +99,11 @@ int	execute_command(char **cmd, t_data *data)
 	wait(&status);
 	if (WIFEXITED(status))
 	{
-		if (WEXITSTATUS(status) == 0)
-		{
-			data->exit_status = 0;
+		exit_s = handle_exit_status(data, status);
+		if (exit_s == FAILED)
+			return (FAILED);
+		else if (exit_s == SUCCESS)
 			return (SUCCESS);
-		}
-		else if (WEXITSTATUS(status) == 126)
-		{
-			data->exit_status = 126;
-			return (FAILED);
-		}
-		else if (WEXITSTATUS(status) == 127)
-		{
-			data->exit_status = 127;
-			return (FAILED);
-		}
-		else
-			data->exit_status = 1;
 	}
 	return (FAILED);
 }

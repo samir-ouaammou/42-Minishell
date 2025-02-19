@@ -69,21 +69,24 @@ typedef struct s_parsing
 // struct Exaction
 typedef struct s_data
 {
-	char			**matches;
-	char			**DollarSign;
-	char			**env;
-	int				status;
-	int				exit_status;
-	int				check_operator;
-	int				check_parenthese;
-	int				check_pipe;
-	int				check_exe;
-	int				check_fmatch;
-	int				save_index;
-	int				stdout_backup;
-	int				stdin_backup;
-	char			*name_pro;
-	char			*input;
+	char **matches;
+	char **DollarSign;
+	char **env;
+	int status;
+	int exit_status;
+	int check_operator;
+	int check_parenthese;
+	int check_pipe;
+	int check_exe;
+	int check_fmatch;
+	int save_index;
+	int stdout_backup;
+	int stdin_backup;
+	char *name_pro;
+	char *input;
+	int fd_file;
+	int count_ok;
+	int is_plus;
 }					t_data;
 
 

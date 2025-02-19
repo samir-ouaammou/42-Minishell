@@ -62,7 +62,7 @@ int	builtin_cd(char **args, t_data *data)
 		ft_printf("minishell: cd: too many arguments\n");
 		return (1);
 	}
-	if (!args[1] || ft_strcmp(args[1], "~") == 0)
+	if (args[0] && !args[1])
 		return (handle_home_path(data));
 	if (handle_directory_change(args[1]) != 0)
 		return (1);

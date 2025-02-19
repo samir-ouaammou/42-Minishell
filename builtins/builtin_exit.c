@@ -30,35 +30,35 @@ int is_numeric(const char *str)
 	return (1);
 }
 
-static int handle_exit_args(t_ast *node, int *exit_code)
+static int handle_exit_args(char **args, int *exit_code)
 {
-	if (node->value[1])
+	if (args[1])
 	{
-		*exit_code = ft_atoi(node->value[1]);
-		if (is_numeric(node->value[1]) && node->value[2])
+		*exit_code = ft_atoi(args[1]);
+		if (is_numeric(args[1]) && args[2])
 		{
 			ft_printf("minishell: exit: too many arguments\n");
 			return (2);
 		}
-		if (!is_numeric(node->value[1]))
+		if (!is_numeric(args[1]))
 		{
 			ft_printf("minishell: exit: %s: numeric argument required\n",
-					  node->value[1]);
+					  args[1]);
 			return (0);
 		}
 	}
 	return (0);
 }
 
-int builtin_exit(t_ast *node, t_data *data)
+int builtin_exit(char **args, t_data *data)
 {
 	int exit_code;
 
 	exit_code = 0;
-	if (!node)
+	if (!args)
 		return (1);
 	ft_printf("exit\n");
-	exit_code = handle_exit_args(node, &exit_code);
+	exit_code = handle_exit_args(args, &exit_code);
 	if (!exit_code)
 		exit (data->status);
 	return (0);

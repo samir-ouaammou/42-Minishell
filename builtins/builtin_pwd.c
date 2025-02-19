@@ -18,7 +18,7 @@ int	builtin_pwd(void)
 
 	if (getcwd(path, sizeof(path)))
 	{
-		ft_printf("%s\n", path);
+		printf("%s\n", path);
 		return (0);
 	}
 	else

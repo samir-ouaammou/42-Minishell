@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_env.c                                      :+:      :+:    :+:   */
+/*   input_redirection_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 18:05:25 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/16 18:05:29 by aahaded          ###   ########.fr       */
+/*   Created: 2025/02/17 16:27:26 by aahaded           #+#    #+#             */
+/*   Updated: 2025/02/17 16:27:27 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	builtin_env(char **args, t_data *data)
+int	open_input_file(t_ast *node)
 {
-	int	i;
+	int	fd_file;
 
-	if (!data || !data->env || !args)
-		return (-1);
-	else if (args && args[1])
-		write(2, "minishell: env: too many arguments\n", 35);
-	else
+	fd_file = open(node->right->value[0], O_RDONLY);
+	if (fd_file == -1)
+		perror("Error");
+	return (fd_file);
+}
+
+char	**copy_args(char **args, int start, int count)
+{
+	int		i;
+	char	**res;
+
+	i = 0;
+	res = malloc(sizeof(char *) * (count + 1));
+	if (!res)
+		return (NULL);
+	while (i < count)
 	{
-		i = 0;
-		while (data->env[i])
-		{
-			printf("%s\n", data->env[i]);
-			i++;
-		}
+		res[i] = ft_strdup(args[start + i]);
+		i++;
 	}
-	return (0);
+	res[count] = NULL;
+	return (res);
 }

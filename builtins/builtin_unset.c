@@ -22,21 +22,21 @@ static void	remove_env_var(t_data *data, int index)
 	data->env[index] = NULL;
 }
 
-int	builtin_unset(t_ast *node, t_data *data)
+int	builtin_unset(char **args, t_data *data)
 {
 	int	i;
 	int	j;
 
-	if (!node || !data || !data->env)
+	if (!args || !data || !data->env)
 		return (1);
 	i = 1;
-	while (node->value[i])
+	while (args[i])
 	{
 		j = 0;
 		while (data->env[j])
 		{
-			if (ft_strncmp(node->value[i], data->env[j],
-					ft_strlen(node->value[i])) == 0)
+			if (ft_strncmp(args[i], data->env[j],
+					ft_strlen(args[i])) == 0)
 			{
 				remove_env_var(data, j);
 				break ;

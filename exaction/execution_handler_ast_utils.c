@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_handler_ast_utils.c                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/17 16:26:38 by aahaded           #+#    #+#             */
+/*   Updated: 2025/02/17 16:26:40 by aahaded          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	check_special_chars(char **args)
@@ -9,9 +21,7 @@ int	check_special_chars(char **args)
 		j = 0;
 		while (args[i][j])
 		{
-			if (args[i][j] == '$' && args[i][j + 1] == '\0')
-				return (0);
-			else if (args[i][j] == '*')
+			if (args[i][j] == '*')
 				return (1);
 			j++;
 		}
