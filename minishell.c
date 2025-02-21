@@ -23,6 +23,7 @@ int	main(int ac, char **av, char **env)
 			write(2, "minishell: syntax error\n", 24);
 		if (shell.input)
 		{
+			printf("\n%s\n\n", shell.input);
 			if (shell.tree)
 				exaction(shell.tree, &data);
 			add_history(shell.history);

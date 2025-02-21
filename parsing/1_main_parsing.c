@@ -63,8 +63,8 @@ void	ft_parsing(t_parsing *shell, int bol)
 	ft_init_parsing(shell);
 	if (ft_check_input_is_valid(shell))
 	{
-		// if (bol)
-		ft_here_doc(shell, shell->input);
+		if (bol)
+			ft_here_doc(shell, shell->input);
 		//fprintf(stderr, "\ninput => [%s]\n\n", shell->input);   ///  pint input
 		ft_split_args(shell);
 		ft_check_syntax_errors(shell);
@@ -78,13 +78,14 @@ void	ft_parsing(t_parsing *shell, int bol)
 			ft_free_parsing(shell);
 		
 	}
-	(void)bol;
-	// if (!bol)
-	// {
-	// 	bol++;
-	// 	ft_pars_redirections(shell, shell->tokens);
-	// 	ft_parsing(shell, bol);
-	// }
+	// (void)bol;
+	if (!bol)
+	{
+		bol++;
+		ft_pars_redirections(shell, shell->tokens);
+		ft_parsing(shell, bol);
+		return ;
+	}
 	// else ////-------------------
 	// {
 	// 	if (shell->free != -1 && shell->tree)	//	temp
