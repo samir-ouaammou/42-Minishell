@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static size_t calculate_length(char *str, t_data *data)
+size_t calculate_length(char *str, t_data *data)
 {
 	size_t len;
 	int index;
@@ -34,7 +34,7 @@ static size_t calculate_length(char *str, t_data *data)
 	return (len);
 }
 
-static void handle_env_var(char *str, char *res, t_data *data, int *res_index)
+void handle_env_var(char *str, char *res, t_data *data, int *res_index)
 {
 	char(*var), (*chrstr), (*env_var);
 	var = get_str_Dollars(str);
@@ -65,19 +65,19 @@ static void handle_exit_status(char *res, t_data *data, int *res_index)
 	}
 }
 
-static void process_variable(char *str, char *res, t_data *data, int *res_index)
+void process_variable(char *str, char *res, t_data *data, int *res_index)
 {
 	int i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0')
+		if (str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0' && str[0] != '\'' && str[i + 1] != '$')
 		{
 			handle_env_var(&str[i], res, data, res_index);
 			i += ft_strlen(get_str_Dollars(&str[i])) + 1;
 		}
-		else if (str[i] == '$' && str[i + 1] == '?')
+		else if (str[i] == '$' && str[i + 1] == '?' && str[0] != '\'' && str[i + 1] != '$')
 		{
 			handle_exit_status(res, data, res_index);
 			i += 2;

@@ -18,7 +18,7 @@ int	open_input_file(t_ast *node)
 
 	fd_file = open(node->right->value[0], O_RDONLY);
 	if (fd_file == -1)
-		perror("Error");
+		ft_printf("minishell: %s: %s\n", node->right->value[0], strerror(errno));
 	return (fd_file);
 }
 

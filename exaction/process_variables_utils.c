@@ -12,6 +12,13 @@
 
 #include "../minishell.h"
 
+int is_valid_char(char c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
+	   return (1);
+	return (0);
+}
+
 void	copy_string(char *str, char *res)
 {
 	int(i), (j);
@@ -19,7 +26,7 @@ void	copy_string(char *str, char *res)
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] != '$')
+		if (str[i] != '$' && is_valid_char(str[i]) == 1)
 			res[j++] = str[i];
 		else
 			break ;
@@ -28,14 +35,14 @@ void	copy_string(char *str, char *res)
 	res[j] = '\0';
 }
 
-static int	calculate_length(char *str)
+static int	calculate_length_(char *str)
 {
 	int(len), (i);
 	len = 0;
 	i = 1;
 	while (str[i])
 	{
-		if (str[i] != '$')
+		if (str[i] != '$' && is_valid_char(str[i]) == 1)
 			len++;
 		i++;
 	}
@@ -47,7 +54,7 @@ char	*get_str_Dollars(char *str)
 	int		len;
 	char	*res;
 
-	len = calculate_length(str);
+	len = calculate_length_(str);
 	res = malloc(len + 1);
 	if (!res)
 		return (NULL);

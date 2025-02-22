@@ -90,6 +90,8 @@ typedef struct s_data
 	int fd_file;
 	int count_ok;
 	int is_plus;
+	int check_file_1;
+	char *name_path_file;
 }					t_data;
 
 

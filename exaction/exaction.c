@@ -12,9 +12,9 @@
 
 #include "../minishell.h"
 
-char	*find_str_env(char *str, t_data *data)
+char *find_str_env(char *str, t_data *data)
 {
-	int	i;
+	int i;
 
 	if (!str || !data->env)
 		return (NULL);
@@ -28,8 +28,22 @@ char	*find_str_env(char *str, t_data *data)
 	return (NULL);
 }
 
-void	exaction(t_ast *root, t_data *data)
+void exaction(t_ast *root, t_data *data)
 {
+	// if (root == NULL)
+	// 	return;
+	// if (data->fd_file != -1)
+	// {
+	// 	close(data->fd_file);
+	// 	data->fd_file = -1;
+	// }
+	// if (data->stdout_backup != -1)
+	// {
+	// 	close(data->stdout_backup);
+	// 	data->stdout_backup = -1;
+	// }
 	execute_ast(root, data);
+	data->check_file_1 = 0;
+	// ft_printf("close 2\n");
 	// ft_printf("exit_status: %d\n", data->exit_status);
 }

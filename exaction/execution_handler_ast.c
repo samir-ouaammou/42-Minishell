@@ -49,27 +49,27 @@ static void handle_operator(t_ast *root, t_data *data)
 		execute_pipe(root, data);
 	else if (ft_strcmp(root->value[0], ">") == 0)
 		data->status = execute_redir_RightArrow_redirout(root, data, "redirout");
-	else if (ft_strcmp(root->value[0], "<") == 0)
-		data->status = execute_redir_inp(root, data);
-	else if (ft_strcmp(root->value[0], ">>") == 0)
-		data->status = execute_redir_RightArrow_redirout(root, data, "RightArrow");
-	else if (ft_strcmp(root->value[0], "<<") == 0)
-		data->status = execute_heredoc(root, data);
+	// else if (ft_strcmp(root->value[0], "<") == 0)
+	// 	data->status = execute_redir_inp(root, data);
+	// else if (ft_strcmp(root->value[0], ">>") == 0)
+	// 	data->status = execute_redir_RightArrow_redirout(root, data, "RightArrow");
+	// else if (ft_strcmp(root->value[0], "<<") == 0)
+	// 	data->status = execute_heredoc(root, data);
 }
 
 static int handle_builtin(t_ast *root, t_data *data)
 {
 	if (check_special_chars(root->value) == 1)
 	{
+		process_strings(root, data);
 		handle_wildcards(root->value, data);
 		ft_remove_quots(root->value);
-		process_strings(root, data);
 		return (execute_builtin(data->matches, data));
 	}
 	else
 	{
-		ft_remove_quots(root->value);
 		process_strings(root, data);
+		ft_remove_quots(root->value);
 		return (execute_builtin(root->value, data));
 	}
 }
@@ -78,18 +78,18 @@ static int handle_command(t_ast *root, t_data *data)
 {
 	if (check_special_chars(root->value) == 1)
 	{
+		process_strings(root, data);
 		handle_wildcards(root->value, data);
 		ft_remove_quots(data->matches);
-		process_strings(root, data);
 		if (is_builtin(data->matches[0]))
-		   data->status = handle_builtin(root, data);
+			data->status = handle_builtin(root, data);
 		else
-		   data->status = execute_command(data->matches, data);
+			data->status = execute_command(data->matches, data);
 	}
 	else
 	{
-		ft_remove_quots(root->value);
 		process_strings(root, data);
+		ft_remove_quots(root->value);
 		data->status = execute_command(root->value, data);
 	}
 	return (data->status);
@@ -100,7 +100,14 @@ int execute_ast(t_ast *root, t_data *data)
 	if (!root)
 		return (FAILED);
 	if (is_operator(root->value[0]))
+	{
+		if (!root->left || !root->right)
+        {
+            write(2, "minishell: syntax error\n", 24);
+            return (FAILED);
+        }
 		handle_operator(root, data);
+	}
 	else if (is_builtin(root->value[0]))
 		data->status = handle_builtin(root, data);
 	else
