@@ -32,6 +32,8 @@ typedef struct s_ast
 	struct s_ast	*right;
 }					t_ast;
 
+typedef struct s_data t_data_struct;
+
 // struct Pxaction
 typedef struct s_parsing
 {
@@ -63,6 +65,7 @@ typedef struct s_parsing
 	t_list			*lst_help2;
 	t_list			*start_node;
 	t_list			*end_node;
+	t_data_struct   *data;
 }					t_parsing;
 
 
@@ -158,6 +161,10 @@ char	**copy_args(char **args, int start, int count);
 int execute_heredoc(t_ast *node, t_data *data);
 int	count_args(char **args, int start);
 char	**merge_command_args(t_ast *node, int count_left, int count_right);
+size_t calculate_length(char *str, t_data *data);
+void process_variable(char *str, char *res, t_data *data, int *res_index);
+void handle_env_var(char *str, char *res, t_data *data, int *res_index);
+char *process_template_string(char *str, t_data *data);
 
 #endif
 
