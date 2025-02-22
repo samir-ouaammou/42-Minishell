@@ -22,6 +22,8 @@ void	ft_free_ast(t_ast *node)
 
 	if (!node)
 		return ;
+	ft_free_ast(node->left);
+	ft_free_ast(node->right);
 	if (node->value)
 	{
 		i = 0;
@@ -34,8 +36,6 @@ void	ft_free_ast(t_ast *node)
 		free(node->value);
 		node->value = NULL;
 	}
-	ft_free_ast(node->left);
-	ft_free_ast(node->right);
 	free(node);
 	node = NULL;
 }

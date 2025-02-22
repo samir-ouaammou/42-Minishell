@@ -65,7 +65,6 @@ void	ft_parsing(t_parsing *shell, int bol)
 	{
 		if (bol)
 			ft_here_doc(shell, shell->input);
-		//fprintf(stderr, "\ninput => [%s]\n\n", shell->input);   ///  pint input
 		ft_split_args(shell);
 		ft_check_syntax_errors(shell);
 		shell->tree = ft_creat_ast_tree(shell);
@@ -76,26 +75,24 @@ void	ft_parsing(t_parsing *shell, int bol)
 					- ft_count_brackets(shell->tokens)))
 			|| ft_ast_contains_brackets(shell->tree))
 			ft_free_parsing(shell);
-		
-	}
-	// (void)bol;
-	if (!bol)
-	{
-		bol++;
-		ft_pars_redirections(shell, shell->tokens);
-		ft_parsing(shell, bol);
-		return ;
+		if (shell->free == -1)
+			return;
+		if (!bol)
+		{
+			ft_pars_redirections(shell, shell->tokens);
+			ft_parsing(shell, 1337);
+			return ;			//  tmp
+		}
 	}
 	// else ////-------------------
 	// {
-	// 	if (shell->free != -1 && shell->tree)	//	temp
-	// 	{
-	// 		printf("\n----------Parsing----------\n\n");
-	// 		print_ast(shell->tree, 0, "root");  //	temp
-	// 		printf("\n\n\n----------exacution----------\n\n");
-	// 	}
+		if (shell->free != -1 && shell->tree)	//	temp
+		{
+			printf("\n----------Parsing----------\n\n");
+			print_ast(shell->tree, 0, "root");  //	temp
+			printf("\n\n\n----------exacution----------\n\n");
+		}
 	// }   //-------------------
-	// bol++;
 }
 
 // *************** test parsing **********

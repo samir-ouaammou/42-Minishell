@@ -17,20 +17,16 @@ int	main(int ac, char **av, char **env)
 	{
 		shell.input = readline(data.name_pro);
 		shell.history = ft_strdup(shell.input);
-		data.input = ft_strdup(shell.input);
 		ft_parsing(&shell, 0);
 		if (shell.free == -1 && (!shell.tokens || !shell.tree))
 			write(2, "minishell: syntax error\n", 24);
 		if (shell.input)
 		{
-			printf("\n%s\n\n", shell.input);
-			if (shell.tree)
-				exaction(shell.tree, &data);
+			printf("input =>   [%s]\n\n", shell.input);
+			// if (shellkpkefion(shell.tree, &data);
 			add_history(shell.history);
 			ft_free_parsing(&shell);
 		}
-		if (data.input)
-			free(data.input);
 		if (shell.history)
 		{
 			free(shell.history);
