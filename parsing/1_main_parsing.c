@@ -58,12 +58,34 @@ int	ft_count_brackets(t_list *list)
 	return (count);
 }
 
+void	ft_check_other_errors(t_parsing *shell)
+{
+	if (!shell || !shell->tokens)
+	{
+		ft_free_parsing(shell);
+		return ;
+	}
+	t_list *tmp;
+	
+	tmp = shell->tokens;
+
+	while (tmp)
+	{
+		if (tmp && tmp->next && tmp->next->value && tmp->value && !tmp->value[1] && ft_check_is_redirections(tmp->value[0]) && ft_check_is_operators(tmp->next->value[0]))
+		{
+			ft_free_parsing(shell);
+			return ;
+		}
+		tmp = tmp->next;
+	}
+}
+
 void	ft_parsing(t_parsing *shell, int bol)
 {
 	ft_init_parsing(shell);
 	if (ft_check_input_is_valid(shell))
 	{
-		if (bol)
+		if (!bol)
 			ft_here_doc(shell, shell->input);
 		ft_split_args(shell);
 		ft_check_syntax_errors(shell);
@@ -77,6 +99,9 @@ void	ft_parsing(t_parsing *shell, int bol)
 			ft_free_parsing(shell);
 		if (shell->free == -1)
 			return;
+		ft_check_other_errors(shell);
+		if (shell->free == -1)
+			return;
 		if (!bol)
 		{
 			ft_pars_redirections(shell, shell->tokens);
@@ -86,12 +111,12 @@ void	ft_parsing(t_parsing *shell, int bol)
 	}
 	// else ////-------------------
 	// {
-		if (shell->free != -1 && shell->tree)	//	temp
-		{
-			printf("\n----------Parsing----------\n\n");
-			print_ast(shell->tree, 0, "root");  //	temp
-			printf("\n\n\n----------exacution----------\n\n");
-		}
+		// if (shell->free != -1 && shell->tree)	//	temp
+		// {
+		// 	printf("\n----------Parsing----------\n\n");
+		// 	print_ast(shell->tree, 0, "root");  //	temp
+		// 	printf("\n\n\n----------exacution----------\n\n");
+		// }
 	// }   //-------------------
 }
 

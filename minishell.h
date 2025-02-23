@@ -97,6 +97,11 @@ typedef struct s_data
 
 // Functions Pxaction
 
+
+int ft_check_is_operators(char *str);
+int ft_check_is_redirections(char *str);
+
+
 void				ft_free_ast(t_ast *node);
 void				ft_remove_quots(char **str);
 void				ft_free_args(t_parsing *shell);
