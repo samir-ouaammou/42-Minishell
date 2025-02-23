@@ -10,7 +10,7 @@ int	main(int ac, char **av, char **env)
 		write(2, "Error: Invalid number of arguments.\n", 36);
 		exit(-1);
 	}
-	memset(&data, 0, sizeof(t_data)); //	?? mem => ft_mem
+	memset(&data, 0, sizeof(t_data)); //	?? mem => ft_mem.
 	read_env(&data, env);
 	data.name_pro = "➜ Minishell ";
 	while (1)
