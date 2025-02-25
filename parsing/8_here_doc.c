@@ -62,9 +62,12 @@ void ft_move_input(t_parsing *shell, char *str)
 
 void ft_here_doc(t_parsing *shell, char *str, t_data *data)
 {
+    int     h;
+    int     dolar;
+
     if (!str || !str[0])
         return ;
-
+    dolar = 0;
     shell->i = 0;
     shell->bol = 0;
     shell->nbr = 1;
@@ -124,6 +127,16 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
             else
             {
                 shell->stop[0] = ft_substr(str, shell->i, shell->j - shell->i);
+                h = 0;
+                while (shell->stop && shell->stop[0] && shell->stop[0][h])
+                {
+                    if (shell->stop[0][h] == 39)
+                    {
+                        dolar = 1;
+                        break;
+                    }
+                    h++;
+                }
                 ft_remove_quots(shell->stop, data);
                 shell->itoa = ft_itoa(shell->nbr);
                 shell->name = ft_strjoin("/tmp/heredoc", shell->itoa);
@@ -139,6 +152,8 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
                         free(shell->line);
                         break;
                     }
+                    if (!dolar)
+                        shell->line = process_template_string(shell->line, data);
                     write(shell->fd, shell->line, ft_strlen(shell->line));
                     write(shell->fd, "\n", 1);
                     free(shell->line);
