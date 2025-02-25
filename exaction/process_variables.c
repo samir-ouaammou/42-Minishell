@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_variables.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:28:01 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 16:28:03 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:30:34 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ size_t calculate_length(char *str, t_data *data)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0' && str[0] != '\'' && str[i + 1] != '$')
+		if (str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0' && str[i + 1] != '$')
 			len += handle_env_var_length(str, data, &i);
-		else if (str[i] == '$' && str[i + 1] == '?' && str[0] != '\'' && str[i + 1] != '$')
+		else if (str[i] == '$' && str[i + 1] == '?' && str[i + 1] != '$')
 			len += handle_exit_status_length(data, &i);
 		else
 		{
@@ -78,12 +78,12 @@ void process_variable(char *str, char *res, t_data *data)
 	while (str[i])
 	{
 
-		if ((str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0') && str[0] != '\'' && str[i + 1] != '$')
+		if ((str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0') && str[i + 1] != '$')
 		{
 			handle_env_var(&str[i], res, data, &res_index);
 			i += ft_strlen(get_str_Dollars(&str[i])) + 1;
 		}
-		else if (str[i] == '$' && str[i + 1] == '?' && str[0] != '\'' && str[i + 1] != '$')
+		else if (str[i] == '$' && str[i + 1] == '?' && str[i + 1] != '$')
 		{
 			handle_exit_status(res, data, &res_index);
 			i += 2;
