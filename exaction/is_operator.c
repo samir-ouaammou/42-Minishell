@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_operator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:16:41 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/23 17:14:45 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/17 08:16:45 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,22 @@ int	is_operator(char *str)
 
 int	is_builtin(char *cmd)
 {
-	return (ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "echo") == 0
-		|| ft_strcmp(cmd, "env") == 0 || ft_strcmp(cmd, "pwd") == 0
-		|| ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0
-		|| ft_strcmp(cmd, "exit") == 0);
+	char **args = malloc(sizeof(char *) * 2);
+	if (!args)
+		return (1);
+	args[0] = ft_strdup(cmd);
+	args[1] = NULL;
+	ft_remove_quots(args);
+	char *temp = ft_strdup(args[0]);
+	free_all(args);
+	if (ft_strcmp(temp, "cd") == 0 || ft_strcmp(temp, "echo") == 0
+		|| ft_strcmp(temp, "env") == 0 || ft_strcmp(temp, "pwd") == 0
+		|| ft_strcmp(temp, "export") == 0 || ft_strcmp(temp, "unset") == 0
+		|| ft_strcmp(temp, "exit") == 0)
+	{
+		free(temp);
+		return (1);
+	}
+		free(temp);
+	return (0);
 }

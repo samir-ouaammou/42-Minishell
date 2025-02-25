@@ -74,7 +74,10 @@ size_t	handle_env_var_length(char *str, t_data *data, int *index)
 	if (var)
 	{
 		len += ft_strlen(var);
-		env_var = find_str_env(ft_strjoin(var, "="), data);
+		char *str_j = ft_strjoin(var, "=");
+		if (!str_j)
+			return (1);
+		env_var = find_str_env(str_j, data);
 		if (env_var)
 		{
 			chrstr = ft_strchr(env_var, '=');

@@ -32,7 +32,8 @@ SRCS_EXACTION = $(PATH_EXACTION)/exaction.c \
                 $(PATH_EXACTION)/execution_handler_ast_utils.c \
                 $(PATH_EXACTION)/process_variables_utils.c \
                 $(PATH_EXACTION)/input_redirection_utils.c \
-                $(PATH_EXACTION)/handle_heredoc.c
+                $(PATH_EXACTION)/handle_heredoc.c \
+		$(PATH_EXACTION)/memory_cleanup.c
 
 # SRCS_BUILTINS
 SRCS_BUILTINS = $(PATH_BUILTINS)/builtin_echo.c \

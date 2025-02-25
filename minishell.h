@@ -88,10 +88,13 @@ typedef struct s_data
 	char *name_pro;
 	char *input;
 	int fd_file;
+	int fd_file2;
 	int count_ok;
 	int is_plus;
 	int check_file_1;
+	int check_file_2;
 	char *name_path_file;
+	char *name_path_file2;
 }					t_data;
 
 
@@ -145,7 +148,6 @@ int builtin_echo(char **str, t_data *data);
 int builtin_unset(char **args, t_data *data);
 int builtin_export(char **args, t_data *data);
 void exaction(t_ast *root, t_data *data);
-char *find_str_env(char *str, t_data *data);
 char *get_path_env(char *cmd, t_data *data);
 int execute_command(char **cmd, t_data *data);
 int execute_pipe(t_ast *node, t_data *data);
@@ -169,9 +171,11 @@ int execute_heredoc(t_ast *node, t_data *data);
 int	count_args(char **args, int start);
 char	**merge_command_args(t_ast *node, int count_left, int count_right);
 size_t calculate_length(char *str, t_data *data);
-void process_variable(char *str, char *res, t_data *data, int *res_index);
+void process_variable(char *str, char *res, t_data *data);
 void handle_env_var(char *str, char *res, t_data *data, int *res_index);
 char *process_template_string(char *str, t_data *data);
+void    free_all(char **args);
+
 
 #endif
 

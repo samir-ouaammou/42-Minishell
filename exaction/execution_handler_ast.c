@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_handler_ast.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:27:02 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/23 17:14:43 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:27:04 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void handle_operator(t_ast *root, t_data *data)
 	if (ft_strcmp(root->value[0], "&&") == 0)
 	{
 		execute_ast(root->left, data);
+		ft_printf("status2: %d\n", data->status);
 		if (data->status == 0)
 			execute_ast(root->right, data);
 	}
@@ -48,16 +49,16 @@ static void handle_operator(t_ast *root, t_data *data)
 	else if (ft_strcmp(root->value[0], "|") == 0)
 		execute_pipe(root, data);
 	else if (ft_strcmp(root->value[0], ">") == 0)
-		data->status = execute_redir_RightArrow_redirout(root, data, "redirout");
-	// else if (ft_strcmp(root->value[0], "<") == 0)
-	// 	data->status = execute_redir_inp(root, data);
-	// else if (ft_strcmp(root->value[0], ">>") == 0)
-	// 	data->status = execute_redir_RightArrow_redirout(root, data, "RightArrow");
-	// else if (ft_strcmp(root->value[0], "<<") == 0)
-	// 	data->status = execute_heredoc(root, data);
+		execute_redir_RightArrow_redirout(root, data, "redirout");
+	else if (ft_strcmp(root->value[0], "<") == 0)
+		execute_redir_inp(root, data);
+	else if (ft_strcmp(root->value[0], ">>") == 0)
+		execute_redir_RightArrow_redirout(root, data, "RightArrow");
+	else if (ft_strcmp(root->value[0], "<<") == 0)
+		execute_heredoc(root, data);
 }
 
-static int handle_builtin(t_ast *root, t_data *data)
+static int handle_builtin(t_ast *root, t_data *data)// "$use"$user""$user'$user'"$user"'$user'""''"''"
 {
 	if (check_special_chars(root->value) == 1)
 	{
@@ -82,9 +83,9 @@ static int handle_command(t_ast *root, t_data *data)
 		handle_wildcards(root->value, data);
 		ft_remove_quots(data->matches);
 		if (is_builtin(data->matches[0]))
-			data->status = handle_builtin(root, data);
+			data->status = handle_builtin(root, data);//$HOME$HOME
 		else
-			data->status = execute_command(data->matches, data);
+			data->status = execute_command(data->matches, data);//       '$HOME'"$HOME"'$HOME'"$HOME"'$HOME'"$HOME"'$HOME'"$HOME"'$HOME'"$HOME"
 	}
 	else
 	{
@@ -100,14 +101,7 @@ int execute_ast(t_ast *root, t_data *data)
 	if (!root)
 		return (FAILED);
 	if (is_operator(root->value[0]))
-	{
-		if (!root->left || !root->right)
-        {
-            write(2, "minishell: syntax error\n", 24);
-            return (FAILED);
-        }
 		handle_operator(root, data);
-	}
 	else if (is_builtin(root->value[0]))
 		data->status = handle_builtin(root, data);
 	else

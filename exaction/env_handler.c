@@ -12,9 +12,31 @@
 
 #include "../minishell.h"
 
+static void	update_shlvl(t_data *data)
+{
+	int		i;
+	int		shlvl_value;
+	char	*new_shlvl;
+
+	i = 0;
+	while (data->env[i])
+	{
+		if (ft_strncmp(data->env[i], "SHLVL=", 6) == 0)
+		{
+			shlvl_value = ft_atoi(data->env[i] + 6) + 1;
+			new_shlvl = ft_strjoin("SHLVL=", ft_itoa(shlvl_value));
+			free(data->env[i]);
+			data->env[i] = new_shlvl;
+			return ;
+		}
+		i++;
+	}
+}
+
 static void	copy_envp(t_data *data, char **envp)
 {
-	int(count), (i);
+	int	count, i;
+
 	count = 0;
 	while (envp[count])
 		count++;
@@ -27,19 +49,21 @@ static void	copy_envp(t_data *data, char **envp)
 		data->env[i] = ft_strdup(envp[i]);
 		if (!data->env[i])
 		{
+			free_all(data->env);
 			data->env = NULL;
 			return ;
 		}
 		i++;
 	}
 	data->env[count] = NULL;
+	update_shlvl(data);
 }
 
 static void	create_default_env(t_data *data)
 {
 	int	add_num;
+	char	path[1024], (*pwd_path);
 
-	char(path[1024]), (*pwd_path);
 	pwd_path = getcwd(path, sizeof(path));
 	if (pwd_path != NULL)
 		add_num = 1;

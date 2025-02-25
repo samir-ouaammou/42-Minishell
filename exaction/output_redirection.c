@@ -102,6 +102,7 @@ static int open_file(char *path_name, char *type)
 
 int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
 {
+	ft_printf("status: %d\n", data->status);
 	(void)type;
 
 	// if (!node || !node->left || !node->right)
@@ -112,8 +113,6 @@ int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
 	// 	return (FAILED);
 	if (data->check_file_1 == 0)
 	{
-		if (data->name_path_file)
-			free(data->name_path_file);
 		data->name_path_file = ft_strdup(node->right->value[0]);
 		if (!data->name_path_file)
 		{
@@ -121,10 +120,16 @@ int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
 			return (FAILED);
 		}
 	}
-	data->check_file_1 = 1;
 	data->fd_file = open_file(data->name_path_file, type);
 	if (data->fd_file == -1)
 		return (FAILED);
+	if (data->check_file_1 != 0)
+	{
+		int d = open_file(node->right->value[0], type);
+		if (d == -1)
+			return (FAILED);
+	}
+	data->check_file_1 = 1;
 	pid_t pid = fork();
 	if (pid == -1)
 	{
@@ -136,10 +141,13 @@ int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
 	{
 		dup2(data->fd_file, STDOUT_FILENO);
 		close(data->fd_file);
-		execute_ast(node->left, data);
-		exit(1);
+		data->status = execute_ast(node->left, data);
+		exit(data->status);
 	}
-	wait(NULL);
+	int status;
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		data->status = WEXITSTATUS(status);
 	close(data->fd_file);
 	return (0);
 }

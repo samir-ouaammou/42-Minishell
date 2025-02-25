@@ -36,7 +36,7 @@ int	check_special_chars(char **args)
 char *process_template_string(char *str, t_data *data)
 {
 	char **split_str;
-	int(i), (count), (res_index);
+	int(i), (count);
 	if (!str || !data)
 		return (NULL);
 	i = 0;
@@ -54,10 +54,10 @@ char *process_template_string(char *str, t_data *data)
 		res[i] = malloc(calculate_length(split_str[i], data) + 1);
 		if (!res[i])
 			return (NULL);
-		res_index = 0;
-		process_variable(split_str[i], res[i], data, &res_index);
+		process_variable(split_str[i], res[i], data);
 		i++;
 	}
+	// ft_printf("split_str: %s\n", res[0]);
 	res[count] = NULL;
 	i = 0;
 	int len = 0;
@@ -84,6 +84,6 @@ char *process_template_string(char *str, t_data *data)
 			res_str[k++] = ' ';
 		i++;
 	}
-	res_str[len + 1] = '\0';
+	res_str[len] = '\0';
 	return (res_str);
 }
