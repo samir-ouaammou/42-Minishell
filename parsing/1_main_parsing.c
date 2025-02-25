@@ -80,13 +80,13 @@ void	ft_check_other_errors(t_parsing *shell)
 	}
 }
 
-void	ft_parsing(t_parsing *shell, int bol)
+void	ft_parsing(t_parsing *shell, int bol, t_data *data)
 {
 	ft_init_parsing(shell);
 	if (ft_check_input_is_valid(shell))
 	{
 		if (!bol)
-			ft_here_doc(shell, shell->input);
+			ft_here_doc(shell, shell->input, data);
 		ft_split_args(shell);
 		ft_check_syntax_errors(shell);
 		shell->tree = ft_creat_ast_tree(shell);
@@ -105,7 +105,7 @@ void	ft_parsing(t_parsing *shell, int bol)
 		if (!bol)
 		{
 			ft_pars_redirections(shell, shell->tokens);
-			ft_parsing(shell, 1337);
+			ft_parsing(shell, 1337, data);
 			return ;			//  tmp
 		}
 	}

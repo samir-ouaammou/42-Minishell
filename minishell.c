@@ -17,7 +17,7 @@ int	main(int ac, char **av, char **env)
 	{
 		shell.input = readline(data.name_pro);
 		shell.history = ft_strdup(shell.input);
-		ft_parsing(&shell, 0);
+		ft_parsing(&shell, 0, &data);
 		if (shell.free == -1 && (!shell.tokens || !shell.tree))
 			write(2, "minishell: syntax error\n", 24);
 		if (shell.input)

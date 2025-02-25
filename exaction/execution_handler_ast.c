@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_handler_ast.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:27:02 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 16:27:04 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:19:58 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,15 @@ static int handle_builtin(t_ast *root, t_data *data)// "$use"$user""$user'$user'
 {
 	if (check_special_chars(root->value) == 1)
 	{
-		process_strings(root, data);
+		// process_strings(root, data);
 		handle_wildcards(root->value, data);
-		ft_remove_quots(root->value);
+		ft_remove_quots(root->value, data);
 		return (execute_builtin(data->matches, data));
 	}
 	else
 	{
-		process_strings(root, data);
-		ft_remove_quots(root->value);
+		// process_strings(root, data);
+		ft_remove_quots(root->value, data);
 		return (execute_builtin(root->value, data));
 	}
 }
@@ -79,18 +79,18 @@ static int handle_command(t_ast *root, t_data *data)
 {
 	if (check_special_chars(root->value) == 1)
 	{
-		process_strings(root, data);
+		// process_strings(root, data);
 		handle_wildcards(root->value, data);
-		ft_remove_quots(data->matches);
-		if (is_builtin(data->matches[0]))
+		ft_remove_quots(data->matches, data);
+		if (is_builtin(data->matches[0], data))
 			data->status = handle_builtin(root, data);//$HOME$HOME
 		else
 			data->status = execute_command(data->matches, data);//       '$HOME'"$HOME"'$HOME'"$HOME"'$HOME'"$HOME"'$HOME'"$HOME"'$HOME'"$HOME"
 	}
 	else
 	{
-		process_strings(root, data);
-		ft_remove_quots(root->value);
+		// process_strings(root, data);
+		ft_remove_quots(root->value, data);
 		data->status = execute_command(root->value, data);
 	}
 	return (data->status);
@@ -102,7 +102,7 @@ int execute_ast(t_ast *root, t_data *data)
 		return (FAILED);
 	if (is_operator(root->value[0]))
 		handle_operator(root, data);
-	else if (is_builtin(root->value[0]))
+	else if (is_builtin(root->value[0], data))
 		data->status = handle_builtin(root, data);
 	else
 		data->status = handle_command(root, data);

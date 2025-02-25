@@ -60,7 +60,7 @@ void ft_move_input(t_parsing *shell, char *str)
 }
 
 
-void ft_here_doc(t_parsing *shell, char *str)
+void ft_here_doc(t_parsing *shell, char *str, t_data *data)
 {
     if (!str || !str[0])
         return ;
@@ -124,7 +124,7 @@ void ft_here_doc(t_parsing *shell, char *str)
             else
             {
                 shell->stop[0] = ft_substr(str, shell->i, shell->j - shell->i);
-                ft_remove_quots(shell->stop);
+                ft_remove_quots(shell->stop, data);
                 shell->itoa = ft_itoa(shell->nbr);
                 shell->name = ft_strjoin("/tmp/heredoc", shell->itoa);
                 free(shell->itoa);

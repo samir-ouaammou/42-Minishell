@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_operator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:16:41 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 08:16:45 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:12:26 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int	is_operator(char *str)
 		|| ft_strcmp(str, ">>") == 0);
 }
 
-int	is_builtin(char *cmd)
+int	is_builtin(char *cmd, t_data *data)
 {
 	char **args = malloc(sizeof(char *) * 2);
 	if (!args)
 		return (1);
 	args[0] = ft_strdup(cmd);
 	args[1] = NULL;
-	ft_remove_quots(args);
+	ft_remove_quots(args, data);
 	char *temp = ft_strdup(args[0]);
 	free_all(args);
 	if (ft_strcmp(temp, "cd") == 0 || ft_strcmp(temp, "echo") == 0
