@@ -73,7 +73,7 @@ char    *ft_str_join(char **str, t_data *data)
                 str[i] = tmp;
             }
             // printf("9bl=> [%s]\n", str[i]);  //tmp
-            str[i] = process_template_string(str[i], data);
+            str[i] = process_strings(str[i], data);
             // printf("b3d=>  [%s]\n\n", str[i]); //tmp
         } 
         else if (str[i][0] == 39)
