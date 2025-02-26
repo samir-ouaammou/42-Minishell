@@ -69,16 +69,18 @@ char    *ft_str_join(char **str, t_data *data)
             {
                 str[i][strlen(str[i]) - 1] = '\0';
                 tmp = strdup(&str[i][1]);
-                free(str[i]);
+                //free(str[i]);
                 str[i] = tmp;
             }
+            // printf("9bl=> [%s]\n", str[i]);  //tmp
             str[i] = process_template_string(str[i], data);
+            // printf("b3d=>  [%s]\n\n", str[i]); //tmp
         } 
         else if (str[i][0] == 39)
         {
             str[i][strlen(str[i]) - 1] = '\0';
             tmp = strdup(&str[i][1]);
-            free(str[i]);
+            //free(str[i]);
             str[i] = tmp;
         }
         len += strlen(str[i]);
@@ -110,11 +112,9 @@ void ft_remove_quots(char **str, t_data *data)
     i = 0;
     while (str[i])
     {
-        // printf("[%s] ", str[i]); // TMP
         split = ft_split_quots(str[i]);
-        free(str[i]);
+        //free(str[i]);
         str[i] = ft_str_join(split, data);
-        // printf("=> {%s}\n", str[i]); // TMP
         i++;
     }
 

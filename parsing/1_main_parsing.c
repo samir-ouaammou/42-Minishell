@@ -80,13 +80,51 @@ void	ft_check_other_errors(t_parsing *shell)
 	}
 }
 
+void	 ft_replace_tabs_with_spaces(t_parsing *shell, char *input)
+{
+    int i = 0, j = 0, new_len = 0;
+
+    while (input[i] != '\0')
+	{
+        if (input[i] == '\t')
+            new_len += 7;
+        else 
+            new_len += 1;
+        i++;
+    }
+    char *result = (char *)malloc(new_len + 1);
+    i = 0;
+    while (input[i] != '\0')
+	{
+        if (input[i] == '\t')
+		{
+            result[j++] = ' ';
+            result[j++] = ' ';
+            result[j++] = ' ';
+            result[j++] = ' ';
+            result[j++] = ' ';
+            result[j++] = ' ';
+            result[j++] = ' ';
+        }
+		else 
+            result[j++] = input[i];
+        i++;
+    }
+    result[j] = '\0';
+	free(shell->input);
+	shell->input = result;
+}
+
 void	ft_parsing(t_parsing *shell, int bol, t_data *data)
 {
 	ft_init_parsing(shell);
 	if (ft_check_input_is_valid(shell))
 	{
 		if (!bol)
+		{
+			ft_replace_tabs_with_spaces(shell, shell->input);
 			ft_here_doc(shell, shell->input, data);
+		}
 		ft_split_args(shell);
 		ft_check_syntax_errors(shell);
 		shell->tree = ft_creat_ast_tree(shell);
