@@ -153,7 +153,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
                         break;
                     }
                     if (!dolar)
-                        shell->line = process_template_string(shell->line, data);
+                        shell->line = process_strings(shell->line, data);
                     write(shell->fd, shell->line, ft_strlen(shell->line));
                     write(shell->fd, "\n", 1);
                     //free(shell->line);
