@@ -6,7 +6,7 @@
 /*   By: aahaded <aahaded@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:36:38 by aahaded           #+#    #+#             */
-/*   Updated: 2024/10/30 10:10:39 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/02/26 21:48:15 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -16,7 +16,7 @@ char	*ft_strdup(const char *s)
 	int		str_len;
 	char	*res;
 
-	if (!s || !s[0])
+	if (!s)
 		return (NULL);
 	str_len = ft_strlen(s);
 	res = malloc(str_len + 1);

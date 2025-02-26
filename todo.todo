@@ -88,6 +88,28 @@
           "done": false,
           "start": 1740603485485
         }
+      },
+      {
+        "key": 1740606688442,
+        "children": [],
+        "todo": {
+          "content": "*      [bash => {builtins: command not found}  ,  dyalna => {minishell: Makefile: Command not found}]",
+          "id": 1740606688442,
+          "level": "default",
+          "done": false,
+          "start": 1740606688442
+        }
+      },
+      {
+        "key": 1740606804309,
+        "children": [],
+        "todo": {
+          "content": "exit => segmentation fault",
+          "id": 1740606804309,
+          "level": "default",
+          "done": false,
+          "start": 1740606804309
+        }
       }
     ],
     "expandKeys": [],
@@ -102,6 +124,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1740603500375"
+    "version": "1740606831303"
   }
 }
