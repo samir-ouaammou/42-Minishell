@@ -25,7 +25,7 @@ static void	update_shlvl(t_data *data)
 		{
 			shlvl_value = ft_atoi(data->env[i] + 6) + 1;
 			new_shlvl = ft_strjoin("SHLVL=", ft_itoa(shlvl_value));
-			free(data->env[i]);
+			// free(data->env[i]);
 			data->env[i] = new_shlvl;
 			return ;
 		}
@@ -49,7 +49,7 @@ static void	copy_envp(t_data *data, char **envp)
 		data->env[i] = ft_strdup(envp[i]);
 		if (!data->env[i])
 		{
-			free_all(data->env);
+			// free_all(data->env);
 			data->env = NULL;
 			return ;
 		}

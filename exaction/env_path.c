@@ -15,11 +15,13 @@
 static char *get_path_env_utils(char **path, char *cmd)
 {
     char *path_arg;
-    char *temp;
+    // char *temp;
     int i;
 
     i = 0;
-    temp = NULL;
+    // temp = NULL;
+    // if (cmd[0] == '.')
+    //     return "./a.out";
     while (path[i])
     {
         path_arg = ft_strjoin(path[i], "/");
@@ -34,8 +36,8 @@ static char *get_path_env_utils(char **path, char *cmd)
             return (path_arg);
         i++;
     }
-    if (temp)
-        free(temp);
+    // if (temp)
+    //     free(temp);
     return (NULL);
 }
 
@@ -64,11 +66,11 @@ char *get_path_env(char *cmd, t_data *data)
     if (!check_path)
         return (NULL);
     path_arg = get_path_env_utils(path, cmd);
-    free_all(path);
+    // free_all(path);
     if (!path_arg || cmd == NULL || is_operator(cmd))
     {
         if (path_arg)
-            free(path_arg);
+            // free(path_arg);
         return (NULL);
     }
     return (path_arg);

@@ -104,6 +104,7 @@ int builtin_export(char **args, t_data *data)
 			{
 				ft_printf("minishell: export: `%s': not a valid identifier\n", args[i]);
 				check_error = 1;
+				data->exit_status = 1;
 				break;
 			}
 			j++;

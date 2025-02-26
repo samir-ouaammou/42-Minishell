@@ -69,7 +69,7 @@ GET_NEXT_PATH = $(LIBFT_PATH)/get_next_line
 
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror # -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror  #-g3 -fsanitize=address
 
 all: $(NAME)
 

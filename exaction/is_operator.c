@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_operator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:16:41 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/25 14:12:26 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:12:26 by aahaded         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,23 @@ int	is_operator(char *str)
 
 int	is_builtin(char *cmd, t_data *data)
 {
+	(void)data;
 	char **args = malloc(sizeof(char *) * 2);
 	if (!args)
 		return (1);
 	args[0] = ft_strdup(cmd);
 	args[1] = NULL;
-	ft_remove_quots(args, data);
+	// ft_remove_quots(args, data);
 	char *temp = ft_strdup(args[0]);
-	free_all(args);
+	// free_all(args);
 	if (ft_strcmp(temp, "cd") == 0 || ft_strcmp(temp, "echo") == 0
 		|| ft_strcmp(temp, "env") == 0 || ft_strcmp(temp, "pwd") == 0
 		|| ft_strcmp(temp, "export") == 0 || ft_strcmp(temp, "unset") == 0
 		|| ft_strcmp(temp, "exit") == 0)
 	{
-		free(temp);
+		// free(temp);
 		return (1);
 	}
-		free(temp);
+		// free(temp);
 	return (0);
 }

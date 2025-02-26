@@ -18,7 +18,6 @@ char *find_str_env(char *str, t_data *data)
 	if (!str || !data->env || !data->env[0])
 		return (NULL);
 	i = 0;
-			// printf("str: %s, env: %s\n", str, data->env[0]);
 	while (data->env[i])
 	{
 		if (ft_strncmp(data->env[i], str, ft_strlen(str)) == 0)
@@ -44,12 +43,14 @@ void exaction(t_ast *root, t_data *data)
 	// 	close(data->stdout_backup);
 	// 	data->stdout_backup = -1;
 	// }
-	// char *str = process_template_string(root->value[0], data);
+	// char *str = process_strings(root->value[0], data);
 	// ft_printf("str: %s\n", str);
 	execute_ast(root, data);
 	data->check_file_1 = 0;
 	data->check_file_2 = 0;
 	data->status = 0;
+	data->num_proess = 0;
+	data->num_proess2 = 0;
 	// free_all(data->env);
 	// free_all(data->matches);
 	// free_all(data->DollarSign);

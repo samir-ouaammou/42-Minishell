@@ -16,6 +16,7 @@
 #include <errno.h>
 # include <stdio.h>
 
+
 # define SUCCESS 0
 # define FAILED 1
 
@@ -95,6 +96,8 @@ typedef struct s_data
 	int check_file_2;
 	char *name_path_file;
 	char *name_path_file2;
+    int num_proess;
+    int num_proess2;
 }					t_data;
 
 
@@ -157,7 +160,7 @@ int execute_redir_inp(t_ast *node, t_data *data);
 int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type);
 void read_env(t_data *data, char **envp);
 char *find_str_env(char *str, t_data *data);
-void process_strings(t_ast *root, t_data *data);
+char	*process_strings(char *str, t_data *data);
 int check_special_chars(char **args);
 int is_operator(char *str);
 int is_builtin(char *cmd, t_data *data);
@@ -165,7 +168,7 @@ void copy_string(char *str, char *res);
 size_t handle_env_var_length(char *str, t_data *data, int *index);
 size_t handle_exit_status_length(t_data *data, int *index);
 char	*get_str_Dollars(char *str);
-int	open_input_file(t_ast *node);
+int	open_input_file(t_ast *node, t_data *data);
 char	**copy_args(char **args, int start, int count);
 int execute_heredoc(t_ast *node, t_data *data);
 int	count_args(char **args, int start);
@@ -173,9 +176,11 @@ char	**merge_command_args(t_ast *node, int count_left, int count_right);
 size_t calculate_length(char *str, t_data *data);
 void process_variable(char *str, char *res, t_data *data);
 void handle_env_var(char *str, char *res, t_data *data, int *res_index);
-char *process_template_string(char *str, t_data *data);
+// char *process_strings(char *str, t_data *data);
 void    free_all(char **args);
+int check_and_open_file(t_ast *node, t_data *data, char *type);
+
+
 
 
 #endif
-

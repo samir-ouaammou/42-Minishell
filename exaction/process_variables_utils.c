@@ -64,16 +64,21 @@ char	*get_str_Dollars(char *str)
 
 size_t	handle_env_var_length(char *str, t_data *data, int *index)
 {
+	(void)data;
+	(void)index;
+	(void)str;
 	size_t	len;
 	char	*var;
 	char	*env_var;
 	char	*chrstr;
 
 	len = 0;
+	// ft_printf("str: %s\n", str);
 	var = get_str_Dollars(&str[*index]);
+	if (!var)
+	   return (-1);
 	if (var)
 	{
-		len += ft_strlen(var);
 		char *str_j = ft_strjoin(var, "=");
 		if (!str_j)
 			return (1);
@@ -82,7 +87,7 @@ size_t	handle_env_var_length(char *str, t_data *data, int *index)
 		{
 			chrstr = ft_strchr(env_var, '=');
 			if (chrstr)
-				len += ft_strlen(chrstr) - 1;
+				len += ft_strlen(chrstr + 1);
 		}
 		*index += ft_strlen(var) + 1;
 	}

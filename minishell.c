@@ -25,7 +25,7 @@ int	main(int ac, char **av, char **env)
 			// printf("input =>   [%s]\n\n", shell.input);  // TMP
 			if (shell.tree)
 				exaction(shell.tree, &data);
-			add_history(shell.history);
+			// add_history(shell.history);
 			ft_free_parsing(&shell);
 		}
 		if (shell.history)

@@ -30,10 +30,23 @@
 // 	return (count);
 // }
 
-static int open_file(char *path_name, char *type)
+int open_file(char *path_name, char *type, t_data *data)
 {
 	int fd_file;
 
+	path_name = process_strings(path_name, data);
+	
+	// ft_printf("path_name: {%s}\n", path_name);
+	// else if (type == NULL)
+	// 	fd_file = open(data->name_path_file2, O_RDONLY);
+	// int i = 0;
+	// ft_printf("path_name: %s\n", path_name);
+	// while (path_name[i])
+	// {
+	// 	if (path_name[i] == ' ')
+	// 		return (42);
+	// 	i++;
+	// }
 	if (ft_strcmp(type, "RightArrow") == 0)
 		fd_file = open(path_name, O_WRONLY | O_CREAT | O_APPEND,
 					   0644);
@@ -43,7 +56,11 @@ static int open_file(char *path_name, char *type)
 	else
 		fd_file = -1;
 	if (fd_file == -1)
-		ft_printf("minishell: %s: %s\n", path_name, strerror(errno));
+	{
+		ft_printf("awd\n");
+		ft_printf("minishellawdawd: %s: %s\n", path_name, strerror(errno));
+		data->exit_status = 1;
+	}
 	return (fd_file);
 }
 
@@ -100,19 +117,60 @@ static int open_file(char *path_name, char *type)
 // 	return (res);
 // }
 
+// int check_and_open_file(t_ast *node, t_data *data, char *type)
+// {
+// 	if (!node || !node->right || !node->right->value[0])
+// 		return (0);
+// 	int fd = check_and_open_file(node->left, data, type);
+// 	if (fd == 1)
+// 		return (1);
+// 	char *str = process_strings(node->right->value[0], data);
+// 	if (!str)
+// 		return (0);
+// 	int i = 0;
+// 	// ft_printf("str_1: %s\n", str);
+// 	// ft_printf("str_2: %s\n", node->right->value[0]);
+// 	while (str[i])
+// 	{
+// 		if (str[i] == ' ' && ft_strncmp(node->right->value[0], "$", 1) == 0)
+// 		{
+// 			data->num_proess = 1;
+// 			break;
+// 		}
+// 		i++;
+// 	}
+// 	free(str);
+// 	if (data->num_proess == 0)
+// 	{
+// 		ft_remove_quots(node->right->value, data);
+// 		int d = open_file(node->right->value[0], type, data);
+// 		if (d == -1)
+// 			return (1);
+// 	}
+// 	return (0);
+// }
+
 int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
 {
-	ft_printf("status: %d\n", data->status);
-	(void)type;
-
 	// if (!node || !node->left || !node->right)
 	// 	return (FAILED);
 	// if (!node->left->value || !node->right->value)
 	// 	return (FAILED);
 	// if (!node->right->value[0])
 	// 	return (FAILED);
+	
+	// int fd = check_and_open_file(node, data, type);
+	// if (fd == 1)
+	// 	return (1);
+	// if (data->num_proess == 1)
+	// {
+	// 	ft_printf("minishell: %s: ambiguous redirect\n", node->right->value[0]);
+	// 	data->exit_status = 1;
+	// 	return (1);
+	// }
 	if (data->check_file_1 == 0)
 	{
+		
 		data->name_path_file = ft_strdup(node->right->value[0]);
 		if (!data->name_path_file)
 		{
@@ -120,16 +178,16 @@ int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
 			return (FAILED);
 		}
 	}
-	data->fd_file = open_file(data->name_path_file, type);
+	data->fd_file = open_file(data->name_path_file, type, data);
 	if (data->fd_file == -1)
 		return (FAILED);
-	if (data->check_file_1 != 0)
-	{
-		int d = open_file(node->right->value[0], type);
-		if (d == -1)
-			return (FAILED);
-	}
-	data->check_file_1 = 1;
+	// if (data->check_file_1 != 0)
+	// {
+	// 	int d = open_file(node->right->value[0], type, data);
+	// 	if (d == -1)
+	// 		return (FAILED);
+	// }
+	// data->check_file_1 = 1;
 	pid_t pid = fork();
 	if (pid == -1)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_handler_ast.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:27:02 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/25 14:19:58 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:19:58 by aahaded         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static int execute_builtin(char **args, t_data *data)
 
 static void handle_operator(t_ast *root, t_data *data)
 {
+		// ft_printf("lsssss\n");
 	if (ft_strcmp(root->value[0], "&&") == 0)
 	{
 		execute_ast(root->left, data);
-		ft_printf("status2: %d\n", data->status);
 		if (data->status == 0)
 			execute_ast(root->right, data);
 	}
@@ -49,27 +49,25 @@ static void handle_operator(t_ast *root, t_data *data)
 	else if (ft_strcmp(root->value[0], "|") == 0)
 		execute_pipe(root, data);
 	else if (ft_strcmp(root->value[0], ">") == 0)
-		execute_redir_RightArrow_redirout(root, data, "redirout");
+		data->status = execute_redir_RightArrow_redirout(root, data, "redirout");
 	else if (ft_strcmp(root->value[0], "<") == 0)
-		execute_redir_inp(root, data);
+		data->status = execute_redir_inp(root, data);
 	else if (ft_strcmp(root->value[0], ">>") == 0)
-		execute_redir_RightArrow_redirout(root, data, "RightArrow");
+		data->status = execute_redir_RightArrow_redirout(root, data, "RightArrow");
 	else if (ft_strcmp(root->value[0], "<<") == 0)
-		execute_heredoc(root, data);
+		data->status = execute_heredoc(root, data);
 }
 
-static int handle_builtin(t_ast *root, t_data *data)// "$use"$user""$user'$user'"$user"'$user'""''"''"
+static int handle_builtin(t_ast *root, t_data *data)
 {
 	if (check_special_chars(root->value) == 1)
 	{
-		// process_strings(root, data);
 		handle_wildcards(root->value, data);
 		ft_remove_quots(root->value, data);
 		return (execute_builtin(data->matches, data));
 	}
 	else
 	{
-		// process_strings(root, data);
 		ft_remove_quots(root->value, data);
 		return (execute_builtin(root->value, data));
 	}
@@ -79,17 +77,15 @@ static int handle_command(t_ast *root, t_data *data)
 {
 	if (check_special_chars(root->value) == 1)
 	{
-		// process_strings(root, data);
 		handle_wildcards(root->value, data);
 		ft_remove_quots(data->matches, data);
 		if (is_builtin(data->matches[0], data))
-			data->status = handle_builtin(root, data);//$HOME$HOME
+			data->status = handle_builtin(root, data);
 		else
-			data->status = execute_command(data->matches, data);//       '$HOME'"$HOME"'$HOME'"$HOME"'$HOME'"$HOME"'$HOME'"$HOME"'$HOME'"$HOME"
+			data->status = execute_command(data->matches, data);
 	}
 	else
 	{
-		// process_strings(root, data);
 		ft_remove_quots(root->value, data);
 		data->status = execute_command(root->value, data);
 	}

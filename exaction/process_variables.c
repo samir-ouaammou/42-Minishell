@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_variables.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:28:01 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/25 14:30:34 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:28:03 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 size_t calculate_length(char *str, t_data *data)
 {
+	(void)data;
+	(void)str;
 	size_t len;
 	int i;
 
@@ -21,7 +23,7 @@ size_t calculate_length(char *str, t_data *data)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0' && str[i + 1] != '$')
+		if ((str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0') && str[i + 1] != '$' && str[i + 1] != '*')
 			len += handle_env_var_length(str, data, &i);
 		else if (str[i] == '$' && str[i + 1] == '?' && str[i + 1] != '$')
 			len += handle_exit_status_length(data, &i);
@@ -75,10 +77,11 @@ void process_variable(char *str, char *res, t_data *data)
 
 	i = 0;
 	res_index = 0;
+	
 	while (str[i])
 	{
 
-		if ((str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0') && str[i + 1] != '$')
+		if ((str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0') && str[i + 1] != '$' && str[i + 1] != '*')
 		{
 			handle_env_var(&str[i], res, data, &res_index);
 			i += ft_strlen(get_str_Dollars(&str[i])) + 1;
@@ -98,34 +101,15 @@ void process_variable(char *str, char *res, t_data *data)
 	res[res_index] = '\0';
 }
 
-void process_strings(t_ast *root, t_data *data)
+char  *process_strings(char *str, t_data *data)
 {
-	char **res;
-	int i, count;
+	char	*res_str;
+	int		len = 0;
 
-	if (!root || !root->value || !data)
-		return;
-	count = 0;
-	while (root->value[count])
-		count++;
-	res = malloc(sizeof(char *) * (count + 1));
-	if (!res)
-		return;
-	i = 0;
-	while (i < count)
-	{
-		int len = calculate_length(root->value[i], data);
-		res[i] = malloc(len + 1);
-		if (!res[i])
-		{
-			free_all(res);
-			return;
-		}
-		process_variable(root->value[i], res[i], data);
-		i++;
-	}
-	res[count] = NULL;
-	if (root->value)
-		free_all(root->value);
-	root->value = res;
+	len = calculate_length(str, data);
+	res_str = malloc(len + 1);
+	if (!res_str)
+		return (NULL);
+	process_variable(str, res_str, data);
+	return (res_str);
 }

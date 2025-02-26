@@ -38,9 +38,16 @@ int execute_heredoc(t_ast *node, t_data *data)
 {
     int fd_file;
 
-    fd_file = open_input_file(node);
-    if (fd_file == -1)
+    fd_file = open_input_file(node, data);
+    if (fd_file == -1 || fd_file == 42)
+    {
+        // if (fd_file == 42)
+        // {
+        //     ft_printf("minishell: %s: ambiguous redirect", node->right->value[0]);
+        //     data->exit_status = 1;
+        // }
         return (1);
+    }
     int stdinp_backup = dup(STDIN_FILENO);
     dup2(fd_file, STDIN_FILENO);
     execute_ast(node->left, data);

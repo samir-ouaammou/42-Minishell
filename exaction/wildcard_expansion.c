@@ -112,5 +112,6 @@ int handle_wildcards(char **args, t_data *data)
 		i++;
 	}
 	data->matches[match_index] = NULL;
+	// ft_printf("match: %s\n", data->matches[1]);
 	return (0);
 }

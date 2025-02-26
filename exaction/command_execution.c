@@ -43,18 +43,17 @@ static void handle_exec_failure(char *cmd, int check_, char *path_args)
 	(void)path_args;
 	if (check_)
 	{
-		fprintf(stderr, "minishell: %s: No such file or directory\n", cmd);
+		ft_printf("minishell: %s: No such file or directory\n", cmd);
 		// free(path_args);
 		exit(127);
 	}
-	fprintf(stderr, "minishell: %s: Command not found\n", cmd);
+	ft_printf("minishell: %s: Command not found\n", cmd);
 	// free(path_args);
 	exit(127);
 }
 
 static int handle_exit_status(t_data *data, int status)
 {
-
 	if (WEXITSTATUS(status) == 0)
 	{
 		data->exit_status = 0;
@@ -82,7 +81,7 @@ int execute_command(char **cmd, t_data *data)
 
 	if (cmd[0][0] == '\0')
 	{
-		fprintf(stderr, "minishell: %s: Command not found\n", cmd[0]);
+		ft_printf("minishell: %s: Command not found\n", cmd[0]);
 		data->exit_status = 127;
 		return (1);
 	}
@@ -93,8 +92,12 @@ int execute_command(char **cmd, t_data *data)
 	{
 		is_directory(cmd[0]);
 		char *path_args = get_path_env(cmd[0], data);
-		if (path_args != NULL && !contains_slash(cmd[0]))
+		if ((path_args != NULL && !contains_slash(cmd[0])) || cmd[0][0] == '.')
+		{
+			if (!path_args)
+				path_args = ft_strdup(cmd[0]);
 			execve(path_args, cmd, data->env);
+		}
 		else
 			handle_exec_failure(cmd[0], contains_slash(cmd[0]), path_args);
 		return (FAILED);
