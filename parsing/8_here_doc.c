@@ -154,7 +154,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
             shell->end = shell->j;
             while (str[shell->j] && str[shell->j] == ' ')
                 shell->j++;
-            ft_printf("aijgs;akldmgskml;d\n\n");
+            // ft_printf("aijgs;akldmgskml;d\n\n");
             if (str[shell->j] && (str[shell->j] == '>' || str[shell->j] == '|' || str[shell->j] == '&' || !str[shell->j]))
             {
                 while (shell->start < shell->end)
