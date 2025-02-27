@@ -71,7 +71,9 @@ void	ft_check_other_errors(t_parsing *shell)
 
 	while (tmp)
 	{
-		if (tmp && tmp->next && tmp->next->value && tmp->value && !tmp->value[1] && ft_check_is_redirections(tmp->value[0]) && ft_check_is_operators(tmp->next->value[0]))
+		if (tmp && tmp->next && tmp->next->value && tmp->value
+			&& !tmp->value[1] && ft_check_is_redirections(tmp->value[0])
+			&& ft_check_is_operators(tmp->next->value[0]))
 		{
 			ft_free_parsing(shell);
 			return ;
@@ -80,40 +82,61 @@ void	ft_check_other_errors(t_parsing *shell)
 	}
 }
 
-void	 ft_replace_tabs_with_spaces(t_parsing *shell, char *input)
-{
-    int i = 0, j = 0, new_len = 0;
 
-    while (input[i] != '\0')
+static int	ft_calculate_new_length(t_parsing *shell, char *input)
+{
+	shell->i = 0;
+	shell->len = 0;
+	while (input[shell->i])
 	{
-        if (input[i] == '\t')
-            new_len += 7;
-        else 
-            new_len += 1;
-        i++;
-    }
-    char *result = (char *)malloc(new_len + 1);
-    i = 0;
-    while (input[i] != '\0')
-	{
-        if (input[i] == '\t')
-		{
-            result[j++] = ' ';
-            result[j++] = ' ';
-            result[j++] = ' ';
-            result[j++] = ' ';
-            result[j++] = ' ';
-            result[j++] = ' ';
-            result[j++] = ' ';
-        }
-		else 
-            result[j++] = input[i];
-        i++;
-    }
-    result[j] = '\0';
-	free(shell->input);
-	shell->input = result;
+		if (input[shell->i] == '\t')
+			shell->len += 7;
+		else
+			shell->len += 1;
+		shell->i++;
+	}
+	return (shell->len);
 }
+
+static void	ft_convert_tabs_to_spaces(t_parsing *shell, char *input)
+{
+	shell->i = 0;
+	shell->j = 0;
+	while (input[shell->i])
+	{
+		if (input[shell->i] == '\t')
+		{
+			shell->cmds[shell->j++] = ' ';
+			shell->cmds[shell->j++] = ' ';
+			shell->cmds[shell->j++] = ' ';
+			shell->cmds[shell->j++] = ' ';
+			shell->cmds[shell->j++] = ' ';
+			shell->cmds[shell->j++] = ' ';
+			shell->cmds[shell->j++] = ' ';
+		}
+		else
+			shell->cmds[shell->j++] = input[shell->i];
+		shell->i++;
+	}
+	shell->cmds[shell->j] = '\0';
+}
+
+void	ft_replace_tabs_with_spaces(t_parsing *shell, char *input)
+{
+	shell->len = ft_calculate_new_length(shell, input);
+	shell->cmds = (char *)malloc(shell->len + 1);
+	if (!shell->cmds)
+		return ;
+	ft_convert_tabs_to_spaces(shell, input);
+	free(shell->input);
+	shell->input = ft_strdup(shell->cmds);
+	free(shell->cmds);
+	shell->cmds = NULL;
+	shell->i = 0;
+	shell->j = 0;
+	shell->len = 0;
+}
+
 
 void	ft_parsing(t_parsing *shell, int bol, t_data *data)
 {

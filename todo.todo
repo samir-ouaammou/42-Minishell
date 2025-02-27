@@ -90,17 +90,6 @@
         }
       },
       {
-        "key": 1740606688442,
-        "children": [],
-        "todo": {
-          "content": "*      [bash => {builtins: command not found}  ,  dyalna => {minishell: Makefile: Command not found}]",
-          "id": 1740606688442,
-          "level": "default",
-          "done": false,
-          "start": 1740606688442
-        }
-      },
-      {
         "key": 1740606804309,
         "children": [],
         "todo": {
@@ -109,6 +98,28 @@
           "level": "default",
           "done": false,
           "start": 1740606804309
+        }
+      },
+      {
+        "key": 1740650234036,
+        "children": [],
+        "todo": {
+          "content": "ls && ls && ls && ls && ls && ls && ls && ls && ls ** ls  =>   segmentation fault",
+          "id": 1740650234036,
+          "level": "default",
+          "done": false,
+          "start": 1740650234036
+        }
+      },
+      {
+        "key": 1740650239715,
+        "children": [],
+        "todo": {
+          "content": "",
+          "id": 1740650239715,
+          "level": "default",
+          "done": false,
+          "start": 1740650239715
         }
       }
     ],
@@ -124,6 +135,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1740606831303"
+    "version": "1740650329491"
   }
 }
