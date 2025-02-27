@@ -22,9 +22,11 @@ int	main(int ac, char **av, char **env)
 			write(2, "minishell: syntax error\n", 24);
 		if (shell.input)
 		{
-			printf("input =>   [%s]\n\n", shell.input);  // TMP
 			if (shell.tree)
+			{
+				printf("input =>   [%s]\n\n", shell.input);  // TMP
 				exaction(shell.tree, &data);
+			}
 			ft_free_parsing(&shell);
 		}
 		if (shell.history)

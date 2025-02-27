@@ -131,10 +131,30 @@ void	ft_replace_tabs_with_spaces(t_parsing *shell, char *input)
 	free(shell->input);
 	shell->input = ft_strdup(shell->cmds);
 	free(shell->cmds);
-	shell->cmds = NULL;
+	ft_init_parsing(shell);
+}
+
+
+void	ft_replace_newline_with_space(t_parsing *shell)
+{
+	if (!shell || !shell->input || !shell->input[0])
+		return;
 	shell->i = 0;
 	shell->j = 0;
-	shell->len = 0;
+	while (shell->input[shell->i])
+	{
+		if (shell->input[shell->i] == 34 || shell->input[shell->i] == 39)
+		{
+			shell->chr = shell->input[shell->i++];
+			while (shell->input[shell->i] && shell->input[shell->i] != shell->chr)
+				shell->i++;
+		}
+		if (shell->input[shell->i] == '\n')
+			shell->input[shell->i] = ' ';
+		if (shell->input[shell->i])
+			shell->i++;
+	}
+	ft_init_parsing(shell);
 }
 
 
@@ -145,6 +165,7 @@ void	ft_parsing(t_parsing *shell, int bol, t_data *data)
 	{
 		if (!bol)
 		{
+			ft_replace_newline_with_space(shell);
 			ft_replace_tabs_with_spaces(shell, shell->input);
 			ft_here_doc(shell, shell->input, data);
 		}
@@ -211,3 +232,4 @@ void	print_ast(t_ast *node, int level, char *branch)
 	print_ast(node->left, level + 1, "left");
 	print_ast(node->right, level + 1, "right");
 }
+

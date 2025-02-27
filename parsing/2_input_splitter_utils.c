@@ -9,7 +9,8 @@ int	ft_check_input_is_valid(t_parsing *shell)
 	while (shell->input && shell->input[shell->i])
 	{
 		if (shell->input[shell->i] != ' '
-			&& shell->input[shell->i] != '\t')
+			&& shell->input[shell->i] != '\t'
+			&& shell->input[shell->i] != '\n')
 			break ;
 		shell->i++;
 	}
@@ -92,3 +93,5 @@ void	ft_count_len_args(t_parsing *shell)
 		shell->len++;
 	}
 }
+
+
