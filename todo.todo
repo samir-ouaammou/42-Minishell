@@ -118,8 +118,10 @@
           "content": "cat << stop",
           "id": 1740650239715,
           "level": "default",
-          "done": false,
-          "start": 1740650239715
+          "done": true,
+          "start": 1740650239715,
+          "focus": false,
+          "end": 1740681063110
         }
       }
     ],
@@ -135,6 +137,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1740668637995"
+    "version": "1740681063156"
   }
 }

@@ -10,31 +10,21 @@ void free_split(char **split)
     free(split);
 }
 
-char **ft_split_quots(char *str)
+int count_words(char *str)
 {
-    char **res;
-    char c;
-    int i, j, k, h;
+    int count = 0;
+    int i = 0;
+    char c = '\0';
 
-    if (!str)
-        return (NULL);
-    res = malloc(strlen(str) * sizeof(char *));
-    if (!res)
-        return (NULL);
-    i = 0;
-    j = 0;
     while (str[i])
     {
-        c = '\0';
-        res[j] = malloc(strlen(str) + 1);
-        if (!res[j])
+        while (str[i] == ' ') 
+            i++;
+        if (str[i] == '\0')
+            break;
+        count++;
+        if (str[i] == '\'' || str[i] == '"')
         {
-            free_split(res);  // تحرير كل ما تم تخصيصه سابقًا
-            return (NULL);
-        }
-        if (str[i] == 39 || str[i] == 34)
-        {
-            k = i;
             c = str[i++];
             while (str[i] && str[i] != c)
                 i++;
@@ -43,10 +33,58 @@ char **ft_split_quots(char *str)
         }
         else
         {
-            k = i;
-            while (str[i] && str[i] != 39 && str[i] != 34)
+            while (str[i] && str[i] != ' ' && str[i] != '\'' && str[i] != '"')
                 i++;
         }
+    }
+    return count;
+}
+
+char **ft_split_quots(char *str)
+{
+    char **res;
+    char c;
+    int i = 0, j = 0, k, h;
+
+    if (!str)
+        return (NULL);
+    
+    int word_count = count_words(str);
+    res = malloc((word_count + 1) * sizeof(char *));
+    if (!res)
+        return (NULL);
+
+    while (str[i])
+    {
+        while (str[i] == ' ') 
+            i++;
+        if (str[i] == '\0')
+            break;
+
+        c = '\0';
+        k = i;
+
+        if (str[i] == '\'' || str[i] == '"') 
+        {
+            c = str[i++];
+            while (str[i] && str[i] != c)
+                i++;
+            if (str[i])
+                i++;
+        }
+        else
+        {
+            while (str[i] && str[i] != ' ' && str[i] != '\'' && str[i] != '"')
+                i++;
+        }
+
+        res[j] = malloc((i - k + 1) * sizeof(char)); 
+        if (!res[j])
+        {
+            free_split(res);
+            return (NULL);
+        }
+
         h = 0;
         while (k < i)
             res[j][h++] = str[k++];
@@ -79,7 +117,7 @@ char *ft_str_join(char **str, t_data *data)
                     free_split(str);
                     return (NULL);
                 }
-                free(str[i]); // تحرير الذاكرة القديمة
+                free(str[i]);
                 str[i] = tmp;
             }
             str[i] = process_strings(str[i], data);
@@ -93,7 +131,7 @@ char *ft_str_join(char **str, t_data *data)
                 free_split(str);
                 return (NULL);
             }
-            free(str[i]); // تحرير الذاكرة القديمة
+            free(str[i]);
             str[i] = tmp;
         }
         len += strlen(str[i]);
@@ -114,7 +152,7 @@ char *ft_str_join(char **str, t_data *data)
         i++;
     }
     res[k] = '\0';
-    free_split(str);  // تحرير المصفوفة بأكملها
+    free_split(str);
     return (res);
 }
 
@@ -131,7 +169,7 @@ void ft_remove_quots(char **str, t_data *data)
         split = ft_split_quots(str[i]);
         if (!split)
             return;
-        free(str[i]); // تحرير القديم قبل الاستبدال
+        free(str[i]);
         str[i] = ft_str_join(split, data);
         i++;
     }
