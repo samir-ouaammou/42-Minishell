@@ -114,6 +114,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
                 while (1)
                 {
                     shell->line = readline("heredoc> ");
+                    free(shell->line);
                 }
             }
             else
@@ -153,6 +154,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
             shell->end = shell->j;
             while (str[shell->j] && str[shell->j] == ' ')
                 shell->j++;
+            ft_printf("aijgs;akldmgskml;d\n\n");
             if (str[shell->j] && (str[shell->j] == '>' || str[shell->j] == '|' || str[shell->j] == '&' || !str[shell->j]))
             {
                 while (shell->start < shell->end)
@@ -167,10 +169,11 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
         else
             shell->i++;
     }
-    while (shell->start < shell->end)
+    while (shell->start < shell->end - 1)
     {
         str[shell->start] = '\t';
         shell->start++;
     }
+    // printf("input=>[%s]\nstrt=>[%d]\nend=>[%d]\nlen=>[%zu]\n", str, shell->start, shell->end, strlen(str));
     ft_move_input(shell, str);
 }

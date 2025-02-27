@@ -88,14 +88,9 @@ void	ft_delete_commits(t_parsing *shell)
 	}
 }
 
-// void	ft_move_tab(t_parsing *shell)
-// {
-// 	if (!shell || !shell->input)
-// }
 
 void	ft_split_args(t_parsing *shell)
 {
-	// ft_move_tab(shell);
 	ft_count_len_args(shell);
 	if (shell->free == -1)
 		return ;
