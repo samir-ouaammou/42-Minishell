@@ -115,7 +115,7 @@
         "key": 1740650239715,
         "children": [],
         "todo": {
-          "content": "",
+          "content": "cat << stop",
           "id": 1740650239715,
           "level": "default",
           "done": false,
@@ -135,6 +135,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1740650329491"
+    "version": "1740668637995"
   }
 }
