@@ -38,7 +38,7 @@ void ft_move_input(t_parsing *shell, char *str)
         {
             shell->itoa = ft_itoa(shell->nbr);
             shell->name = ft_strjoin("/tmp/heredoc", shell->itoa);
-            free(shell->itoa);
+            //free(shell->itoa);
 
             while (str[shell->i] && str[shell->i] == '\t')
                 shell->i++;
@@ -48,13 +48,13 @@ void ft_move_input(t_parsing *shell, char *str)
                 shell->help[shell->j++] = shell->name[shell->len];
                 shell->len++;
             }
-            free(shell->name);
+            //free(shell->name);
             shell->nbr++;
         }
         shell->help[shell->j++] = str[shell->i];
         shell->i++;
     }
-    free(shell->input);
+    //free(shell->input);
     shell->help[shell->j] = '\0';
     shell->input = shell->help;
 }
@@ -91,12 +91,12 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
         {
             shell->i += 2;
             shell->chr = ' ';
-            while (str[shell->i] && (str[shell->i] == ' '))
+            while (str[shell->i] && (str[shell->i] == ' ' /*|| str[shell->i] == '\n'*/))
                 shell->i++;
             if (ft_is(str[shell->i]) || !str[shell->i])
             {
                 ft_free_args(shell);
-                free(shell->stop);
+                //free(shell->stop);
                 return ;
             }
             if (shell->bol == 0)
@@ -121,7 +121,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
                 while (1)
                 {
                     shell->line = readline("heredoc> ");
-                    free(shell->line);
+                    //free(shell->line);
                 }
             }
             else
@@ -140,7 +140,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
                 ft_remove_quots(shell->stop, data);
                 shell->itoa = ft_itoa(shell->nbr);
                 shell->name = ft_strjoin("/tmp/heredoc", shell->itoa);
-                free(shell->itoa);
+                //free(shell->itoa);
                 shell->fd = open(shell->name, O_CREAT | O_RDWR | O_TRUNC, 0644);
                 while (1)
                 {
@@ -149,28 +149,42 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
                         break;
                     if (!strcmp(shell->stop[0], shell->line))
                     {
-                        free(shell->line);
+                        //free(shell->line);
                         break;
                     }
                     if (!dolar)
                         shell->line = process_strings(shell->line, data);
                     write(shell->fd, shell->line, ft_strlen(shell->line));
                     write(shell->fd, "\n", 1);
-                    free(shell->line);
+                    //free(shell->line);
                 }
                 close(shell->fd);
-                free(shell->name);
+                //free(shell->name);
             }
             shell->i = shell->j;
             shell->end = shell->j;
             while (str[shell->j] && str[shell->j] == ' ')
                 shell->j++;
-            free(shell->stop[0]);
-            shell->nbr++;
+            if (str[shell->j] && (str[shell->j] == '>' || str[shell->j] == '|' || str[shell->j] == '&' || !str[shell->j]))
+            {
+                while (shell->start < shell->end)
+                {
+                    str[shell->start] = '\t';///            ls > o -l -s < o -w 
+                    shell->start++;
+                }
+                shell->bol = 0;
+                //free(shell->stop[0]);
+                shell->nbr++;
+            }
         }
         else
             shell->i++;
     }
-    free(shell->stop);
+    while (shell->start < shell->end)
+    {
+        str[shell->start] = '\t';
+        shell->start++;
+    }
     ft_move_input(shell, str);
+    //free(shell->stop);
 }
