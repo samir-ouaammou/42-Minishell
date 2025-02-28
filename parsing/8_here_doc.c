@@ -23,7 +23,8 @@ void ft_move_input(t_parsing *shell, char *str)
             while (str[shell->i] && str[shell->i] == '\t')
                 shell->i++;
         }
-        shell->i++;
+        if (str[shell->i])
+            shell->i++;
     }
     if (shell->j == 0)
         return;
@@ -49,7 +50,8 @@ void ft_move_input(t_parsing *shell, char *str)
             shell->nbr++;
         }
         shell->help[shell->j++] = str[shell->i];
-        shell->i++;
+        if (str[shell->i])
+            shell->i++;
     }
     shell->help[shell->j] = '\0';
     shell->input = shell->help;
@@ -154,7 +156,6 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
             shell->end = shell->j;
             while (str[shell->j] && str[shell->j] == ' ')
                 shell->j++;
-            // ft_printf("aijgs;akldmgskml;d\n\n");
             if (str[shell->j] && (str[shell->j] == '>' || str[shell->j] == '|' || str[shell->j] == '&' || !str[shell->j]))
             {
                 while (shell->start < shell->end)
@@ -169,11 +170,10 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
         else
             shell->i++;
     }
-    while (shell->start < shell->end - 1)
+    while (shell->start < shell->end)
     {
         str[shell->start] = '\t';
         shell->start++;
     }
-    // printf("input=>[%s]\nstrt=>[%d]\nend=>[%d]\nlen=>[%zu]\n", str, shell->start, shell->end, strlen(str));
     ft_move_input(shell, str);
 }
