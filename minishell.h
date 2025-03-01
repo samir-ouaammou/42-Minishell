@@ -20,8 +20,6 @@
 # define SUCCESS 0
 # define FAILED 1
 
-
-
 typedef struct s_ast
 {
 	char			**value;
@@ -73,6 +71,9 @@ typedef struct s_data
 	char **matches;
 	char **DollarSign;
 	char **env;
+	char **env_buffer;
+	char **export;
+	char **export_buffer;
 	int status;
 	int exit_status;
 	int check_operator;
@@ -89,12 +90,7 @@ typedef struct s_data
 	int fd_file2;
 	int count_ok;
 	int is_plus;
-	int check_file_1;
-	int check_file_2;
-	char *name_path_file;
-	char *name_path_file2;
-    int num_proess;
-    int num_proess2;
+	char *save_pwd;
 }					t_data;
 
 
@@ -139,7 +135,7 @@ void				print_ast(t_ast *node, int level, char *branch); //temp
 
 // Functions Exaction
 
-int builtin_pwd(void);
+int	builtin_pwd(t_data *data);
 int builtin_exit(char **args, t_data *data);
 void read_env(t_data *data, char **envp);
 int builtin_cd(char **args, t_data *data);
@@ -176,8 +172,8 @@ void handle_env_var(char *str, char *res, t_data *data, int *res_index);
 // char *process_strings(char *str, t_data *data);
 void    free_all(char **args);
 int check_and_open_file(t_ast *node, t_data *data, char *type);
-
-
+char *add_double_quotes(char *str);
+char *add_double_quotes_plus(char *str_export, char *str);
 
 
 #endif

@@ -64,6 +64,7 @@ LIBFT_AR = $(LIBFT_PATH)/libft.a
 PRINTF_PATH = $(LIBFT_PATH)/printf
 PRINTF_AR = $(PRINTF_PATH)/libftprintf.a
 
+
 # GET_NEXT: Path
 GET_NEXT_PATH = $(LIBFT_PATH)/get_next_line
 
@@ -89,4 +90,3 @@ fclean: clean
 	@rm -r $(NAME)
 
 re: fclean all
-

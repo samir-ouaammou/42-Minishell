@@ -86,21 +86,21 @@ int check_and_open_file_input(t_ast *node, t_data *data, char *type)
 	// ft_printf("str_2: %s\n", node->right->value[0]);
 	while (str[i])
 	{
-		if (str[i] == ' ' && ft_strncmp(node->right->value[0], "$", 1) == 0)
-		{
-			data->num_proess2 = 1;
-			break;
-		}
+		// if (str[i] == ' ' && ft_strncmp(node->right->value[0], "$", 1) == 0)
+		// {
+		// 	data->num_proess2 = 1;
+		// 	break;
+		// }
 		i++;
 	}
 	free(str);
-	if (data->num_proess2 == 0)
-	{
-		ft_remove_quots(node->right->value, data);
-		int d = open_input_file(node, data);
-		if (d == -1)
-			return (1);
-	}
+	// if (data->num_proess2 == 0)
+	// {
+	// 	ft_remove_quots(node->right->value, data);
+	// 	int d = open_input_file(node, data);
+	// 	if (d == -1)
+	// 		return (1);
+	// }
 	return (0);
 }
 
@@ -125,11 +125,11 @@ int execute_redir_inp(t_ast *node, t_data *data)
 	// 	}
 	// }
 	data->fd_file2 = open_input_file(node, data);
-	if (data->fd_file2 == -1)
-	{
-		ft_printf("minishellawd: %s: %s\n", data->name_path_file2, strerror(errno));
-		return (FAILED);
-	}
+	// if (data->fd_file2 == -1)
+	// {
+	// 	ft_printf("minishellawd: %s: %s\n", data->name_path_file2, strerror(errno));
+	// 	return (FAILED);
+	// }
 	// if (data->check_file_2 != 0)
 	// {
 	// 	int d = open_input_file(node, data);

@@ -25,6 +25,8 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int	ft_isalpha(int c);
+char *ft_strncpy(char *dest, const char *src, int len);
 t_list *ft_lstnew(char **value);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 char	*ft_substr(char const *s, unsigned int start, size_t len);

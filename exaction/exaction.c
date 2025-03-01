@@ -45,12 +45,13 @@ void exaction(t_ast *root, t_data *data)
 	// }
 	// char *str = process_strings(root->value[0], data);
 	// ft_printf("str: %s\n", str);
+	// link_env_envBuffer(data);
 	execute_ast(root, data);
-	data->check_file_1 = 0;
-	data->check_file_2 = 0;
+	// data->check_file_1 = 0;
+	// data->check_file_2 = 0;
 	data->status = 0;
-	data->num_proess = 0;
-	data->num_proess2 = 0;
+	// data->num_proess = 0;
+	// data->num_proess2 = 0;
 	// free_all(data->env);
 	// free_all(data->matches);
 	// free_all(data->DollarSign);

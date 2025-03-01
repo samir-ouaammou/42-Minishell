@@ -62,6 +62,15 @@ int builtin_exit(char **args, t_data *data)
 	ft_printf("exit\n");
 	exit_code = handle_exit_args(args, &exit_code, data);
 	if (!exit_code)
-		exit(ft_atoi(args[1]));
+	{
+		int status = 0;
+		if (args[1])
+			status = ft_atoi(args[1]);
+		else
+			status = data->exit_status;
+		if (!status)
+			status = 0;
+		exit(status);
+	}
 	return (0);
 }

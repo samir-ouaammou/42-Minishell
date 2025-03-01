@@ -15,14 +15,14 @@
 static int execute_builtin(char **args, t_data *data)
 {
 	if (ft_strcmp(args[0], "pwd") == 0)
-		return (builtin_pwd());
+		return (builtin_pwd(data));
 	else if (ft_strcmp(args[0], "echo") == 0)
 		return (builtin_echo(args, data));
 	else if (ft_strcmp(args[0], "unset") == 0)
 		return (builtin_unset(args, data));
 	else if (ft_strcmp(args[0], "export") == 0)
 		return (builtin_export(args, data));
-	if (ft_strcmp(args[0], "cd") == 0)
+	else if (ft_strcmp(args[0], "cd") == 0)
 		return (builtin_cd(args, data));
 	else if (ft_strcmp(args[0], "env") == 0)
 		return (builtin_env(args, data));
@@ -33,7 +33,7 @@ static int execute_builtin(char **args, t_data *data)
 
 static void handle_operator(t_ast *root, t_data *data)
 {
-		// ft_printf("lsssss\n");
+	// ft_printf("lsssss\n");
 	if (ft_strcmp(root->value[0], "&&") == 0)
 	{
 		execute_ast(root->left, data);
@@ -60,6 +60,10 @@ static void handle_operator(t_ast *root, t_data *data)
 
 static int handle_builtin(t_ast *root, t_data *data)
 {
+	char path[1024];
+
+	if (getcwd(path, sizeof(path)))
+		data->save_pwd = ft_strdup(path);
 	if (check_special_chars(root->value) == 1)
 	{
 		handle_wildcards(root->value, data);

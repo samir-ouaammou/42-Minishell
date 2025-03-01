@@ -40,16 +40,26 @@ static int count_wildcards(char *str)
 	DIR *dir;
 	struct dirent *entry;
 	int count;
+	int check_count;
 
 	count = 0;
+	check_count = 0;
 	dir = opendir(".");
 	if (!dir)
 		return (1);
 	while ((entry = readdir(dir)) != NULL)
 	{
 		if (is_wildcard_match(str, entry->d_name))
+		{
+			// ft_printf("str: %s\n", str);
+			check_count += 1;
 			count++;
+		}
 	}
+	// ft_printf("A count: %d\n", count);
+	if (check_count == 0)
+		count += 1;
+	// ft_printf("A count: %d\n", count);
 	closedir(dir);
 	return (count);
 }
@@ -82,8 +92,11 @@ static int count_total_matches(char **args)
 	count = 0;
 	while (args[i])
 	{
+		// ft_printf("-> args: %s\n", args[i]);
 		if (check_for_wildcards(args[i]) == 0)
 			count += count_wildcards(args[i]);
+		else
+			count += 1;
 		i++;
 	}
 	return (count);
@@ -94,7 +107,7 @@ int handle_wildcards(char **args, t_data *data)
 	int(i), (count), (match_index);
 	i = 0;
 	match_index = 0;
-	
+
 	count = count_total_matches(args);
 	data->matches = malloc(sizeof(char *) * (count + 1));
 	if (!data->matches)
@@ -111,7 +124,13 @@ int handle_wildcards(char **args, t_data *data)
 		}
 		i++;
 	}
+	// ft_printf("count: %d\n", count);
 	data->matches[match_index] = NULL;
-	// ft_printf("match: %s\n", data->matches[1]);
+	// i = 0;
+	// while (data->matches[i])
+	// {
+	// 	ft_printf("matchs: %s\n", data->matches[i]);
+	// 	i++;
+	// }
 	return (0);
 }

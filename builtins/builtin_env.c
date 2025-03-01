@@ -12,14 +12,17 @@
 
 #include "../minishell.h"
 
-int	builtin_env(char **args, t_data *data)
+int builtin_env(char **args, t_data *data)
 {
-	int	i;
+	int i;
 
 	if (!data || !data->env || !args)
 		return (-1);
 	else if (args && args[1])
-		write(2, "minishell: env: too many arguments\n", 35);
+	{
+		ft_printf("minishell: env: too many arguments\n");
+		data->exit_status = 1;
+	}
 	else
 	{
 		i = 0;

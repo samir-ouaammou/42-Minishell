@@ -47,42 +47,34 @@ static void handle_exec_failure(char *cmd, int check_, char *path_args)
 		// free(path_args);
 		exit(127);
 	}
-	ft_printf("minishell: %s: Command not found\n", cmd);
+	fprintf(stderr, "minishell: %s: Command not found\n", cmd);
 	// free(path_args);
 	exit(127);
 }
 
-static int handle_exit_status(t_data *data, int status)
+int	check_is_directory(char *str)
 {
-	if (WEXITSTATUS(status) == 0)
+	int i = 0;
+	while (str[i])
 	{
-		data->exit_status = 0;
-		return (SUCCESS);
+		if (str[0] == '/')
+			return (1);
+		else if (str[i] == '.' && str[i + 1] == '/')
+			return (1);
+		i++;
 	}
-	else if (WEXITSTATUS(status) == 126)
-	{
-		data->exit_status = 126;
-		return (FAILED);
-	}
-	else if (WEXITSTATUS(status) == 127)
-	{
-		data->exit_status = 127;
-		return (FAILED);
-	}
-	else
-		data->exit_status = 1;
-	return (FAILED);
+	return (0);
 }
 
 int execute_command(char **cmd, t_data *data)
 {
 	pid_t pid;
-	int status, exit_s;
+	int status;
 
 	if (cmd[0][0] == '\0')
 	{
-		ft_printf("minishell: %s: Command not found\n", cmd[0]);
-		data->exit_status = 127;
+		// ft_printf("minishell: %s: Command not found\n", cmd[0]);
+		data->exit_status = 0;
 		return (1);
 	}
 	pid = fork();
@@ -90,13 +82,21 @@ int execute_command(char **cmd, t_data *data)
 		return (FAILED);
 	if (pid == 0)
 	{
-		is_directory(cmd[0]);
+		if (check_is_directory(cmd[0]) == 1)
+			is_directory(cmd[0]);
 		char *path_args = get_path_env(cmd[0], data);
-		if ((path_args != NULL && !contains_slash(cmd[0])) || cmd[0][0] == '.')
+		if ((path_args != NULL && !contains_slash(cmd[0])))
 		{
-			if (!path_args)
-				path_args = ft_strdup(cmd[0]);
-			execve(path_args, cmd, data->env);
+			if (execve(path_args, cmd, data->env) == -1)
+				ft_printf("minishell: %s: %s\n", cmd[0], strerror(errno));
+		}
+		else if (!path_args && contains_slash(cmd[0]))
+		{
+			if (execve(cmd[0], cmd, data->env) == -1)
+			{
+				ft_printf("minishell: %s: %s\n", cmd[0], strerror(errno));
+				exit(126);
+			}
 		}
 		else
 			handle_exec_failure(cmd[0], contains_slash(cmd[0]), path_args);
@@ -105,10 +105,8 @@ int execute_command(char **cmd, t_data *data)
 	wait(&status);
 	if (WIFEXITED(status))
 	{
-		exit_s = handle_exit_status(data, status);
-		if (exit_s == FAILED)
-			return (FAILED);
-		else if (exit_s == SUCCESS)
+		data->exit_status = WEXITSTATUS(status);
+		if (data->exit_status == 0)
 			return (SUCCESS);
 	}
 	return (FAILED);

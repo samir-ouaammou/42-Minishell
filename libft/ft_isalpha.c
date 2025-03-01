@@ -1,25 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: aahaded <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 18:13:03 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/16 18:13:05 by aahaded          ###   ########.fr       */
+/*   Created: 2024/10/22 10:06:49 by aahaded           #+#    #+#             */
+/*   Updated: 2024/10/22 11:18:39 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-#include "../minishell.h"
-
-int builtin_pwd(t_data *data)
+int	ft_isalpha(int c)
 {
-	if (data->save_pwd)
-	{
-		printf("%s\n", data->save_pwd);
-		data->exit_status = 0;
-		return (0);
-	}
-	data->exit_status = 1;
-	return (1);
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }

@@ -20,6 +20,7 @@ static int	handle_home_path(t_data *data)
 	if (!home_path)
 	{
 		ft_printf("minishell: cd: HOME not set\n");
+		data->exit_status = 1;
 		return (1);
 	}
 	chdir(ft_strchr(home_path, '=') + 1);
@@ -27,11 +28,12 @@ static int	handle_home_path(t_data *data)
 	return (0);
 }
 
-static int	handle_directory_change(char *dir)
+static int	handle_directory_change(char *dir, t_data *data)
 {
 	if (chdir(dir) == -1)
 	{
-		ft_printf("minishell: %s: No such file or directory\n", dir);
+		ft_printf("minishell: %s: %s\n", dir, strerror(errno));
+		data->exit_status = 1;
 		return (1);
 	}
 	return (0);
@@ -60,11 +62,12 @@ int	builtin_cd(char **args, t_data *data)
 	if (args[2])
 	{
 		ft_printf("minishell: cd: too many arguments\n");
+		data->exit_status = 1;
 		return (1);
 	}
 	if (args[0] && !args[1])
 		return (handle_home_path(data));
-	if (handle_directory_change(args[1]) != 0)
+	if (handle_directory_change(args[1], data) != 0)
 		return (1);
 	update_prompt(data);
 	return (0);
