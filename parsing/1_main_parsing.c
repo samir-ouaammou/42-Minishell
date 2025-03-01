@@ -156,7 +156,133 @@ void	ft_replace_newline_with_space(t_parsing *shell)
 	}
 	ft_init_parsing(shell);
 }
+void	ft_count_len_list(t_parsing *shell)
+{
+	shell->j = 0;
+	shell->i = -1;
+	while (++shell->i < 999)
+		shell->tab[shell->i] = 0;
+	shell->lst_help1 = shell->tokens;
+	while (shell->lst_help1)
+	{
+		shell->i = -1;
+		while (shell->lst_help1->value[++shell->i])
+			;
+		shell->tab[shell->j] = shell->i;
+		if (shell->lst_help1 && ft_check_is_redirections(shell->lst_help1->value[0]))
+		{
+			printf("\n");
+			shell->lst_help1 = shell->lst_help1->next;
+			shell->j++;
+			while(shell->lst_help1)
+			{
+				if (ft_check_is_operators(shell->lst_help1->value[0]))
+					break;
+				shell->i = -1;
+				while (shell->lst_help1->value[++shell->i])
+					;
+				shell->tab[shell->j] += shell->i;
+				if (shell->lst_help1)
+					shell->lst_help1 = shell->lst_help1->next;
+			}
+			shell->j++;
+		}
+		else if (shell->lst_help1)
+		{
+			shell->lst_help1 = shell->lst_help1->next;
+			shell->j++;
+		}
+	}
+	shell->len = shell->j;
+}
 
+
+
+
+
+void	ft_move_redirections(t_parsing *shell)
+{
+	int	i = 0;
+	int	j = 0;
+	int	k = 0;
+	char	**tmp = NULL;
+	t_list *head = NULL, *new = NULL;
+	ft_count_len_list(shell);
+	shell->lst_help1 = shell->tokens;
+	while (shell->tokens)
+	{
+		if (tmp)
+		{
+			free_split(tmp);
+			tmp = NULL;
+		}
+		tmp = malloc((shell->tab[j++] + 1) * sizeof(char *));
+		i = 0;
+		while (shell->tokens->value[i])
+		{
+			tmp[i] = ft_strdup(shell->tokens->value[i]);
+			i++;
+		}
+		if (i != -1)
+			tmp[i] = NULL;
+		if (shell->tokens && ft_check_is_redirections(shell->tokens->value[0]))
+		{
+			if (tmp[0])
+			{
+				tmp[i] = NULL;
+				new = ft_lstnew(tmp);
+				ft_lstadd_back(&head, new);
+				if (tmp)
+				{
+					free_split(tmp);
+					tmp = NULL;
+				}
+			}
+			shell->tokens = shell->tokens->next;
+			k = 0;
+			while(shell->tokens)
+			{
+				if (ft_check_is_operators(shell->tokens->value[0]))
+					break;
+				i = 0;
+				while (shell->tokens->value[i])
+				{
+					if (!k)
+					{
+						if (tmp)
+						{
+							free_split(tmp);
+							tmp = NULL;
+						}
+						tmp = malloc((shell->tab[j++] + 1) * sizeof(char *));
+					}
+					tmp[k] = ft_strdup(shell->tokens->value[i]);
+					k++;
+					i++;
+				}
+				if (shell->tokens)
+					shell->tokens = shell->tokens->next;
+			}
+			if (k)
+				tmp[k] = NULL;
+		}
+		else if (shell->tokens)
+			shell->tokens = shell->tokens->next;
+		
+		new = ft_lstnew(tmp);
+		ft_lstadd_back(&head, new);
+	}
+	if (tmp)
+	{
+		free_split(tmp);
+		tmp = NULL;
+	}
+	ft_free_tokens(shell);
+	shell->tokens = NULL;
+	shell->lst_help1 = NULL;
+	shell->lst_help2 = NULL;
+	shell->tokens = head;
+}
 
 void	ft_parsing(t_parsing *shell, int bol, t_data *data)
 {
@@ -171,6 +297,8 @@ void	ft_parsing(t_parsing *shell, int bol, t_data *data)
 		}
 		ft_split_args(shell);
 		ft_check_syntax_errors(shell);
+		if (bol)
+			ft_move_redirections(shell);
 		shell->tree = ft_creat_ast_tree(shell);
 		if (!shell->tree)
 			return ;
@@ -193,12 +321,12 @@ void	ft_parsing(t_parsing *shell, int bol, t_data *data)
 	}
 	// else ////-------------------
 	// {
-		// if (shell->free != -1 && shell->tree)	//	temp
-		// {
-		// 	printf("\n----------Parsing----------\n\n");
-		// 	print_ast(shell->tree, 0, "root");  //	temp
-		// 	printf("\n\n\n----------exacution----------\n\n");
-		// }
+		if (shell->free != -1 && shell->tree)	//	temp
+		{
+			printf("\n----------Parsing----------\n\n");
+			print_ast(shell->tree, 0, "root");  //	temp
+			printf("\n\n\n----------exacution----------\n\n");
+		}
 	// }   //-------------------
 }
 
@@ -232,4 +360,64 @@ void	print_ast(t_ast *node, int level, char *branch)
 	print_ast(node->left, level + 1, "left");
 	print_ast(node->right, level + 1, "right");
 }
+
+
+
+/*
+
+void	ft_move_redirections(t_parsing *shell)
+{
+	int i = 0;
+	int j = 0;
+	while (i < 100)
+		shell->tab[i++] = 0;
+	shell->lst_help1 = shell->tokens;
+	while (shell->tokens)
+	{
+		i = 0;
+		while (shell->tokens->value[i])
+		{
+			printf("%s ", shell->tokens->value[i]);
+			i++;
+		}
+		shell->tab[j] = i;
+		if (shell->tokens && ft_check_is_redirections(shell->tokens->value[0]))
+		{
+			printf("\n");
+			shell->tokens = shell->tokens->next;
+			j++;
+			while(shell->tokens)
+			{
+				if (ft_check_is_operators(shell->tokens->value[0]))
+					break;
+				int i = 0;
+				while (shell->tokens->value[i])
+				{
+					printf("%s ", shell->tokens->value[i]);
+					i++;
+				}
+				shell->tab[j] += i;
+				if (shell->tokens)
+					shell->tokens = shell->tokens->next;
+			}
+			j++;
+		}
+		else if (shell->tokens)
+		{
+			shell->tokens = shell->tokens->next;
+			j++;
+		}
+		printf("\n");
+	}
+	printf("\n\n");
+	i = 0;
+	while (i < j)
+	{
+		printf("%d\n", shell->tab[i]);
+		i++;
+	}
+}
+
+
+*/
 

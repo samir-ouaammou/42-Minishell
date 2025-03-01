@@ -20,11 +20,7 @@
 # define SUCCESS 0
 # define FAILED 1
 
-typedef struct s_list
-{
-	char			**value;
-	struct s_list	*next;
-}					t_list;
+
 
 typedef struct s_ast
 {
@@ -47,6 +43,7 @@ typedef struct s_parsing
 	int				end;
 	int				fd;
 	int				nbr;
+	int				tab[1000];
 	int				parent;
 	int				brackets;
 	int				priority;
@@ -107,7 +104,7 @@ typedef struct s_data
 int ft_check_is_operators(char *str);
 int ft_check_is_redirections(char *str);
 
-
+void free_split(char **split);
 void				ft_free_ast(t_ast *node);
 void				ft_remove_quots(char **str, t_data *data);
 void				ft_free_args(t_parsing *shell);

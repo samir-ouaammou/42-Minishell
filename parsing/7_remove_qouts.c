@@ -2,12 +2,18 @@
 
 void free_split(char **split)
 {
-    int i = 0;
+    int i;
     if (!split)
         return;
+    i = 0;
     while (split[i])
-        free(split[i++]);
+    {
+        free(split[i]);
+        split[i] =  NULL;
+        i++;
+    }
     free(split);
+    split = NULL;
 }
 
 int count_words(char *str)
