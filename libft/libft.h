@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:06:24 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/05 18:53:32 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/01 11:18:44 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_list
+{
+	char			**value;
+	struct s_list	*next;
+}					t_list;
+
+t_list *ft_lstnew(char **value);
+void	ft_lstadd_back(t_list **lst, t_list *new);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_strstr(const char *big, const char *little);
