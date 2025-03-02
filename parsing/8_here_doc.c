@@ -49,17 +49,17 @@ void ft_move_input(t_parsing *shell, char *str)
                 shell->len++;
             }
             shell->nbr++;
-            //free(shell->itoa);
-            //free(shell->name);
+            free(shell->itoa);
+            free(shell->name);
         }
         shell->help[shell->j++] = str[shell->i];
         if (str[shell->i])
             shell->i++;
     }
     shell->help[shell->j] = '\0';
-    //free(shell->input);
+    free(shell->input);
     shell->input = ft_strdup(shell->help);
-    //free(shell->help);
+    free(shell->help);
 }
 
 void ft_here_doc(t_parsing *shell, char *str, t_data *data)
@@ -96,7 +96,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
                 shell->i++;
             if (ft_is(str[shell->i]) || !str[shell->i])
             {
-                //ft_free_args(shell);
+                ft_free_args(shell);
                 return;
             }
             if (shell->bol == 0)
@@ -121,7 +121,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
                 while (1)
                 {
                     shell->line = readline("heredoc> ");
-                    //free(shell->line);
+                    free(shell->line);
                 }
             }
             else
@@ -148,18 +148,18 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
                         break;
                     if (!strcmp(shell->stop[0], shell->line))
                     {
-                        //free(shell->line);
+                        free(shell->line);
                         break;
                     }
                     if (!dolar)
                         shell->line = process_strings(shell->line, data);
                     write(shell->fd, shell->line, ft_strlen(shell->line));
                     write(shell->fd, "\n", 1);
-                    //free(shell->line);
+                    free(shell->line);
                 }
                 close(shell->fd);
-                //free(shell->itoa);
-                //free(shell->name);
+                free(shell->itoa);
+                free(shell->name);
             }
             shell->i = shell->j;
             shell->end = shell->j;

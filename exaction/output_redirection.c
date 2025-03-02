@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:45:18 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:12:40 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/02 21:09:42 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int ft_test(t_ast *node, t_data *data)
         // if (a != 0)
         // {
         //     a -= 1;
-        ft_printf("value: %s\n", node->right->value[0]);
+        // ft_printf("value: %s\n", node->right->value[0]);
         pid_t pid = fork();
         if (pid == -1)
         {
