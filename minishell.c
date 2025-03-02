@@ -25,7 +25,7 @@ int	main(int ac, char **av, char **env)
 		{
 			if (shell.tree)
 			{
-				printf("\ninput =>   [%s]\n\n", shell.input);  // TMP
+				// printf("\ninput =>   [%s]\n\n", shell.input);  // TMP
 				exaction(shell.tree, &data);
 			}
 			ft_free_parsing(&shell);

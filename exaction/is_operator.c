@@ -26,7 +26,7 @@ int is_builtin(char *cmd, t_data *data)
 		return (1);
 	args[0] = ft_strdup(cmd);
 	args[1] = NULL;
-	ft_remove_quots(args, data);
+	ft_remove_quots(args, data, 1);
 	char *temp = ft_strdup(args[0]);
 	// free_all(args);
 	if (ft_strcmp(temp, "cd") == 0 || ft_strcmp(temp, "echo") == 0 || ft_strcmp(temp, "env") == 0 || ft_strcmp(temp, "pwd") == 0 || ft_strcmp(temp, "export") == 0 || ft_strcmp(temp, "unset") == 0 || ft_strcmp(temp, "exit") == 0)

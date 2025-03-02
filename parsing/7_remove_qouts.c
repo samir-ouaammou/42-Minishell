@@ -101,7 +101,7 @@ char **ft_split_quots(char *str)
     return (res);
 }
 
-char *ft_str_join(char **str, t_data *data)
+char *ft_str_join(char **str, t_data *data, short bol)
 {
     int i, j, k, len;
     char *res, *tmp;
@@ -127,7 +127,8 @@ char *ft_str_join(char **str, t_data *data)
                 free(str[i]);
                 str[i] = tmp;
             }
-            str[i] = process_strings(str[i], data);
+            if (bol)
+                str[i] = process_strings(str[i], data);
         }
         else
         {
@@ -163,7 +164,7 @@ char *ft_str_join(char **str, t_data *data)
     return (res);
 }
 
-void ft_remove_quots(char **str, t_data *data)
+void ft_remove_quots(char **str, t_data *data, short bol)
 {
     int i;
     char **split;
@@ -177,7 +178,7 @@ void ft_remove_quots(char **str, t_data *data)
         if (!split)
             return;
         free(str[i]);
-        str[i] = ft_str_join(split, data);
+        str[i] = ft_str_join(split, data, bol);
         i++;
     }
 }

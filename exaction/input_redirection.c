@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:43:27 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:12:48 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:52:01 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int check_and_open_file_input(t_ast *node, t_data *data, char *type)
 	free(str);
 	// if (data->num_proess2 == 0)
 	// {
-	// 	ft_remove_quots(node->right->value, data);
+	// 	ft_remove_quots(node->right->value, data, 1);
 	// 	int d = open_input_file(node, data);
 	// 	if (d == -1)
 	// 		return (1);

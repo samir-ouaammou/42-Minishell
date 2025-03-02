@@ -68,12 +68,12 @@ static int handle_builtin(t_ast *root, t_data *data)
 	if (check_special_chars(root->value) == 1)
 	{
 		handle_wildcards(root->value, data);
-		ft_remove_quots(root->value, data);
+		ft_remove_quots(root->value, data, 1);
 		return (execute_builtin(data->matches, data));
 	}
 	else
 	{
-		ft_remove_quots(root->value, data);
+		ft_remove_quots(root->value, data, 1);
 		return (execute_builtin(root->value, data));
 	}
 }
@@ -83,7 +83,7 @@ static int handle_command(t_ast *root, t_data *data)
 	if (check_special_chars(root->value) == 1)
 	{
 		handle_wildcards(root->value, data);
-		ft_remove_quots(data->matches, data);
+		ft_remove_quots(data->matches, data, 1);
 		if (is_builtin(data->matches[0], data))
 			data->status = handle_builtin(root, data);
 		else
@@ -91,7 +91,7 @@ static int handle_command(t_ast *root, t_data *data)
 	}
 	else
 	{
-		ft_remove_quots(root->value, data);
+		ft_remove_quots(root->value, data, 1);
 		data->status = execute_command(root->value, data);
 	}
 	return (data->status);

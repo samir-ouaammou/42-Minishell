@@ -137,7 +137,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_data *data)
                     }
                     h++;
                 }
-                ft_remove_quots(shell->stop, data);
+                ft_remove_quots(shell->stop, data, 0);
                 shell->itoa = ft_itoa(shell->nbr);
                 shell->name = ft_strjoin("/tmp/heredoc", shell->itoa);
                 shell->fd = open(shell->name, O_CREAT | O_RDWR | O_TRUNC, 0644);

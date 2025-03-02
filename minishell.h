@@ -96,27 +96,22 @@ typedef struct s_data
 
 // Functions Pxaction
 
-
-int ft_check_is_operators(char *str);
-int ft_check_is_redirections(char *str);
-
-void free_split(char **split);
+void				free_split(char **split);
 void				ft_free_ast(t_ast *node);
-void				ft_remove_quots(char **str, t_data *data);
 void				ft_free_args(t_parsing *shell);
 void				ft_split_args(t_parsing *shell);
 void				ft_free_tokens(t_parsing *shell);
 int					ft_count_tree_nodes(t_ast *tree);
+int					ft_check_is_operators(char *str);
 void				ft_skip_string(t_parsing *shell);
 void				ft_init_parsing(t_parsing *shell);
 void				ft_free_parsing(t_parsing *shell);
+int					ft_check_is_redirections(char *str);
 void				ft_count_len_args(t_parsing *shell);
 int					ft_get_symbol_type(t_parsing *shell);
 t_ast				*ft_creat_ast_tree(t_parsing *shell);
-void				ft_parsing(t_parsing *shell, int bol, t_data *data);
 int					ft_ast_contains_brackets(t_ast *tree);
 void				ft_check_syntax_errors(t_parsing *shell);
-void				ft_here_doc(t_parsing *shell, char *str, t_data *data);
 int					ft_check_input_is_valid(t_parsing *shell);
 int					ft_check_single_operators(t_parsing *shell);
 int					ft_check_double_operators(t_parsing *shell);
@@ -124,8 +119,11 @@ void				ft_check_operator_position(t_parsing *shell);
 t_list				*ft_get_list_node(t_list *tokens, int index);
 int					ft_is_redirections(t_parsing *shell, int index);
 t_ast				*ft_creat_ast_node(t_parsing *shell, char **value);
+void				ft_parsing(t_parsing *shell, int bol, t_data *data);
 int					ft_is_logical_operators(t_parsing *shell, int index);
+void				ft_remove_quots(char **str, t_data *data, short bol);
 void    			ft_pars_redirections(t_parsing *shell, t_list *list);
+void				ft_here_doc(t_parsing *shell, char *str, t_data *data);
 t_ast				*ft_build_command_tree(t_parsing *shell, int start, int end);
 int					is_wildcard_match(const char *wildcard, const char *filename);
 t_ast				*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
