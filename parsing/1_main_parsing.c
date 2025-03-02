@@ -170,7 +170,6 @@ void	ft_count_len_list(t_parsing *shell)
 		shell->tab[shell->j] = shell->i;
 		if (shell->lst_help1 && ft_check_is_redirections(shell->lst_help1->value[0]))
 		{
-			printf("\n");
 			shell->lst_help1 = shell->lst_help1->next;
 			shell->j++;
 			while(shell->lst_help1)
@@ -194,10 +193,6 @@ void	ft_count_len_list(t_parsing *shell)
 	}
 	shell->len = shell->j;
 }
-
-
-
-
 
 void	ft_move_redirections(t_parsing *shell)
 {
@@ -359,64 +354,3 @@ void	print_ast(t_ast *node, int level, char *branch)
 	print_ast(node->left, level + 1, "left");
 	print_ast(node->right, level + 1, "right");
 }
-
-
-
-/*
-
-void	ft_move_redirections(t_parsing *shell)
-{
-	int i = 0;
-	int j = 0;
-	while (i < 100)
-		shell->tab[i++] = 0;
-	shell->lst_help1 = shell->tokens;
-	while (shell->tokens)
-	{
-		i = 0;
-		while (shell->tokens->value[i])
-		{
-			printf("%s ", shell->tokens->value[i]);
-			i++;
-		}
-		shell->tab[j] = i;
-		if (shell->tokens && ft_check_is_redirections(shell->tokens->value[0]))
-		{
-			printf("\n");
-			shell->tokens = shell->tokens->next;
-			j++;
-			while(shell->tokens)
-			{
-				if (ft_check_is_operators(shell->tokens->value[0]))
-					break;
-				int i = 0;
-				while (shell->tokens->value[i])
-				{
-					printf("%s ", shell->tokens->value[i]);
-					i++;
-				}
-				shell->tab[j] += i;
-				if (shell->tokens)
-					shell->tokens = shell->tokens->next;
-			}
-			j++;
-		}
-		else if (shell->tokens)
-		{
-			shell->tokens = shell->tokens->next;
-			j++;
-		}
-		printf("\n");
-	}
-	printf("\n\n");
-	i = 0;
-	while (i < j)
-	{
-		printf("%d\n", shell->tab[i]);
-		i++;
-	}
-}
-
-
-*/
-
