@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   input_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:43:27 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 08:43:30 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/02 16:12:48 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 // static void execute_without_left_redirection(int fd_file2, char **args,
 // 											 t_data *data)

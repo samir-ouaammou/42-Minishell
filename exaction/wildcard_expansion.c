@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:34:38 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/25 14:19:04 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/02 16:12:24 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 // {
 // 	char *args[] = {str, NULL}
 // }
+
 
 static int check_for_wildcards(char *pattern)
 {

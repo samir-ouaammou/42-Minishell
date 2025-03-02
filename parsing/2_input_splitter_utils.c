@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 int	ft_check_input_is_valid(t_parsing *shell)

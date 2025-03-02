@@ -5,6 +5,7 @@ int	main(int ac, char **av, char **env)
 	t_parsing	shell;
 	t_data		data;
 
+
 	if (ac != 1)
 	{
 		write(2, "Error: Invalid number of arguments.\n", 36);

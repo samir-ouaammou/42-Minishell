@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:13:03 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/16 18:13:05 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/02 16:13:23 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,4 @@ int builtin_pwd(t_data *data)
 	data->exit_status = 1;
 	return (1);
 }
+

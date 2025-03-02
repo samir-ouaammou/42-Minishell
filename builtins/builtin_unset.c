@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:13:36 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/16 18:13:38 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/02 16:13:20 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 static void	remove_env_var(t_data *data, int index)
 {

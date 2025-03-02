@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   input_redirection_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:27:26 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 16:27:27 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/02 16:12:50 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 int	open_input_file(t_ast *node, t_data *data)
 {

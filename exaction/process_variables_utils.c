@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   process_variables_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:27:50 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 16:27:52 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/02 16:12:30 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 int is_valid_char(char c)
 {

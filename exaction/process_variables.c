@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   process_variables.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:28:01 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 16:28:03 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/02 16:12:27 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 size_t calculate_length(char *str, t_data *data)
 {

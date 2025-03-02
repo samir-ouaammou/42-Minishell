@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution_pipes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:35:04 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 08:35:06 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/02 16:12:57 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 static int create_pipe(int pipefd[2])
 {

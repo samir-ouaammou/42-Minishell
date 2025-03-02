@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:25:07 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 16:25:09 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/02 16:13:06 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 static void update_shlvl(t_data *data)
 {

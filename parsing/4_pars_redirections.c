@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+
 int ft_check_is_operators(char *str)
 {
     if (!str || !str[0])

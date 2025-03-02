@@ -12,6 +12,7 @@
 
 #include "../minishell.h"
 
+
 static int execute_builtin(char **args, t_data *data)
 {
 	if (ft_strcmp(args[0], "pwd") == 0)

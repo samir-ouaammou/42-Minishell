@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:11:56 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/16 18:11:58 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/02 16:13:26 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 void print_export(t_data *data)
 {

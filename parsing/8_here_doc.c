@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+
 int ft_is(char c)
 {
     if (c == '<' || c == '>' || c == '|' || c == '&')

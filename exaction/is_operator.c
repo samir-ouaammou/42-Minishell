@@ -37,3 +37,4 @@ int is_builtin(char *cmd, t_data *data)
 	// free(temp);
 	return (0);
 }
+

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 15:16:22 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/16 15:16:30 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/02 16:13:38 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
 
 static int	handle_home_path(t_data *data)
 {

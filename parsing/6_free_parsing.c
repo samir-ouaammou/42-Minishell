@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 void	ft_free_parsing(t_parsing *shell)

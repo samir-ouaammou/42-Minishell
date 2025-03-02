@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+
 char *ft_compress_wildcards(const char *input)
 {
     char    *res;

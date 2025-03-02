@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-
 void	ft_init_parsing(t_parsing *shell)
 {
 	shell->i = 0;

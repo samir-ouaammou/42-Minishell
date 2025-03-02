@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 int ft_count_tree_nodes(t_ast *tree)

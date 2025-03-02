@@ -1,4 +1,3 @@
-
 #include "../minishell.h"
 
 void	ft_check_the_brackets(t_parsing *shell)
