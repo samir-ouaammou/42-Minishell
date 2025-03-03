@@ -42,18 +42,28 @@ SRCS_BUILTINS = $(PATH_BUILTINS)/builtin_echo.c \
                 $(PATH_BUILTINS)/builtin_pwd.c \
                 $(PATH_BUILTINS)/builtin_unset.c
 
+# SRCS_WILDCARDS
+SRCS_WILDCARDS = $(PATH_WILDCARDS)/wildcard.c
+
+# SRCS_SIGNALS
+SRCS_SIGNALS = $(PATH_SIGNALS)/signals.c
+
 # PROGRAM NAME
 NAME = minishell
 
 PATH_PARSING = ./parsing
+PATH_SIGNALS = ./signals
 PATH_EXACTION = ./exaction
 PATH_BUILTINS = ./builtins
+PATH_WILDCARDS = ./wildcards
 
 # OBJS: Object files
 OBJS_MAIN = $(SRCS_MAIN:.c=.o)
+OBJS_SIGNALS = $(SRCS_SIGNALS:.c=.o)
 OBJS_PARSING = $(SRCS_PARSING:.c=.o)
 OBJS_EXACTION = $(SRCS_EXACTION:.c=.o)
 OBJS_BUILTINS = $(SRCS_BUILTINS:.c=.o)
+OBJS_WILDCARDS = $(SRCS_WILDCARDS:.c=.o)
 
 # LIBFT: Paths
 LIBFT_PATH = ./libft
@@ -68,10 +78,10 @@ CFLAGS = -Wall -Wextra -Werror  #-g3 -fsanitize=address
 
 all: $(NAME)
 
-$(NAME): $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS)
+$(NAME): $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(OBJS_SIGNALS) $(OBJS_WILDCARDS)
 	@make --no-print-directory -C $(LIBFT_PATH)
 	@make --no-print-directory -C $(PRINTF_PATH)
-	@$(CC) $(CFLAGS) $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(LIBFT_AR) $(PRINTF_AR) -o $(NAME) -lreadline
+	@$(CC) $(CFLAGS) $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(OBJS_SIGNALS) $(OBJS_WILDCARDS) $(LIBFT_AR) $(PRINTF_AR) -o $(NAME) -lreadline
 	@echo "\033[1;32m✅ Compilation finished successfully!\033[0m"
 
 %.o: %.c
