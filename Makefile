@@ -15,7 +15,6 @@ SRCS_PARSING =  $(PATH_PARSING)/1_main_parsing.c \
                 $(PATH_PARSING)/8_here_doc.c \
                 $(PATH_PARSING)/9_handle_wildcard.c
 
-
 # SRCS_EXACTION
 SRCS_EXACTION = $(PATH_EXACTION)/exaction.c \
                 $(PATH_EXACTION)/is_operator.c \
@@ -43,6 +42,7 @@ SRCS_BUILTINS = $(PATH_BUILTINS)/builtin_echo.c \
                 $(PATH_BUILTINS)/builtin_pwd.c \
                 $(PATH_BUILTINS)/builtin_unset.c
 
+# PROGRAM NAME
 NAME = minishell
 
 PATH_PARSING = ./parsing
