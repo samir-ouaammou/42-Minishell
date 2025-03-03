@@ -84,7 +84,9 @@ int execute_command(char **cmd, t_exaction *data)
 			}
 		}
 		else
+		{
 			handle_exec_failure(cmd[0], contains_slash(cmd[0]), path_args);
+		}
 		return (FAILED);
 	}
 	wait(&status);

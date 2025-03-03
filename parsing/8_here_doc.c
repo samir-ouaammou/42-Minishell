@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-
 int ft_is(char c)
 {
     if (c == '<' || c == '>' || c == '|' || c == '&')
@@ -141,6 +140,14 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
                 shell->itoa = ft_itoa(shell->nbr);
                 shell->name = ft_strjoin("/tmp/heredoc", shell->itoa);
                 shell->fd = open(shell->name, O_CREAT | O_RDWR | O_TRUNC, 0644);
+                // pid_t pid = fork();
+                // if (pid == -1)
+                // {
+                //     perror("minishell: fork");
+                //     return (1);
+                // }
+                // else if (pid == 0)
+                // {
                 while (1)
                 {
                     shell->line = readline("heredoc> ");
@@ -157,6 +164,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
                     write(shell->fd, "\n", 1);
                     free(shell->line);
                 }
+                // }
                 close(shell->fd);
                 free(shell->itoa);
                 free(shell->name);

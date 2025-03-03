@@ -28,8 +28,8 @@ static void update_shlvl(t_exaction *data)
 			new_shlvl = ft_strjoin("SHLVL=", num);
 			free(data->env[i]);
 			data->env[i] = new_shlvl;
-			free(num);
-			free(new_shlvl);
+			// free(num);
+			// free(new_shlvl);
 			return;
 		}
 		i++;

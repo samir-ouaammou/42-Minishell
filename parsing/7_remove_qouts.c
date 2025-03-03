@@ -8,11 +8,11 @@ void free_split(char **split)
     i = 0;
     while (split[i])
     {
-        free(split[i]);
+        // free(split[i]);
         split[i] =  NULL;
         i++;
     }
-    free(split);
+    // free(split);
     split = NULL;
 }
 
@@ -87,7 +87,7 @@ char **ft_split_quots(char *str)
         res[j] = malloc((i - k + 1) * sizeof(char)); 
         if (!res[j])
         {
-            free_split(res);
+            // free_split(res);
             return (NULL);
         }
 
@@ -120,10 +120,10 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
                 tmp = strdup(&str[i][1]);
                 if (!tmp)
                 {
-                    free_split(str);
+                    // free_split(str);
                     return (NULL);
                 }
-                free(str[i]);
+                // free(str[i]);
                 str[i] = tmp;
             }
             if (bol)
@@ -135,10 +135,10 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
             tmp = strdup(&str[i][1]);
             if (!tmp)
             {
-                free_split(str);
+                // free_split(str);
                 return (NULL);
             }
-            free(str[i]);
+            // free(str[i]);
             str[i] = tmp;
         }
         len += strlen(str[i]);
@@ -147,7 +147,7 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
     res = malloc((len + 1) * sizeof(char));
     if (!res)
     {
-        free_split(str);
+        // free_split(str);
         return (NULL);
     }
     i = 0;
@@ -159,7 +159,7 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
         i++;
     }
     res[k] = '\0';
-    free_split(str);
+    // free_split(str);
     return (res);
 }
 
@@ -176,7 +176,7 @@ void ft_remove_quots(char **str, t_exaction *data, short bol)
         split = ft_split_quots(str[i]);
         if (!split)
             return;
-        free(str[i]);
+        // free(str[i]);
         str[i] = ft_str_join(split, data, bol);
         i++;
     }

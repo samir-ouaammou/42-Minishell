@@ -72,7 +72,7 @@ PRINTF_PATH = $(LIBFT_PATH)/printf
 PRINTF_AR = $(PRINTF_PATH)/libftprintf.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror  #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-g3 -fsanitize=address
 
 all: $(NAME)
 
@@ -104,4 +104,5 @@ re: fclean all
 
 
 #       rda =>       ls > $a    .      16 heredoc      .      signals
+
 #       leeks  norm

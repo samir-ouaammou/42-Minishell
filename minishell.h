@@ -8,6 +8,9 @@
 # include <dirent.h>
 # include <stdlib.h>
 # include <string.h>
+#include <signal.h>
+#include <stdio.h>
+#include <unistd.h>
 # include <fnmatch.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
@@ -89,7 +92,7 @@ typedef struct s_exaction
 	int					count_ok;
 	int					is_plus;
 	char				*save_pwd;
-	t_parsing			*shell;
+	t_parsing			*shell_c;
 }						t_exaction;
 
 // Functions Pxaction
@@ -127,8 +130,8 @@ int						is_wildcard_match(const char *wildcard, const char *filename);
 t_ast					*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
 void	print_ast(t_ast *node, int level, char *branch); //////////////////////////////////temp
 
-
 // Functions Exaction
+
 void					free_all(char **args);
 int						is_operator(char *str);
 char					*get_str_Dollars(char *str);
