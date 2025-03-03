@@ -6,14 +6,14 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:11:56 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:13:26 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-void print_export(t_data *data)
+void print_export(t_exaction *data)
 {
 	int i;
 
@@ -28,7 +28,7 @@ void print_export(t_data *data)
 	}
 }
 
-static int update_env_var(char **args, t_data *data, char *str, int i)
+static int update_env_var(char **args, t_exaction *data, char *str, int i)
 {
 	int j;
 	int found;
@@ -86,7 +86,7 @@ char *get_key_part(char *str, char delimiter)
 	return (NULL);
 }
 
-static int update_export_var(char **args, t_data *data, char *str, int i)
+static int update_export_var(char **args, t_exaction *data, char *str, int i)
 {
 	int j;
 	int found;
@@ -129,7 +129,7 @@ static int update_export_var(char **args, t_data *data, char *str, int i)
 	return (found);
 }
 
-static int add_default_export(char *str, t_data *data, int len)
+static int add_default_export(char *str, t_exaction *data, int len)
 {
 	(void)str;
 	char **new_export;
@@ -165,7 +165,7 @@ static int add_default_export(char *str, t_data *data, int len)
 	return (0);
 }
 
-static int add_new_env_var(char **args, t_data *data, int index)
+static int add_new_env_var(char **args, t_exaction *data, int index)
 {
 	char **new_env;
 	int count;
@@ -193,7 +193,7 @@ static int add_new_env_var(char **args, t_data *data, int index)
 	return (0);
 }
 
-static int add_new_export_var(char **args, t_data *data, int index)
+static int add_new_export_var(char **args, t_exaction *data, int index)
 {
 	char **new_export;
 	int count;
@@ -317,7 +317,7 @@ char *add_double_quotes(char *str)
 	return (res);
 }
 
-int builtin_export(char **args, t_data *data)
+int builtin_export(char **args, t_exaction *data)
 {
 	(void)args;
 	int i;

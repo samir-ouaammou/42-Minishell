@@ -1,34 +1,5 @@
 #include "../minishell.h"
 
-void	ft_init_parsing(t_parsing *shell)
-{
-	shell->i = 0;
-	shell->j = 0;
-	shell->bol = 0;
-	shell->len = 0;
-	shell->end = 0;
-	shell->fd = -1;
-	shell->free = 0;
-	shell->start = 0;
-	shell->parent = 0;
-	shell->brackets = 0;
-	shell->priority = 0;
-	shell->cmds = NULL;
-	shell->name = NULL;
-	shell->itoa = NULL;
-	shell->stop = NULL;
-	shell->line = NULL;
-	shell->help = NULL;
-	shell->temp = NULL;
-	shell->tree = NULL;
-	shell->tokens = NULL;
-	shell->lst_help1 = NULL;
-	shell->lst_help2 = NULL;
-	shell->start_node = NULL;
-	shell->end_node = NULL;
-}
-
-
 int	ft_count_nodes_list(t_list *list)
 {
 	int	count;
@@ -303,7 +274,7 @@ int	ft_count_heredoc(t_parsing *shell)
 	return (1);
 }
 
-void	ft_parsing(t_parsing *shell, int bol, t_data *data)
+void	ft_parsing(t_parsing *shell, int bol, t_exaction *data)
 {
 	ft_init_parsing(shell);
 	if (ft_check_input_is_valid(shell))

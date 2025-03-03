@@ -27,7 +27,7 @@ typedef struct s_ast
 	struct s_ast	*right;
 }					t_ast;
 
-typedef struct s_data t_data_struct;
+typedef struct s_data t_exaction_struct;
 
 // struct Pxaction
 typedef struct s_parsing
@@ -61,12 +61,11 @@ typedef struct s_parsing
 	t_list			*lst_help2;
 	t_list			*start_node;
 	t_list			*end_node;
-	t_data_struct   *data;
+	t_exaction_struct   *data;
 }					t_parsing;
 
-
 // struct Exaction
-typedef struct s_data
+typedef struct s_exaction
 {
 	char **matches;
 	char **DollarSign;
@@ -91,7 +90,8 @@ typedef struct s_data
 	int count_ok;
 	int is_plus;
 	char *save_pwd;
-}					t_data;
+	t_parsing *shell;
+}					t_exaction;
 
 
 // Functions Pxaction
@@ -119,11 +119,11 @@ void				ft_check_operator_position(t_parsing *shell);
 t_list				*ft_get_list_node(t_list *tokens, int index);
 int					ft_is_redirections(t_parsing *shell, int index);
 t_ast				*ft_creat_ast_node(t_parsing *shell, char **value);
-void				ft_parsing(t_parsing *shell, int bol, t_data *data);
+void				ft_parsing(t_parsing *shell, int bol, t_exaction *data);
 int					ft_is_logical_operators(t_parsing *shell, int index);
-void				ft_remove_quots(char **str, t_data *data, short bol);
+void				ft_remove_quots(char **str, t_exaction *data, short bol);
 void    			ft_pars_redirections(t_parsing *shell, t_list *list);
-void				ft_here_doc(t_parsing *shell, char *str, t_data *data);
+void				ft_here_doc(t_parsing *shell, char *str, t_exaction *data);
 t_ast				*ft_build_command_tree(t_parsing *shell, int start, int end);
 int					is_wildcard_match(const char *wildcard, const char *filename);
 t_ast				*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
@@ -133,43 +133,43 @@ void				print_ast(t_ast *node, int level, char *branch); //temp
 
 // Functions Exaction
 
-int	builtin_pwd(t_data *data);
-int builtin_exit(char **args, t_data *data);
-void read_env(t_data *data, char **envp);
-int builtin_cd(char **args, t_data *data);
-int builtin_env(char **args, t_data *data);
-int builtin_echo(char **str, t_data *data);
-int builtin_unset(char **args, t_data *data);
-int builtin_export(char **args, t_data *data);
-void exaction(t_ast *root, t_data *data);
-char *get_path_env(char *cmd, t_data *data);
-int execute_command(char **cmd, t_data *data);
-int execute_pipe(t_ast *node, t_data *data);
-int handle_wildcards(char **args, t_data *data);
-int execute_ast(t_ast *root, t_data *data);
-int execute_redir_inp(t_ast *node, t_data *data);
-int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type);
-void read_env(t_data *data, char **envp);
-char *find_str_env(char *str, t_data *data);
-char	*process_strings(char *str, t_data *data);
+int	builtin_pwd(t_exaction *data);
+int builtin_exit(char **args, t_exaction *data);
+void read_env(t_exaction *data, char **envp);
+int builtin_cd(char **args, t_exaction *data);
+int builtin_env(char **args, t_exaction *data);
+int builtin_echo(char **str, t_exaction *data);
+int builtin_unset(char **args, t_exaction *data);
+int builtin_export(char **args, t_exaction *data);
+void exaction(t_ast *root, t_exaction *data);
+char *get_path_env(char *cmd, t_exaction *data);
+int execute_command(char **cmd, t_exaction *data);
+int execute_pipe(t_ast *node, t_exaction *data);
+int handle_wildcards(char **args, t_exaction *data);
+int execute_ast(t_ast *root, t_exaction *data);
+int execute_redir_inp(t_ast *node, t_exaction *data);
+int execute_redir_RightArrow_redirout(t_ast *node, t_exaction *data, char *type);
+void read_env(t_exaction *data, char **envp);
+char *find_str_env(char *str, t_exaction *data);
+char	*process_strings(char *str, t_exaction *data);
 int check_special_chars(char **args);
 int is_operator(char *str);
-int is_builtin(char *cmd, t_data *data);
+int is_builtin(char *cmd, t_exaction *data);
 void copy_string(char *str, char *res);
-size_t handle_env_var_length(char *str, t_data *data, int *index);
-size_t handle_exit_status_length(t_data *data, int *index);
+size_t handle_env_var_length(char *str, t_exaction *data, int *index);
+size_t handle_exit_status_length(t_exaction *data, int *index);
 char	*get_str_Dollars(char *str);
-int	open_input_file(t_ast *node, t_data *data);
+int	open_input_file(t_ast *node, t_exaction *data);
 char	**copy_args(char **args, int start, int count);
-int execute_heredoc(t_ast *node, t_data *data);
+int execute_heredoc(t_ast *node, t_exaction *data);
 int	count_args(char **args, int start);
 char	**merge_command_args(t_ast *node, int count_left, int count_right);
-size_t calculate_length(char *str, t_data *data);
-void process_variable(char *str, char *res, t_data *data);
-void handle_env_var(char *str, char *res, t_data *data, int *res_index);
-// char *process_strings(char *str, t_data *data);
+size_t calculate_length(char *str, t_exaction *data);
+void process_variable(char *str, char *res, t_exaction *data);
+void handle_env_var(char *str, char *res, t_exaction *data, int *res_index);
+// char *process_strings(char *str, t_exaction *data);
 void    free_all(char **args);
-int check_and_open_file(t_ast *node, t_data *data, char *type);
+int check_and_open_file(t_ast *node, t_exaction *data, char *type);
 char *add_double_quotes(char *str);
 char *add_double_quotes_plus(char *str_export, char *str);
 

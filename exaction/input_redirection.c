@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:43:27 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 20:52:01 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 // static void execute_without_left_redirection(int fd_file2, char **args,
-// 											 t_data *data)
+// 											 t_exaction *data)
 // {
 // 	data->stdin_backup = dup(STDIN_FILENO);
 // 	dup2(fd_file, STDIN_FILENO);
@@ -23,7 +23,7 @@
 // 	close(data->stdin_backup);
 // }
 
-// static void execute_with_redirection(t_ast *node, int fd_file, t_data *data)
+// static void execute_with_redirection(t_ast *node, int fd_file, t_exaction *data)
 // {
 // 	int stdin_backup;
 
@@ -72,7 +72,7 @@
 // }
 
 
-int check_and_open_file_input(t_ast *node, t_data *data, char *type)
+int check_and_open_file_input(t_ast *node, t_exaction *data, char *type)
 {
 	if (!node || !node->right || !node->right->value[0])
 		return (0);
@@ -105,7 +105,7 @@ int check_and_open_file_input(t_ast *node, t_data *data, char *type)
 	return (0);
 }
 
-int execute_redir_inp(t_ast *node, t_data *data)
+int execute_redir_inp(t_ast *node, t_exaction *data)
 {
 	// int fd = check_and_open_file_input(node, data, NULL);
 	// if (fd == 1)

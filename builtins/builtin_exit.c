@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:06:26 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:13:30 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int is_numeric(const char *str)
 	return (1);
 }
 
-static int handle_exit_args(char **args, int *exit_code, t_data *data)
+static int handle_exit_args(char **args, int *exit_code, t_exaction *data)
 {
 	if (args[1])
 	{
@@ -52,7 +52,7 @@ static int handle_exit_args(char **args, int *exit_code, t_data *data)
 	return (0);
 }
 
-int builtin_exit(char **args, t_data *data)
+int builtin_exit(char **args, t_exaction *data)
 {
 	(void)data;
 	int exit_code;

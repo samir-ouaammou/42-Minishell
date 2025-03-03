@@ -6,14 +6,14 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:26:04 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:13:02 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-char *find_str_env(char *str, t_data *data)
+char *find_str_env(char *str, t_exaction *data)
 {
 	int i;
 	if (!str || !data->env || !data->env[0])
@@ -30,7 +30,7 @@ char *find_str_env(char *str, t_data *data)
 	return (NULL);
 }
 
-void exaction(t_ast *root, t_data *data)
+void exaction(t_ast *root, t_exaction *data)
 {
 	// if (root == NULL)
 	// 	return;

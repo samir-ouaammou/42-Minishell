@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:20:01 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:13:04 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char *get_path_env_utils(char **path, char *cmd)
 }
 
 
-char *get_path_env(char *cmd, t_data *data)
+char *get_path_env(char *cmd, t_exaction *data)
 {
     char **path;
     int i, check_path;

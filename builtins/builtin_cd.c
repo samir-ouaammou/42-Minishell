@@ -6,14 +6,14 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 15:16:22 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:13:38 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-static int	handle_home_path(t_data *data)
+static int	handle_home_path(t_exaction *data)
 {
 	char	*home_path;
 
@@ -29,7 +29,7 @@ static int	handle_home_path(t_data *data)
 	return (0);
 }
 
-static int	handle_directory_change(char *dir, t_data *data)
+static int	handle_directory_change(char *dir, t_exaction *data)
 {
 	if (chdir(dir) == -1)
 	{
@@ -40,7 +40,7 @@ static int	handle_directory_change(char *dir, t_data *data)
 	return (0);
 }
 
-static void	update_prompt(t_data *data)
+static void	update_prompt(t_exaction *data)
 {
 	char	buffer[1024];
 	char	*last_slash;
@@ -58,7 +58,7 @@ static void	update_prompt(t_data *data)
 		data->name_pro = "➜ / ";
 }
 
-int	builtin_cd(char **args, t_data *data)
+int	builtin_cd(char **args, t_exaction *data)
 {
 	if (args[2])
 	{

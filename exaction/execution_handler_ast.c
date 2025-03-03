@@ -13,7 +13,7 @@
 #include "../minishell.h"
 
 
-static int execute_builtin(char **args, t_data *data)
+static int execute_builtin(char **args, t_exaction *data)
 {
 	if (ft_strcmp(args[0], "pwd") == 0)
 		return (builtin_pwd(data));
@@ -32,7 +32,7 @@ static int execute_builtin(char **args, t_data *data)
 	return (0);
 }
 
-static void handle_operator(t_ast *root, t_data *data)
+static void handle_operator(t_ast *root, t_exaction *data)
 {
 	// ft_printf("lsssss\n");
 	if (ft_strcmp(root->value[0], "&&") == 0)
@@ -59,7 +59,7 @@ static void handle_operator(t_ast *root, t_data *data)
 		data->status = execute_heredoc(root, data);
 }
 
-static int handle_builtin(t_ast *root, t_data *data)
+static int handle_builtin(t_ast *root, t_exaction *data)
 {
 	char path[1024];
 
@@ -78,7 +78,7 @@ static int handle_builtin(t_ast *root, t_data *data)
 	}
 }
 
-static int handle_command(t_ast *root, t_data *data)
+static int handle_command(t_ast *root, t_exaction *data)
 {
 	if (check_special_chars(root->value) == 1)
 	{
@@ -97,7 +97,7 @@ static int handle_command(t_ast *root, t_data *data)
 	return (data->status);
 }
 
-int execute_ast(t_ast *root, t_data *data)
+int execute_ast(t_ast *root, t_exaction *data)
 {
 	if (!root)
 		return (FAILED);

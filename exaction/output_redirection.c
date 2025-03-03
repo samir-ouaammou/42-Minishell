@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:45:18 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 21:09:42 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int a = 3;
 
 
-int ft_test(t_ast *node, t_data *data)
+int ft_test(t_ast *node, t_exaction *data)
 {
     (void)data;
     if (!node || !node->left || !node->right || !node->left->value[0] || !node->right->value[0])
@@ -60,7 +60,7 @@ int ft_test(t_ast *node, t_data *data)
     return (0);
 }
 
-int execute_redir_RightArrow_redirout(t_ast *node, t_data *data, char *type)
+int execute_redir_RightArrow_redirout(t_ast *node, t_exaction *data, char *type)
 {
     int fd = ft_test(node, data);
     (void)type;

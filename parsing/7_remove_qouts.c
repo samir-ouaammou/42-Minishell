@@ -100,7 +100,7 @@ char **ft_split_quots(char *str)
     return (res);
 }
 
-char *ft_str_join(char **str, t_data *data, short bol)
+char *ft_str_join(char **str, t_exaction *data, short bol)
 {
     int i, j, k, len;
     char *res, *tmp;
@@ -163,7 +163,7 @@ char *ft_str_join(char **str, t_data *data, short bol)
     return (res);
 }
 
-void ft_remove_quots(char **str, t_data *data, short bol)
+void ft_remove_quots(char **str, t_exaction *data, short bol)
 {
     int i;
     char **split;

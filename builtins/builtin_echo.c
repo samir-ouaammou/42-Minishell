@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 15:43:21 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:13:36 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	print_arguments(char **str, int i)
 	}
 }
 
-int	builtin_echo(char **str, t_data *data)
+int	builtin_echo(char **str, t_exaction *data)
 {
 	int	i;
 	int	newline;

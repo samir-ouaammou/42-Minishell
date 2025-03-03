@@ -6,14 +6,14 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:25:07 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:13:06 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-static void update_shlvl(t_data *data)
+static void update_shlvl(t_exaction *data)
 {
 	int i;
 	int shlvl_value;
@@ -34,7 +34,7 @@ static void update_shlvl(t_data *data)
 	}
 }
 
-static void copy_envp(t_data *data, char **envp)
+static void copy_envp(t_exaction *data, char **envp)
 {
 	int count, i;
 
@@ -80,7 +80,7 @@ static void copy_envp(t_data *data, char **envp)
 	update_shlvl(data);
 }
 
-static void create_default_env(t_data *data)
+static void create_default_env(t_exaction *data)
 {
 	int add_num;
 	char path[1024], (*pwd_path);
@@ -138,7 +138,7 @@ static void create_default_env(t_data *data)
 	data->export[add_num + 2] = NULL;
 }
 
-void read_env(t_data *data, char **envp)
+void read_env(t_exaction *data, char **envp)
 {
 	if (*envp)
 		copy_envp(data, envp);

@@ -6,14 +6,14 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:13:36 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:13:20 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-static void	remove_env_var(t_data *data, int index)
+static void	remove_env_var(t_exaction *data, int index)
 {
 	while (data->env[index + 1])
 	{
@@ -23,7 +23,7 @@ static void	remove_env_var(t_data *data, int index)
 	data->env[index] = NULL;
 }
 
-static void	remove_export_var(t_data *data, int index)
+static void	remove_export_var(t_exaction *data, int index)
 {
 	while (data->export[index + 1])
 	{
@@ -33,7 +33,7 @@ static void	remove_export_var(t_data *data, int index)
 	data->export[index] = NULL;
 }
 
-int	builtin_unset(char **args, t_data *data)
+int	builtin_unset(char **args, t_exaction *data)
 {
 	int	i;
 	int	j;

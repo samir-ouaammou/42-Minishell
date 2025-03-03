@@ -17,7 +17,7 @@ int is_operator(char *str)
 	return (ft_strcmp(str, "|") == 0 || ft_strcmp(str, "||") == 0 || ft_strcmp(str, "&&") == 0 || ft_strcmp(str, ">") == 0 || ft_strcmp(str, "<") == 0 || ft_strcmp(str, "<<") == 0 || ft_strcmp(str, ">>") == 0);
 }
 
-int is_builtin(char *cmd, t_data *data)
+int is_builtin(char *cmd, t_exaction *data)
 {
 	// printf("cmd: %s\n", cmd);
 	(void)data;

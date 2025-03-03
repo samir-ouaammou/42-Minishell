@@ -62,7 +62,7 @@ void ft_move_input(t_parsing *shell, char *str)
     free(shell->help);
 }
 
-void ft_here_doc(t_parsing *shell, char *str, t_data *data)
+void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
 {
     int h;
     int dolar;

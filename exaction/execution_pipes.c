@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:35:04 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:12:57 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int create_pipe(int pipefd[2])
 	return (SUCCESS);
 }
 
-static void execute_child_first(t_ast *node, t_data *data, int *pipefd)
+static void execute_child_first(t_ast *node, t_exaction *data, int *pipefd)
 {
 	close(pipefd[0]);
 	dup2(pipefd[1], STDOUT_FILENO);
@@ -29,7 +29,7 @@ static void execute_child_first(t_ast *node, t_data *data, int *pipefd)
 	exit(data->exit_status);
 }
 
-static void execute_child_second(t_ast *node, t_data *data, int *pipefd)
+static void execute_child_second(t_ast *node, t_exaction *data, int *pipefd)
 {
 	close(pipefd[1]);
 	dup2(pipefd[0], STDIN_FILENO);
@@ -38,7 +38,7 @@ static void execute_child_second(t_ast *node, t_data *data, int *pipefd)
 	exit(data->exit_status);
 }
 
-int execute_pipe(t_ast *node, t_data *data)
+int execute_pipe(t_ast *node, t_exaction *data)
 {
 	int pipefd[2];
 
