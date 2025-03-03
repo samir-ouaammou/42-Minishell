@@ -127,8 +127,8 @@ int						is_wildcard_match(const char *wildcard, const char *filename);
 t_ast					*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
 void	print_ast(t_ast *node, int level, char *branch); //////////////////////////////////temp
 
-// Functions Exaction
 
+// Functions Exaction
 void					free_all(char **args);
 int						is_operator(char *str);
 char					*get_str_Dollars(char *str);
