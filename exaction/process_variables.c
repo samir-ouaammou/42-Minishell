@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   process_variables.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:28:01 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 16:28:03 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-size_t calculate_length(char *str, t_data *data)
+size_t calculate_length(char *str, t_exaction *data)
 {
 	(void)data;
 	(void)str;
@@ -36,7 +36,7 @@ size_t calculate_length(char *str, t_data *data)
 	return (len);
 }
 
-void handle_env_var(char *str, char *res, t_data *data, int *res_index)
+void handle_env_var(char *str, char *res, t_exaction *data, int *res_index)
 {
 	char(*var), (*chrstr), (*env_var);
 	var = get_str_Dollars(str);
@@ -59,7 +59,7 @@ void handle_env_var(char *str, char *res, t_data *data, int *res_index)
 	}
 }
 
-static void handle_exit_status(char *res, t_data *data, int *res_index)
+static void handle_exit_status(char *res, t_exaction *data, int *res_index)
 {
 	char *exit_status;
 
@@ -71,7 +71,7 @@ static void handle_exit_status(char *res, t_data *data, int *res_index)
 	}
 }
 
-void process_variable(char *str, char *res, t_data *data)
+void process_variable(char *str, char *res, t_exaction *data)
 {
 	int i, res_index;
 
@@ -101,7 +101,7 @@ void process_variable(char *str, char *res, t_data *data)
 	res[res_index] = '\0';
 }
 
-char  *process_strings(char *str, t_data *data)
+char  *process_strings(char *str, t_exaction *data)
 {
 	char	*res_str;
 	int		len = 0;

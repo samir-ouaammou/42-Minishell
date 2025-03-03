@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:22:07 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 08:22:09 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void handle_exec_failure(char *cmd, int check_, char *path_args)
 	exit(127);
 }
 
-int execute_command(char **cmd, t_data *data)
+int execute_command(char **cmd, t_exaction *data)
 {
 	pid_t pid;
 	int status;

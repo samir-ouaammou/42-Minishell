@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:20:01 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 08:20:04 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char *get_path_env_utils(char **path, char *cmd)
 }
 
 
-char *get_path_env(char *cmd, t_data *data)
+char *get_path_env(char *cmd, t_exaction *data)
 {
     char **path;
     int i, check_path;

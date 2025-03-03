@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:34:38 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/25 14:19:04 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int count_wildcards(char *str)
 	return (count);
 }
 
-static int expand_wildcards(char *pattern, t_data *data, int *index)
+static int expand_wildcards(char *pattern, t_exaction *data, int *index)
 {
 	DIR *dir;
 	struct dirent *entry;
@@ -93,7 +93,7 @@ static int count_total_matches(char **args)
 	return (count);
 }
 
-int handle_wildcards(char **args, t_data *data)
+int handle_wildcards(char **args, t_exaction *data)
 {
 	int(i), (count), (match_index);
 	i = 0;

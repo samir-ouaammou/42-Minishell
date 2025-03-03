@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/souaammo/1337-Minishell",
-      "program": "/home/souaammo/1337-Minishell/build/Debug/outDebug",
+      "cwd": "/home/souaammo/Desktop/1337-Minishell",
+      "program": "/home/souaammo/Desktop/1337-Minishell/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

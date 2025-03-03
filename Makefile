@@ -22,14 +22,12 @@ SRCS_EXACTION = $(PATH_EXACTION)/exaction.c \
                 $(PATH_EXACTION)/command_execution.c \
                 $(PATH_EXACTION)/execution_pipes.c \
                 $(PATH_EXACTION)/wildcard_expansion.c \
-                $(PATH_EXACTION)/output_redirection.c \
-                $(PATH_EXACTION)/input_redirection.c \
+                $(PATH_EXACTION)/redirection.c \
                 $(PATH_EXACTION)/execution_handler_ast.c \
                 $(PATH_EXACTION)/env_handler.c \
                 $(PATH_EXACTION)/process_variables.c \
                 $(PATH_EXACTION)/execution_handler_ast_utils.c \
                 $(PATH_EXACTION)/process_variables_utils.c \
-                $(PATH_EXACTION)/input_redirection_utils.c \
                 $(PATH_EXACTION)/handle_heredoc.c \
 		$(PATH_EXACTION)/memory_cleanup.c
 

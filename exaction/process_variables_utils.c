@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_variables_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:27:50 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 16:27:52 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*get_str_Dollars(char *str)
 	return (res);
 }
 
-size_t	handle_env_var_length(char *str, t_data *data, int *index)
+size_t	handle_env_var_length(char *str, t_exaction *data, int *index)
 {
 	(void)data;
 	(void)index;
@@ -94,7 +94,7 @@ size_t	handle_env_var_length(char *str, t_data *data, int *index)
 	return (len);
 }
 
-size_t	handle_exit_status_length(t_data *data, int *index)
+size_t	handle_exit_status_length(t_exaction *data, int *index)
 {
 	size_t	len;
 	char	*exit_status;

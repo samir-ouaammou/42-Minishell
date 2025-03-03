@@ -159,6 +159,7 @@ char					**copy_args(char **args, int start, int count);
 int						execute_heredoc(t_ast *node, t_exaction *data);
 int						handle_wildcards(char **args, t_exaction *data);
 int						execute_redir_inp(t_ast *node, t_exaction *data);
+int						execute_redirection(t_ast *root, t_exaction *data);
 char					*add_double_quotes_plus(char *str_export, char *str);
 size_t					handle_exit_status_length(t_exaction *data, int *index);
 void					process_variable(char *str, char *res, t_exaction *data);
@@ -167,5 +168,4 @@ size_t					handle_env_var_length(char *str, t_exaction *data, int *index);
 char					**merge_command_args(t_ast *node, int count_left, int count_right);
 void					handle_env_var(char *str, char *res, t_exaction *data, int *res_index); // char *process_strings(char *str, t_exaction *data);
 int						execute_redir_RightArrow_redirout(t_ast *node, t_exaction *data, char *type);
-
 #endif

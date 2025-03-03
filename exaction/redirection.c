@@ -1,7 +1,7 @@
 
 #include "../minishell.h"
 
-int execute_redirection(t_ast *root, t_data *data)
+int execute_redirection(t_ast *root, t_exaction *data)
 {
     if (!root)
         return (0);

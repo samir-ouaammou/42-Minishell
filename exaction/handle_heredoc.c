@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 18:50:08 by aahaded           #+#    #+#             */
-/*   Updated: 2025/02/17 18:50:10 by aahaded          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	open_input_file(t_ast *node, t_data *data)
+int	open_input_file(t_ast *node, t_exaction *data)
 {
 	int	fd_file;
 
@@ -26,7 +26,7 @@ int	open_input_file(t_ast *node, t_data *data)
 	return (fd_file);
 }
 
-int execute_heredoc(t_ast *node, t_data *data)
+int execute_heredoc(t_ast *node, t_exaction *data)
 {
     int fd_file;
 
