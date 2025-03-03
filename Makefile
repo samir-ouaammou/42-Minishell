@@ -72,7 +72,7 @@ $(NAME): $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS)
 	@make --no-print-directory -C $(LIBFT_PATH)
 	@make --no-print-directory -C $(PRINTF_PATH)
 	@$(CC) $(CFLAGS) $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(LIBFT_AR) $(PRINTF_AR) -o $(NAME) -lreadline
-	@echo "✅ Compilation finished successfully!"
+	@echo "\033[1;32m✅ Compilation finished successfully!\033[0m"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -81,15 +81,18 @@ clean:
 	@make clean --no-print-directory -C $(LIBFT_PATH)
 	@make clean --no-print-directory -C $(PRINTF_PATH)
 	@find . -name "*.o" -delete
-	@echo "🧹 Clean completed."
+	@echo "\033[1;34m🧹 Clean completed.\033[0m"
 
 fclean: clean
 	@make fclean --no-print-directory -C $(LIBFT_PATH)
 	@make fclean --no-print-directory -C $(PRINTF_PATH)
 	@rm -f $(NAME)
-	@echo "🗑️ Full clean completed."
+	@echo "\033[1;31m🗑️ Full clean completed.\033[0m"
+
 
 re: fclean all
+
+.PHONY: all bonus clean fclean
 
 
 #       rda =>       ls > $a    .      16 heredoc      .      signals
