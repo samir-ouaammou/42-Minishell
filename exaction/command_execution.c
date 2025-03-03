@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:22:07 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/17 08:22:09 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
 
 static int is_directory(char *cmd)
 {
@@ -54,28 +52,14 @@ static void handle_exec_failure(char *cmd, int check_, char *path_args)
 	exit(127);
 }
 
-int	check_is_directory(char *str)
-{
-	int i = 0;
-	while (str[i])
-	{
-		if (str[0] == '/')
-			return (1);
-		else if (str[i] == '.' && str[i + 1] == '/')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int execute_command(char **cmd, t_exaction *data)
+int execute_command(char **cmd, t_data *data)
 {
 	pid_t pid;
 	int status;
 
 	if (cmd[0][0] == '\0')
 	{
-		// ft_printf("minishell: %s: Command not found\n", cmd[0]);
+		ft_printf("minishell: %s: Command not found\n", cmd[0]);
 		data->exit_status = 0;
 		return (1);
 	}
@@ -84,8 +68,7 @@ int execute_command(char **cmd, t_exaction *data)
 		return (FAILED);
 	if (pid == 0)
 	{
-		if (check_is_directory(cmd[0]) == 1)
-			is_directory(cmd[0]);
+		is_directory(cmd[0]);
 		char *path_args = get_path_env(cmd[0], data);
 		if ((path_args != NULL && !contains_slash(cmd[0])))
 		{

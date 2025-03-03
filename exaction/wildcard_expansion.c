@@ -6,17 +6,11 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:34:38 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:19:04 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static char **change_str_arry(char *str)
-// {
-// 	char *args[] = {str, NULL}
-// }
-
 
 static int check_for_wildcards(char *pattern)
 {
@@ -52,20 +46,17 @@ static int count_wildcards(char *str)
 	{
 		if (is_wildcard_match(str, entry->d_name))
 		{
-			// ft_printf("str: %s\n", str);
 			check_count += 1;
 			count++;
 		}
 	}
-	// ft_printf("A count: %d\n", count);
 	if (check_count == 0)
 		count += 1;
-	// ft_printf("A count: %d\n", count);
 	closedir(dir);
 	return (count);
 }
 
-static int expand_wildcards(char *pattern, t_exaction *data, int *index)
+static int expand_wildcards(char *pattern, t_data *data, int *index)
 {
 	DIR *dir;
 	struct dirent *entry;
@@ -93,7 +84,6 @@ static int count_total_matches(char **args)
 	count = 0;
 	while (args[i])
 	{
-		// ft_printf("-> args: %s\n", args[i]);
 		if (check_for_wildcards(args[i]) == 0)
 			count += count_wildcards(args[i]);
 		else
@@ -103,7 +93,7 @@ static int count_total_matches(char **args)
 	return (count);
 }
 
-int handle_wildcards(char **args, t_exaction *data)
+int handle_wildcards(char **args, t_data *data)
 {
 	int(i), (count), (match_index);
 	i = 0;
@@ -125,13 +115,6 @@ int handle_wildcards(char **args, t_exaction *data)
 		}
 		i++;
 	}
-	// ft_printf("count: %d\n", count);
 	data->matches[match_index] = NULL;
-	// i = 0;
-	// while (data->matches[i])
-	// {
-	// 	ft_printf("matchs: %s\n", data->matches[i]);
-	// 	i++;
-	// }
 	return (0);
 }

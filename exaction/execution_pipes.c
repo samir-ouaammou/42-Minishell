@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution_pipes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:35:04 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/17 08:35:06 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 static int create_pipe(int pipefd[2])
 {
@@ -20,7 +19,7 @@ static int create_pipe(int pipefd[2])
 	return (SUCCESS);
 }
 
-static void execute_child_first(t_ast *node, t_exaction *data, int *pipefd)
+static void execute_child_first(t_ast *node, t_data *data, int *pipefd)
 {
 	close(pipefd[0]);
 	dup2(pipefd[1], STDOUT_FILENO);
@@ -29,7 +28,7 @@ static void execute_child_first(t_ast *node, t_exaction *data, int *pipefd)
 	exit(data->exit_status);
 }
 
-static void execute_child_second(t_ast *node, t_exaction *data, int *pipefd)
+static void execute_child_second(t_ast *node, t_data *data, int *pipefd)
 {
 	close(pipefd[1]);
 	dup2(pipefd[0], STDIN_FILENO);
@@ -38,7 +37,7 @@ static void execute_child_second(t_ast *node, t_exaction *data, int *pipefd)
 	exit(data->exit_status);
 }
 
-int execute_pipe(t_ast *node, t_exaction *data)
+int execute_pipe(t_ast *node, t_data *data)
 {
 	int pipefd[2];
 

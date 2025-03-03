@@ -3,52 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 18:50:08 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:50:10 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	open_input_file(t_ast *node, t_data *data)
+{
+	int	fd_file;
 
-// static void execute_without_left_heredoc(int fd_file, char **args, t_exaction *data)
-// {
-//     int stdinp_backup;
+	node->right->value[0] = process_strings(node->right->value[0], data);
+	fd_file = open(node->right->value[0], O_RDONLY);
+	if (fd_file == -1)
+	{
+		ft_printf("minishella: %s: %s\n", node->right->value[0], strerror(errno));
+		data->exit_status = 1;
+	}
+	return (fd_file);
+}
 
-//     stdinp_backup = dup(STDIN_FILENO);
-//     dup2(fd_file, STDIN_FILENO);
-//     data->status = execute_command(args, data);
-//     dup2(stdinp_backup, STDIN_FILENO);
-//     close(stdinp_backup);
-// }
-
-// static void execute_with_heredoc(t_ast *node, int fd_file, t_exaction *data)
-// {
-//     int stdinp_backup;
-
-//     stdinp_backup = dup(STDIN_FILENO);
-//     dup2(fd_file, STDIN_FILENO);
-//     execute_ast(node->left, data);
-//     dup2(stdinp_backup, STDIN_FILENO);
-//     close(stdinp_backup);
-// }
-
-int execute_heredoc(t_ast *node, t_exaction *data)
+int execute_heredoc(t_ast *node, t_data *data)
 {
     int fd_file;
 
     fd_file = open_input_file(node, data);
-    if (fd_file == -1 || fd_file == 42)
-    {
-        // if (fd_file == 42)
-        // {
-        //     ft_printf("minishell: %s: ambiguous redirect", node->right->value[0]);
-        //     data->exit_status = 1;
-        // }
+    if (fd_file == -1)
         return (1);
-    }
     int stdinp_backup = dup(STDIN_FILENO);
     dup2(fd_file, STDIN_FILENO);
     execute_ast(node->left, data);

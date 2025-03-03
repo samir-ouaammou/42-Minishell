@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution_handler_ast_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:26:38 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/02 16:13:00 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:26:40 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 int	check_special_chars(char **args)
 {
@@ -33,3 +32,4 @@ int	check_special_chars(char **args)
 	}
 	return (0);
 }
+

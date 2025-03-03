@@ -3,47 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   env_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:20:01 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/17 08:20:04 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
 static char *get_path_env_utils(char **path, char *cmd)
 {
+    char *temp;
     char *path_arg;
-    // char *temp;
     int i;
 
     i = 0;
-    // temp = NULL;
-    // if (cmd[0] == '.')
-    //     return "./a.out";
     while (path[i])
     {
         path_arg = ft_strjoin(path[i], "/");
         if (!path_arg)
             return (NULL);
-        path_arg = ft_strjoin(path_arg, cmd);
-        // free(path_arg);
-        // if (!temp)
-        //     return (NULL);
-        // path_arg = temp;
-        if (access(path_arg, X_OK) == 0)
-            return (path_arg);
+        temp = ft_strjoin(path_arg, cmd);
+        free(path_arg);
+        if (!temp)
+            return (NULL);
+        if (access(temp, X_OK) == 0)
+            return (temp);
+        free(temp);
         i++;
     }
-    // if (temp)
-    //     free(temp);
     return (NULL);
 }
 
 
-char *get_path_env(char *cmd, t_exaction *data)
+char *get_path_env(char *cmd, t_data *data)
 {
     char **path;
     int i, check_path;
@@ -65,13 +59,13 @@ char *get_path_env(char *cmd, t_exaction *data)
         i++;
     }
     if (!check_path)
-        return (NULL);
+        return (free_all(path), NULL);
     path_arg = get_path_env_utils(path, cmd);
-    // free_all(path);
+    free_all(path);
     if (!path_arg || cmd == NULL || is_operator(cmd))
     {
         if (path_arg)
-            // free(path_arg);
+            free(path_arg);
         return (NULL);
     }
     return (path_arg);

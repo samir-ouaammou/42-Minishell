@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exaction.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:26:04 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:26:08 by aahaded          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-char *find_str_env(char *str, t_exaction *data)
+char *find_str_env(char *str, t_data *data)
 {
 	int i;
 	if (!str || !data->env || !data->env[0])
@@ -30,7 +29,7 @@ char *find_str_env(char *str, t_exaction *data)
 	return (NULL);
 }
 
-void exaction(t_ast *root, t_exaction *data)
+void exaction(t_ast *root, t_data *data)
 {
 	// if (root == NULL)
 	// 	return;
@@ -51,6 +50,7 @@ void exaction(t_ast *root, t_exaction *data)
 	// data->check_file_1 = 0;
 	// data->check_file_2 = 0;
 	data->status = 0;
+	data->fd_file = 0;
 	// data->num_proess = 0;
 	// data->num_proess2 = 0;
 	// free_all(data->env);
