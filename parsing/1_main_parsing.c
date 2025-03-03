@@ -278,12 +278,37 @@ void	ft_move_redirections(t_parsing *shell)
 	shell->tokens = head;
 }
 
+int	ft_count_heredoc(t_parsing *shell)
+{
+	if (!shell || !shell->tokens)
+	{
+		ft_free_parsing(shell);
+		return (0);
+	}
+	shell->len = 0;
+	shell->lst_help1 = shell->tokens;
+	while (shell->lst_help1)
+	{
+		if (shell->lst_help1->value && shell->lst_help1->value[0]
+			&& !shell->lst_help1->value[1]
+			&& !ft_strcmp(shell->lst_help1->value[0], "<<"))
+			shell->len++;
+		shell->lst_help1 = shell->lst_help1->next;
+	}
+	if (shell->len >= 17)
+	{
+		ft_free_parsing(shell);
+		return (0);
+	}
+	return (1);
+}
+
 void	ft_parsing(t_parsing *shell, int bol, t_data *data)
 {
 	ft_init_parsing(shell);
 	if (ft_check_input_is_valid(shell))
 	{
-		if (!bol)
+		if (bol)
 		{
 			ft_replace_newline_with_space(shell);
 			ft_replace_tabs_with_spaces(shell, shell->input);
@@ -301,7 +326,8 @@ void	ft_parsing(t_parsing *shell, int bol, t_data *data)
 					- ft_count_brackets(shell->tokens)))
 			|| ft_ast_contains_brackets(shell->tree))
 			ft_free_parsing(shell);
-		if (shell->free == -1)
+	
+		if (shell->free == -1 || !ft_count_heredoc(shell))
 			return;
 		ft_check_other_errors(shell);
 		if (shell->free == -1)
