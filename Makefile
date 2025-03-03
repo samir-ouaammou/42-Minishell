@@ -13,9 +13,7 @@ SRCS_PARSING =  $(PATH_PARSING)/1_main_parsing.c \
                 $(PATH_PARSING)/6_free_parsing.c \
                 $(PATH_PARSING)/7_remove_qouts.c \
                 $(PATH_PARSING)/8_here_doc.c \
-                $(PATH_PARSING)/9_handle_wildcard.c  \
-                $(GET_NEXT_PATH)/get_next_line_utils.c \
-                $(GET_NEXT_PATH)/get_next_line.c
+                $(PATH_PARSING)/9_handle_wildcard.c
 
 
 # SRCS_EXACTION
@@ -65,30 +63,31 @@ LIBFT_AR = $(LIBFT_PATH)/libft.a
 PRINTF_PATH = $(LIBFT_PATH)/printf
 PRINTF_AR = $(PRINTF_PATH)/libftprintf.a
 
-
-# GET_NEXT: Path
-GET_NEXT_PATH = $(LIBFT_PATH)/get_next_line
-
-
 CC = cc
 CFLAGS = -Wall -Wextra -Werror  #-g3 -fsanitize=address
 
 all: $(NAME)
 
 $(NAME): $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS)
-	@make -C $(LIBFT_PATH)
-	@make -C $(PRINTF_PATH)
+	@make --no-print-directory -C $(LIBFT_PATH)
+	@make --no-print-directory -C $(PRINTF_PATH)
 	@$(CC) $(CFLAGS) $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(LIBFT_AR) $(PRINTF_AR) -o $(NAME) -lreadline
+	@echo "✅ Compilation finished successfully!"
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@make clean -C $(LIBFT_PATH)
-	@make clean -C $(PRINTF_PATH)
-	@rm -r $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS)
+	@make clean --no-print-directory -C $(LIBFT_PATH)
+	@make clean --no-print-directory -C $(PRINTF_PATH)
+	@find . -name "*.o" -delete
+	@echo "🧹 Clean completed."
 
 fclean: clean
-	@make fclean -C $(LIBFT_PATH)
-	@make fclean -C $(PRINTF_PATH)
-	@rm -r $(NAME)
+	@make fclean --no-print-directory -C $(LIBFT_PATH)
+	@make fclean --no-print-directory -C $(PRINTF_PATH)
+	@rm -f $(NAME)
+	@echo "🗑️ Full clean completed."
 
 re: fclean all
 
