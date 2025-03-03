@@ -128,7 +128,7 @@ void					ft_here_doc(t_parsing *shell, char *str, t_exaction *data);
 t_ast					*ft_build_command_tree(t_parsing *shell, int start, int end);
 int						is_wildcard_match(const char *wildcard, const char *filename);
 t_ast					*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
-void	print_ast(t_ast *node, int level, char *branch); //////////////////////////////////temp
+void					print_ast(t_ast *node, int level, char *branch); //////////////////////////////////temp
 
 // Functions Exaction
 
