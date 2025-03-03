@@ -59,8 +59,7 @@ void ft_init_exaction(t_exaction *data)
 int	main(int ac, char **av, char **env)
 {
 	t_parsing	shell;
-	t_exaction		data;
-
+	t_exaction	data;
 
 	if (ac != 1)
 	{

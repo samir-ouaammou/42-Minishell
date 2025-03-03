@@ -25,8 +25,8 @@
 #  define BUFFER_SIZE 5
 # endif
 
+int		ft_strlenw(char *str);
 char	*get_next_line(int fd);
 char	*ft_lkmala(char **str);
-int		ft_strlenw(char *str);
 
 #endif
