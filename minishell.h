@@ -1,20 +1,20 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "./libft/libft.h"
-# include <dirent.h>
 # include <errno.h>
-# include <fcntl.h>
-# include <fnmatch.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <dirent.h>
 # include <stdlib.h>
 # include <string.h>
+# include <fnmatch.h>
+# include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
-# include <sys/wait.h>
-# include <unistd.h>
+# include "./libft/libft.h"
+# include <readline/history.h>
+# include <readline/readline.h>
 
 # define SUCCESS 0
 # define FAILED 1
