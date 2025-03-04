@@ -38,9 +38,11 @@ SRCS_BUILTINS = $(PATH_BUILTINS)/builtin_echo.c \
                 $(PATH_BUILTINS)/builtin_exit.c \
                 $(PATH_BUILTINS)/builtin_export.c \
                 $(PATH_BUILTINS)/builtin_pwd.c \
-                $(PATH_BUILTINS)/builtin_unset.c\
-                gc/gc.c\
-                gc/mian.c
+                $(PATH_BUILTINS)/builtin_unset.c
+
+# SRCS_MALLOC
+SRCS_MALLOC = $(PATH_MALLOC)/malloc.c \
+              $(PATH_MALLOC)/malloc_utils.c
 
 # SRCS_WILDCARDS
 SRCS_WILDCARDS = $(PATH_WILDCARDS)/wildcard.c
@@ -51,6 +53,7 @@ SRCS_SIGNALS = $(PATH_SIGNALS)/signals.c
 # PROGRAM NAME
 NAME = minishell
 
+PATH_MALLOC = ./malloc
 PATH_PARSING = ./parsing
 PATH_SIGNALS = ./signals
 PATH_EXACTION = ./exaction
@@ -59,6 +62,7 @@ PATH_WILDCARDS = ./wildcards
 
 # OBJS: Object files
 OBJS_MAIN = $(SRCS_MAIN:.c=.o)
+OBJS_MALLOC = $(SRCS_MALLOC:.c=.o)
 OBJS_SIGNALS = $(SRCS_SIGNALS:.c=.o)
 OBJS_PARSING = $(SRCS_PARSING:.c=.o)
 OBJS_EXACTION = $(SRCS_EXACTION:.c=.o)
@@ -74,14 +78,14 @@ PRINTF_PATH = $(LIBFT_PATH)/printf
 PRINTF_AR = $(PRINTF_PATH)/libftprintf.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3  #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-g3  -fsanitize=address
 
 all: $(NAME)
 
-$(NAME): $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(OBJS_SIGNALS) $(OBJS_WILDCARDS)
+$(NAME): $(OBJS_MAIN) $(OBJS_MALLOC) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(OBJS_SIGNALS) $(OBJS_WILDCARDS)
 	@make --no-print-directory -C $(LIBFT_PATH)
 	@make --no-print-directory -C $(PRINTF_PATH)
-	@$(CC) $(CFLAGS) $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(OBJS_SIGNALS) $(OBJS_WILDCARDS) $(LIBFT_AR) $(PRINTF_AR) -o $(NAME) -lreadline
+	@$(CC) $(CFLAGS) $(OBJS_MAIN) $(OBJS_MALLOC) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(OBJS_SIGNALS) $(OBJS_WILDCARDS) $(LIBFT_AR) $(PRINTF_AR) -o $(NAME) -lreadline
 	@echo "\033[1;32m✅ Compilation finished successfully!\033[0m"
 
 %.o: %.c
@@ -103,8 +107,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all bonus clean fclean
-
-
-#       rda =>       ls > $a    .      16 heredoc      .      signals
-
-#       leeks  norm

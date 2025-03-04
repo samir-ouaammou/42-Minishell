@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 10:06:24 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 12:38:40 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:11:15 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 # include "./get_next_line/get_next_line.h"
 # include "./printf/ft_printf.h"
+# include "../malloc/malloc.h"
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
-#include "../gc/gc.h"
 typedef struct s_list
 {
 	char			**value;

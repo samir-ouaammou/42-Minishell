@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "libft.h": "c",
+    "get_next_line.h": "c",
+    "malloc.h": "c"
+  },
+  "C_Cpp_Runner.msvcBatchPath": ""
+}

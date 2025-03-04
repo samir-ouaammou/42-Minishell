@@ -12,10 +12,10 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include "malloc/malloc.h"
 # include "./libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
-#include "gc/gc.h"
 
 # define SUCCESS 0
 # define FAILED 1
