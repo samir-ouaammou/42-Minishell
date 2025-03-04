@@ -56,6 +56,15 @@ void ft_init_exaction(t_exaction *data)
     data->export_buffer = NULL;
 }
 
+void handle_sigint(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_parsing	shell;
@@ -68,11 +77,18 @@ int	main(int ac, char **av, char **env)
 	}
 	ft_init_parsing(&shell);
 	ft_init_exaction(&data);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 	read_env(&data, env);
 	data.name_pro = "➜ Minishell ";
 	while (1)
 	{
 		shell.input = readline(data.name_pro);
+		if (!shell.input)
+		{
+			ft_printf("exit\n");
+			ft_exit(data.exit_status);
+		}
 		shell.history = ft_strdup(shell.input);
 		ft_parsing(&shell, 0, &data);
 		if (shell.free == -1 && (!shell.tokens || !shell.tree))
