@@ -12,8 +12,7 @@ SRCS_PARSING =  $(PATH_PARSING)/1_main_parsing.c \
                 $(PATH_PARSING)/5_creat_ast_tree.c \
                 $(PATH_PARSING)/6_free_parsing.c \
                 $(PATH_PARSING)/7_remove_qouts.c \
-                $(PATH_PARSING)/8_here_doc.c \
-                $(PATH_PARSING)/9_handle_wildcard.c
+                $(PATH_PARSING)/8_here_doc.c
 
 # SRCS_EXACTION
 SRCS_EXACTION = $(PATH_EXACTION)/exaction.c \

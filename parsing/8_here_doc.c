@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-
 int ft_is(char c)
 {
     if (c == '<' || c == '>' || c == '|' || c == '&')
@@ -49,17 +48,13 @@ void ft_move_input(t_parsing *shell, char *str)
                 shell->len++;
             }
             shell->nbr++;
-            //free(shell->itoa);
-            //free(shell->name);
         }
         shell->help[shell->j++] = str[shell->i];
         if (str[shell->i])
             shell->i++;
     }
     shell->help[shell->j] = '\0';
-    //free(shell->input);
     shell->input = ft_strdup(shell->help);
-    //free(shell->help);
 }
 
 void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
@@ -121,7 +116,6 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
                 while (1)
                 {
                     shell->line = readline("heredoc> ");
-                    //free(shell->line);
                 }
             }
             else
@@ -147,19 +141,13 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
                     if (!shell->line)
                         break;
                     if (!strcmp(shell->stop[0], shell->line))
-                    {
-                        //free(shell->line);
                         break;
-                    }
                     if (!dolar)
                         shell->line = process_strings(shell->line, data);
                     write(shell->fd, shell->line, ft_strlen(shell->line));
                     write(shell->fd, "\n", 1);
-                    //free(shell->line);
                 }
                 close(shell->fd);
-                //free(shell->itoa);
-                //free(shell->name);
             }
             shell->i = shell->j;
             shell->end = shell->j;

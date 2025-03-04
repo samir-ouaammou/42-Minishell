@@ -93,22 +93,17 @@ int	main(int ac, char **av, char **env)
 		ft_parsing(&shell, 0, &data);
 		if (shell.free == -1 && (!shell.tokens || !shell.tree))
 			write(2, "minishell: syntax error\n", 24);
-		if (shell.input)
-		{
-			if (shell.tree)
+		if (shell.input && shell.tree)
 				exaction(shell.tree, &data);
-			ft_free_parsing(&shell);
-		}
 		if (shell.history)
 		{
 			add_history(shell.history);
-			// free(shell.history);
 			shell.history = NULL;
-			if (shell.input)
-			{
-				free(shell.input);
-				shell.input = NULL;
-			}
+			// if (shell.input)
+			// {
+			// 	free(shell.input);
+			// 	shell.input = NULL;
+			// }
 		}
 	}
 	rl_clear_history();

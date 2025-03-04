@@ -96,11 +96,8 @@ typedef struct s_exaction
 
 // Functions Pxaction
 
-void					free_split(char **split);
-void					ft_free_ast(t_ast *node);
 void					ft_free_args(t_parsing *shell);
 void					ft_split_args(t_parsing *shell);
-void					ft_free_tokens(t_parsing *shell);
 int						ft_count_tree_nodes(t_ast *tree);
 int						ft_check_is_operators(char *str);
 void					ft_skip_string(t_parsing *shell);

@@ -2,7 +2,6 @@
 
 void	ft_str_copy(t_parsing *shell)
 {
-	// shell->cmds[shell->len++] = '\t';
 	shell->chr = shell->input[shell->i];
 	while (shell->input[shell->i])
 	{
@@ -10,7 +9,6 @@ void	ft_str_copy(t_parsing *shell)
 		if (shell->input[shell->i] == shell->chr)
 		{
 			shell->cmds[shell->len++] = shell->input[shell->i];
-			// shell->cmds[shell->len++] = '\t';
 			return ;
 		}
 	}
@@ -77,7 +75,6 @@ void	ft_delete_commits(t_parsing *shell)
 		{
 			while (shell->temp[shell->i])
 			{
-				//free(shell->temp[shell->i]);
 				shell->temp[shell->i] = NULL;
 				shell->i++;
 			}

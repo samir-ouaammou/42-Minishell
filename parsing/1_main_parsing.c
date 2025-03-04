@@ -177,10 +177,7 @@ void	ft_move_redirections(t_parsing *shell)
 	while (shell->tokens)
 	{
 		if (tmp)
-		{
-			free_split(tmp);
 			tmp = NULL;
-		}
 		tmp = ft_malloc((shell->tab[j++] + 1) * sizeof(char *));
 		i = 0;
 		while (shell->tokens->value[i])
@@ -198,10 +195,7 @@ void	ft_move_redirections(t_parsing *shell)
 				new = ft_lstnew(tmp);
 				ft_lstadd_back(&head, new);
 				if (tmp)
-				{
-					free_split(tmp);
 					tmp = NULL;
-				}
 			}
 			shell->tokens = shell->tokens->next;
 			k = 0;
@@ -215,10 +209,7 @@ void	ft_move_redirections(t_parsing *shell)
 					if (!k)
 					{
 						if (tmp)
-						{
-							free_split(tmp);
 							tmp = NULL;
-						}
 						tmp = ft_malloc((shell->tab[j++] + 1) * sizeof(char *));
 					}
 					tmp[k] = ft_strdup(shell->tokens->value[i]);
@@ -238,11 +229,7 @@ void	ft_move_redirections(t_parsing *shell)
 		ft_lstadd_back(&head, new);
 	}
 	if (tmp)
-	{
-		free_split(tmp);
 		tmp = NULL;
-	}
-	ft_free_tokens(shell);
 	shell->tokens = NULL;
 	shell->lst_help1 = NULL;
 	shell->lst_help2 = NULL;

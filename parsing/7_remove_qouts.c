@@ -1,21 +1,5 @@
 #include "../minishell.h"
 
-void free_split(char **split)
-{
-    int i;
-    if (!split)
-        return;
-    i = 0;
-    while (split[i])
-    {
-        //free(split[i]);
-        split[i] =  NULL;
-        i++;
-    }
-    //free(split);
-    split = NULL;
-}
-
 int count_words(char *str)
 {
     int count = 0;
@@ -86,10 +70,7 @@ char **ft_split_quots(char *str)
 
         res[j] = ft_malloc((i - k + 1) * sizeof(char)); 
         if (!res[j])
-        {
-            free_split(res);
             return (NULL);
-        }
 
         h = 0;
         while (k < i)
@@ -119,11 +100,7 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
                 str[i][strlen(str[i]) - 1] = '\0';
                 tmp = ft_strdup(&str[i][1]);
                 if (!tmp)
-                {
-                    free_split(str);
                     return (NULL);
-                }
-                //free(str[i]);
                 str[i] = tmp;
             }
             if (bol)
@@ -133,12 +110,7 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
         {
             str[i][strlen(str[i]) - 1] = '\0';
             tmp = ft_strdup(&str[i][1]);
-            if (!tmp)
-            {
-                free_split(str);
                 return (NULL);
-            }
-            //free(str[i]);
             str[i] = tmp;
         }
         len += strlen(str[i]);
@@ -146,10 +118,7 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
     }
     res = ft_malloc((len + 1) * sizeof(char));
     if (!res)
-    {
-        free_split(str);
         return (NULL);
-    }
     i = 0;
     while (str[i])
     {
@@ -159,7 +128,6 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
         i++;
     }
     res[k] = '\0';
-    free_split(str);
     return (res);
 }
 
@@ -176,7 +144,6 @@ void ft_remove_quots(char **str, t_exaction *data, short bol)
         split = ft_split_quots(str[i]);
         if (!split)
             return;
-        //free(str[i]);
         str[i] = ft_str_join(split, data, bol);
         i++;
     }

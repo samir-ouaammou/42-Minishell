@@ -45,7 +45,6 @@ char	*ft_strjoin_and_free(char *s1, const char *s2)
 		j++;
 	}
 	res[i + j] = '\0';
-	//free(s1);
 	return (res);
 }
 
@@ -161,7 +160,6 @@ void    ft_pars_redirections(t_parsing *shell, t_list *list)
             redirections = ft_move_flags(shell, help);
             str = ft_strjoin_and_free(str, redirections);
             str = ft_strjoin_and_free(str, " ");
-            //free(redirections);
             while (tmp && tmp->value && !ft_check_is_operators(tmp->value[0]))
                 tmp = tmp->next;
         }
