@@ -7,16 +7,16 @@ t_list *ft_lstnew(char **value)
     t_list *new_node;
 
 	i = 0;
-    new_node = (t_list *)malloc(sizeof(t_list));
+    new_node = (t_list *)ft_malloc(sizeof(t_list));
     if (!new_node)
         return (NULL);
 	else
 		i = 0;
 	while (value[i])
 		i++;
-	copy = malloc((i + 1) * sizeof(char *));
+	copy = ft_malloc((i + 1) * sizeof(char *));
 	if (!copy)
-		return(free(new_node), NULL);
+		return( NULL);
 	i = 0;
 	while (value[i])
 	{

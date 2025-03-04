@@ -50,7 +50,7 @@ static char	*ft_strdup(char *str)
 	i = 0;
 	if (!str)
 		return (NULL);
-	res = malloc(ft_strlenw(str) + 1);
+	res = ft_malloc(ft_strlenw(str) + 1);
 	if (!res)
 		return (NULL);
 	while (str[i])
@@ -72,16 +72,16 @@ static void	ft_lkmala_lkmala(char **str, int i)
 		temp = ft_strdup(&((*str)[i]));
 		if (!temp)
 		{
-			free(*str);
+			//free(*str);
 			*str = NULL;
 			return ;
 		}
-		free(*str);
+		//free(*str);
 		*str = temp;
 	}
 	else
 	{
-		free(*str);
+		//free(*str);
 		*str = NULL;
 	}
 }
@@ -96,10 +96,10 @@ char	*ft_lkmala(char **str)
 		i++;
 	if ((*str)[i] == '\n')
 		i++;
-	line = malloc(i + 1);
+	line = ft_malloc(i + 1);
 	if (!line)
 	{
-		free(*str);
+		//free(*str);
 		*str = NULL;
 		return (NULL);
 	}

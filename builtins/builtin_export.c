@@ -48,12 +48,12 @@ static int update_env_var(char **args, t_exaction *data, char *str, int i)
 				str_j = ft_strjoin(data->env[j], str + 1);
 				if (!str_j)
 					return (0);
-				// free(data->env[j]);
+				// //free(data->env[j]);
 				data->env[j] = str_j;
 			}
 			else
 			{
-				// free(data->env[j]);
+				// //free(data->env[j]);
 				data->env[j] = ft_strdup(args[i]);
 				if (!data->env[j])
 					return (0);
@@ -76,7 +76,7 @@ char *get_key_part(char *str, char delimiter)
 	if (pos)
 	{
 		len = (ft_strlen(str) - ft_strlen(pos)) + 1;
-		result = malloc(len + 1);
+		result = ft_malloc(len + 1);
 		if (!result)
 			return (NULL);
 		ft_strncpy(result, str, len);
@@ -103,21 +103,21 @@ static int update_export_var(char **args, t_exaction *data, char *str, int i)
 			if (data->is_plus == 1)
 			{
 				char *sss = add_double_quotes_plus((ft_strchr(data->export[j], '=') + 1), str + 1);
-				// free(data->export[j]);
+				// //free(data->export[j]);
 				char *get_key = get_key_part(args[i], '=');
 				char *str_j = ft_strjoin(get_key, sss);
 				char *ddd = add_double_quotes(str_j);
 				data->export[j] = ddd;
-				// free(sss);
-				// free(str_j);
-				// free(get_key);
+				// //free(sss);
+				// //free(str_j);
+				// //free(get_key);
 			}
 			else
 			{
 				str_new = add_double_quotes(args[i]);
-				// free(data->export[j]);
+				// //free(data->export[j]);
 				data->export[j] = ft_strdup(str_new);
-				// free(str_new);
+				// //free(str_new);
 				if (!data->export[j])
 					return (0);
 			}
@@ -151,7 +151,7 @@ static int add_default_export(char *str, t_exaction *data, int len)
 		while (data->export[count])
 			count++;
 	}
-	new_export = malloc(sizeof(char *) * (count + 2));
+	new_export = ft_malloc(sizeof(char *) * (count + 2));
 	if (!new_export)
 		return (1);
 	while (i < count)
@@ -179,7 +179,7 @@ static int add_new_env_var(char **args, t_exaction *data, int index)
 		while (data->env[count])
 			count++;
 	}
-	new_env = malloc(sizeof(char *) * (count + 2));
+	new_env = ft_malloc(sizeof(char *) * (count + 2));
 	if (!new_env)
 		return (1);
 	while (i < count)
@@ -206,7 +206,7 @@ static int add_new_export_var(char **args, t_exaction *data, int index)
 		while (data->export[count])
 			count++;
 	}
-	new_export = malloc(sizeof(char *) * (count + 2));
+	new_export = ft_malloc(sizeof(char *) * (count + 2));
 	if (!new_export)
 		return (1);
 	while (i < count)
@@ -265,7 +265,7 @@ char *add_double_quotes_plus(char *str_export, char *str)
             len++;
         i++;
     }
-    res = malloc(len + ft_strlen(str) + 1);
+    res = ft_malloc(len + ft_strlen(str) + 1);
     if (!res)
         return (NULL);
     i = 0;
@@ -299,7 +299,7 @@ char *add_double_quotes(char *str)
 	i = 0;
 	j = 0;
 	len = ft_strlen(str);
-	res = malloc(len + 3);
+	res = ft_malloc(len + 3);
 	if (!res)
 		return (NULL);
 	while (str[i])
@@ -383,7 +383,7 @@ int builtin_export(char **args, t_exaction *data)
 							len++;
 						j++;
 					}
-					res = malloc(len + 1);
+					res = ft_malloc(len + 1);
 					if (!res)
 						return (1);
 					j = 0;
@@ -395,9 +395,9 @@ int builtin_export(char **args, t_exaction *data)
 						j++;
 					}
 					res[k] = '\0';
-					// free(args[i]);
+					// //free(args[i]);
 					args[i] = ft_strdup(res);
-					// free(res);
+					// //free(res);
 				}
 				found = update_env_var(args, data, str, i);
 				found_export = update_export_var(args, data, str, i);

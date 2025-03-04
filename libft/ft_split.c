@@ -13,10 +13,12 @@
 
 char	**free_prev(char **res, int i)
 {
-	while (i--)
-		free(res[i]);
-	free(res);
-	return (NULL);
+	(void)i;
+
+	// while (i--)
+		//free(res[i]);
+	//free(res);
+	return (res);
 }
 
 int	count_word(const char *str, char c)
@@ -52,7 +54,7 @@ char	**ft_util(char **res, const char *s, char c, int c_word)
 		while (s[j] && s[j] != c)
 			j++;
 		len = j - e;
-		res[i] = malloc(len + 1);
+		res[i] = ft_malloc(len + 1);
 		if (!res[i])
 			return (free_prev(res, i));
 		ft_memcpy(res[i], s + e, len);
@@ -71,7 +73,7 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	c_word = count_word(s, c);
-	res = malloc(sizeof(char *) * (c_word + 1));
+	res = ft_malloc(sizeof(char *) * (c_word + 1));
 	if (res == NULL)
 		return (NULL);
 	return (ft_util(res, s, c, c_word));

@@ -25,7 +25,7 @@ static void execute_child_first(t_ast *node, t_exaction *data, int *pipefd)
 	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
 	execute_ast(node->left, data);
-	exit(data->exit_status);
+	ft_exit(data->exit_status);
 }
 
 static void execute_child_second(t_ast *node, t_exaction *data, int *pipefd)
@@ -34,7 +34,7 @@ static void execute_child_second(t_ast *node, t_exaction *data, int *pipefd)
 	dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
 	execute_ast(node->right, data);
-	exit(data->exit_status);
+	ft_exit(data->exit_status);
 }
 
 int execute_pipe(t_ast *node, t_exaction *data)

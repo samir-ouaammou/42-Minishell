@@ -38,7 +38,9 @@ SRCS_BUILTINS = $(PATH_BUILTINS)/builtin_echo.c \
                 $(PATH_BUILTINS)/builtin_exit.c \
                 $(PATH_BUILTINS)/builtin_export.c \
                 $(PATH_BUILTINS)/builtin_pwd.c \
-                $(PATH_BUILTINS)/builtin_unset.c
+                $(PATH_BUILTINS)/builtin_unset.c\
+                gc/gc.c\
+                gc/mian.c
 
 # SRCS_WILDCARDS
 SRCS_WILDCARDS = $(PATH_WILDCARDS)/wildcard.c
@@ -72,7 +74,7 @@ PRINTF_PATH = $(LIBFT_PATH)/printf
 PRINTF_AR = $(PRINTF_PATH)/libftprintf.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3  #-fsanitize=address
 
 all: $(NAME)
 

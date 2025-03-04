@@ -100,7 +100,7 @@ int handle_wildcards(char **args, t_exaction *data)
 	match_index = 0;
 
 	count = count_total_matches(args);
-	data->matches = malloc(sizeof(char *) * (count + 1));
+	data->matches = ft_malloc(sizeof(char *) * (count + 1));
 	if (!data->matches)
 		return (-1);
 	while (args[i])

@@ -26,15 +26,15 @@ t_ast	*ft_creat_ast_node(t_parsing *shell, char **value)
 
 	if (!value || !value[0])
 		return (ft_free_args(shell), NULL);
-	new_node = malloc(sizeof(t_ast));
+	new_node = ft_malloc(sizeof(t_ast));
 	if (!new_node)
 		return (ft_free_args(shell), NULL);
 	shell->len = 0;
 	while (value && value[shell->len])
 		shell->len++;
-	new_node->value = malloc((shell->len + 1) * sizeof(char *));
+	new_node->value = ft_malloc((shell->len + 1) * sizeof(char *));
 	if (!new_node->value)
-		return (free(new_node), new_node = NULL, ft_free_args(shell), NULL);
+		return ( new_node = NULL, ft_free_args(shell), NULL);
 	shell->len = 0;
 	while (value && value[shell->len])
 	{

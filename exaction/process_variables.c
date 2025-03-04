@@ -107,7 +107,7 @@ char  *process_strings(char *str, t_exaction *data)
 	int		len = 0;
 
 	len = calculate_length(str, data);
-	res_str = malloc(len + 1);
+	res_str = ft_malloc(len + 1);
 	if (!res_str)
 		return (NULL);
 	process_variable(str, res_str, data);

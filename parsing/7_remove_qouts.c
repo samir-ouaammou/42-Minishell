@@ -8,11 +8,11 @@ void free_split(char **split)
     i = 0;
     while (split[i])
     {
-        // free(split[i]);
+        //free(split[i]);
         split[i] =  NULL;
         i++;
     }
-    // free(split);
+    //free(split);
     split = NULL;
 }
 
@@ -56,7 +56,7 @@ char **ft_split_quots(char *str)
         return (NULL);
     
     int word_count = count_words(str);
-    res = malloc((word_count + 1) * sizeof(char *));
+    res = ft_malloc((word_count + 1) * sizeof(char *));
     if (!res)
         return (NULL);
 
@@ -84,10 +84,10 @@ char **ft_split_quots(char *str)
                 i++;
         }
 
-        res[j] = malloc((i - k + 1) * sizeof(char)); 
+        res[j] = ft_malloc((i - k + 1) * sizeof(char)); 
         if (!res[j])
         {
-            // free_split(res);
+            free_split(res);
             return (NULL);
         }
 
@@ -117,13 +117,13 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
             if (str[i][0] == 34)
             {
                 str[i][strlen(str[i]) - 1] = '\0';
-                tmp = strdup(&str[i][1]);
+                tmp = ft_strdup(&str[i][1]);
                 if (!tmp)
                 {
-                    // free_split(str);
+                    free_split(str);
                     return (NULL);
                 }
-                // free(str[i]);
+                //free(str[i]);
                 str[i] = tmp;
             }
             if (bol)
@@ -132,22 +132,22 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
         else
         {
             str[i][strlen(str[i]) - 1] = '\0';
-            tmp = strdup(&str[i][1]);
+            tmp = ft_strdup(&str[i][1]);
             if (!tmp)
             {
-                // free_split(str);
+                free_split(str);
                 return (NULL);
             }
-            // free(str[i]);
+            //free(str[i]);
             str[i] = tmp;
         }
         len += strlen(str[i]);
         i++;
     }
-    res = malloc((len + 1) * sizeof(char));
+    res = ft_malloc((len + 1) * sizeof(char));
     if (!res)
     {
-        // free_split(str);
+        free_split(str);
         return (NULL);
     }
     i = 0;
@@ -159,7 +159,7 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
         i++;
     }
     res[k] = '\0';
-    // free_split(str);
+    free_split(str);
     return (res);
 }
 
@@ -176,7 +176,7 @@ void ft_remove_quots(char **str, t_exaction *data, short bol)
         split = ft_split_quots(str[i]);
         if (!split)
             return;
-        // free(str[i]);
+        //free(str[i]);
         str[i] = ft_str_join(split, data, bol);
         i++;
     }

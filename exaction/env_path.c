@@ -25,12 +25,12 @@ static char *get_path_env_utils(char **path, char *cmd)
         if (!path_arg)
             return (NULL);
         temp = ft_strjoin(path_arg, cmd);
-        free(path_arg);
+        //free(path_arg);
         if (!temp)
             return (NULL);
         if (access(temp, X_OK) == 0)
             return (temp);
-        free(temp);
+        //free(temp);
         i++;
     }
     return (NULL);
@@ -65,7 +65,7 @@ char *get_path_env(char *cmd, t_exaction *data)
     if (!path_arg || cmd == NULL || is_operator(cmd))
     {
         if (path_arg)
-            free(path_arg);
+            //free(path_arg);
         return (NULL);
     }
     return (path_arg);

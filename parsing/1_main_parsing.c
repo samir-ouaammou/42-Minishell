@@ -94,13 +94,13 @@ static void	ft_convert_tabs_to_spaces(t_parsing *shell, char *input)
 void	ft_replace_tabs_with_spaces(t_parsing *shell, char *input)
 {
 	shell->len = ft_calculate_new_length(shell, input);
-	shell->cmds = (char *)malloc(shell->len + 1);
+	shell->cmds = (char *)ft_malloc(shell->len + 1);
 	if (!shell->cmds)
 		return ;
 	ft_convert_tabs_to_spaces(shell, input);
-	free(shell->input);
+	//free(shell->input);
 	shell->input = ft_strdup(shell->cmds);
-	free(shell->cmds);
+	//free(shell->cmds);
 	ft_init_parsing(shell);
 }
 
@@ -181,7 +181,7 @@ void	ft_move_redirections(t_parsing *shell)
 			free_split(tmp);
 			tmp = NULL;
 		}
-		tmp = malloc((shell->tab[j++] + 1) * sizeof(char *));
+		tmp = ft_malloc((shell->tab[j++] + 1) * sizeof(char *));
 		i = 0;
 		while (shell->tokens->value[i])
 		{
@@ -219,7 +219,7 @@ void	ft_move_redirections(t_parsing *shell)
 							free_split(tmp);
 							tmp = NULL;
 						}
-						tmp = malloc((shell->tab[j++] + 1) * sizeof(char *));
+						tmp = ft_malloc((shell->tab[j++] + 1) * sizeof(char *));
 					}
 					tmp[k] = ft_strdup(shell->tokens->value[i]);
 					k++;
@@ -312,12 +312,12 @@ void	ft_parsing(t_parsing *shell, int bol, t_exaction *data)
 	}
 	// else ////-------------------
 	// {
-		if (shell->free != -1 && shell->tree)	//	temp
-		{
-			printf("\n----------Parsing----------\n\n");
-			print_ast(shell->tree, 0, "root");  //	temp
-			printf("\n\n\n----------exacution----------\n\n");
-		}
+		// if (shell->free != -1 && shell->tree)	//	temp
+		// {
+		// 	printf("\n----------Parsing----------\n\n");
+		// 	print_ast(shell->tree, 0, "root");  //	temp
+		// 	printf("\n\n\n----------exacution----------\n\n");
+		// }
 	// }   //-------------------
 }
 

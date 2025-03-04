@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+
 int ft_is(char c)
 {
     if (c == '<' || c == '>' || c == '|' || c == '&')
@@ -28,7 +29,7 @@ void ft_move_input(t_parsing *shell, char *str)
     }
     if (shell->j == 0)
         return;
-    shell->help = malloc(ft_strlen(str) + (shell->j * 15) + 1);
+    shell->help = ft_malloc(ft_strlen(str) + (shell->j * 15) + 1);
     if (!shell->help)
         return;
     shell->j = 0;
@@ -48,17 +49,17 @@ void ft_move_input(t_parsing *shell, char *str)
                 shell->len++;
             }
             shell->nbr++;
-            free(shell->itoa);
-            free(shell->name);
+            //free(shell->itoa);
+            //free(shell->name);
         }
         shell->help[shell->j++] = str[shell->i];
         if (str[shell->i])
             shell->i++;
     }
     shell->help[shell->j] = '\0';
-    free(shell->input);
+    //free(shell->input);
     shell->input = ft_strdup(shell->help);
-    free(shell->help);
+    //free(shell->help);
 }
 
 void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
@@ -73,7 +74,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
     shell->nbr = 1;
     shell->start = 0;
     shell->end = 0;
-    shell->stop = malloc(sizeof(char *) * 2);
+    shell->stop = ft_malloc(sizeof(char *) * 2);
     if (!shell->stop)
         return;
     shell->stop[1] = NULL;
@@ -120,7 +121,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
                 while (1)
                 {
                     shell->line = readline("heredoc> ");
-                    free(shell->line);
+                    //free(shell->line);
                 }
             }
             else
@@ -140,14 +141,6 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
                 shell->itoa = ft_itoa(shell->nbr);
                 shell->name = ft_strjoin("/tmp/heredoc", shell->itoa);
                 shell->fd = open(shell->name, O_CREAT | O_RDWR | O_TRUNC, 0644);
-                // pid_t pid = fork();
-                // if (pid == -1)
-                // {
-                //     perror("minishell: fork");
-                //     return (1);
-                // }
-                // else if (pid == 0)
-                // {
                 while (1)
                 {
                     shell->line = readline("heredoc> ");
@@ -155,19 +148,18 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
                         break;
                     if (!strcmp(shell->stop[0], shell->line))
                     {
-                        free(shell->line);
+                        //free(shell->line);
                         break;
                     }
                     if (!dolar)
                         shell->line = process_strings(shell->line, data);
                     write(shell->fd, shell->line, ft_strlen(shell->line));
                     write(shell->fd, "\n", 1);
-                    free(shell->line);
+                    //free(shell->line);
                 }
-                // }
                 close(shell->fd);
-                free(shell->itoa);
-                free(shell->name);
+                //free(shell->itoa);
+                //free(shell->name);
             }
             shell->i = shell->j;
             shell->end = shell->j;

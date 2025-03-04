@@ -18,7 +18,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
-
+#include "../gc/gc.h"
 typedef struct s_list
 {
 	char			**value;

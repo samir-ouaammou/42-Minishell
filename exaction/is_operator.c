@@ -21,7 +21,7 @@ int is_builtin(char *cmd, t_exaction *data)
 {
 	// printf("cmd: %s\n", cmd);
 	(void)data;
-	char **args = malloc(sizeof(char *) * 2);
+	char **args = ft_malloc(sizeof(char *) * 2);
 	if (!args)
 		return (1);
 	args[0] = ft_strdup(cmd);
@@ -31,9 +31,9 @@ int is_builtin(char *cmd, t_exaction *data)
 	free_all(args);
 	if (ft_strcmp(temp, "cd") == 0 || ft_strcmp(temp, "echo") == 0 || ft_strcmp(temp, "env") == 0 || ft_strcmp(temp, "pwd") == 0 || ft_strcmp(temp, "export") == 0 || ft_strcmp(temp, "unset") == 0 || ft_strcmp(temp, "exit") == 0)
 	{
-		free(temp);
+		//free(temp);
 		return (1);
 	}
-	free(temp);
+	//free(temp);
 	return (0);
 }

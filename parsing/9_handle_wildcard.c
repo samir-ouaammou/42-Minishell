@@ -9,7 +9,7 @@
 
 //     if (!input || !input[0])
 //         return (NULL);
-//     res = (char *)malloc(ft_strlen(input) + 1);
+//     res = (char *)ft_malloc(ft_strlen(input) + 1);
 //     if (!res)
 //         return (NULL);
 //     i = 0;

@@ -55,7 +55,7 @@ char	*get_str_Dollars(char *str)
 	char	*res;
 
 	len = calculate_length_(str);
-	res = malloc(len + 1);
+	res = ft_malloc(len + 1);
 	if (!res)
 		return (NULL);
 	copy_string(str, res);

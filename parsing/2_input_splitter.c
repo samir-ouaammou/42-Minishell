@@ -77,7 +77,7 @@ void	ft_delete_commits(t_parsing *shell)
 		{
 			while (shell->temp[shell->i])
 			{
-				free(shell->temp[shell->i]);
+				//free(shell->temp[shell->i]);
 				shell->temp[shell->i] = NULL;
 				shell->i++;
 			}
@@ -93,7 +93,7 @@ void	ft_split_args(t_parsing *shell)
 	ft_count_len_args(shell);
 	if (shell->free == -1)
 		return ;
-	shell->cmds = malloc(shell->len + 1);
+	shell->cmds = ft_malloc(shell->len + 1);
 	if (!shell->cmds)
 		return ;
 	ft_args_copy(shell);

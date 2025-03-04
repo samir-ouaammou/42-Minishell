@@ -46,7 +46,7 @@ void ft_init_exaction(t_exaction *data)
     data->check_parenthese = 0;
     data->env = NULL;
     data->input = NULL;
-    data->shell_c = NULL;
+    data->shell = NULL;
     data->export = NULL;
     data->matches = NULL;
     data->save_pwd = NULL;
@@ -54,15 +54,6 @@ void ft_init_exaction(t_exaction *data)
     data->env_buffer = NULL;
     data->DollarSign = NULL;
     data->export_buffer = NULL;
-}
-
-void	handle_sigint(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
 }
 
 int	main(int ac, char **av, char **env)
@@ -73,31 +64,21 @@ int	main(int ac, char **av, char **env)
 	if (ac != 1)
 	{
 		write(2, "Error: Invalid number of arguments.\n", 36);
-		exit(-1);
+		ft_exit(-1);
 	}
 	ft_init_parsing(&shell);
 	ft_init_exaction(&data);
 	read_env(&data, env);
 	data.name_pro = "➜ Minishell ";
-	signal(SIGINT, handle_sigint);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		shell.input = readline(data.name_pro);
-		if (shell.input == NULL)
-		{
-			ft_printf("exit\n");
-			ft_free_parsing(&shell);
-			exit(data.exit_status);
-		}
 		shell.history = ft_strdup(shell.input);
 		ft_parsing(&shell, 0, &data);
 		if (shell.free == -1 && (!shell.tokens || !shell.tree))
 			write(2, "minishell: syntax error\n", 24);
 		if (shell.input)
 		{
-			data.shell_c = &shell;
 			if (shell.tree)
 				exaction(shell.tree, &data);
 			ft_free_parsing(&shell);
@@ -105,8 +86,13 @@ int	main(int ac, char **av, char **env)
 		if (shell.history)
 		{
 			add_history(shell.history);
-			free(shell.history);
+			// free(shell.history);
 			shell.history = NULL;
+			if (shell.input)
+			{
+				free(shell.input);
+				shell.input = NULL;
+			}
 		}
 	}
 	rl_clear_history();

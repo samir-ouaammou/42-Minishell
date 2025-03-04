@@ -46,7 +46,7 @@ static int handle_exit_args(char **args, int *exit_code, t_exaction *data)
 		{
 			ft_printf("minishell: exit: %s: numeric argument required\n",
 					  args[1]);
-			exit(2);
+			ft_exit(2);
 		}
 	}
 	return (0);
@@ -71,7 +71,7 @@ int builtin_exit(char **args, t_exaction *data)
 			status = data->exit_status;
 		if (!status)
 			status = 0;
-		exit(status);
+		ft_exit(status);
 	}
 	return (0);
 }

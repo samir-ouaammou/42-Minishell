@@ -4,7 +4,7 @@ void	ft_free_parsing(t_parsing *shell)
 {
 	if (shell->input)
 	{
-		free(shell->input);
+		// free(shell->input);
 		shell->input = NULL;
 	}
 	if (shell->free != -1)
@@ -28,14 +28,14 @@ void	ft_free_ast(t_ast *node)
 		i = 0;
 		while (node->value[i])
 		{
-			free(node->value[i]);
+			//free(node->value[i]);
 			node->value[i] = NULL;
 			i++;
 		}
-		free(node->value);
+		//free(node->value);
 		node->value = NULL;
 	}
-	free(node);
+	//free(node);
 	node = NULL;
 }
 
@@ -50,16 +50,16 @@ void	ft_free_tokens(t_parsing *shell)
 		{
 			while (shell->tokens->value[shell->i])
 			{
-				free(shell->tokens->value[shell->i]);
+				//free(shell->tokens->value[shell->i]);
 				shell->tokens->value[shell->i] = NULL;
 				shell->i++;
 			}
-			free(shell->tokens->value);
+			//free(shell->tokens->value);
 			shell->tokens->value = NULL;
 		}
 		shell->lst_help1 = shell->tokens;
 		shell->tokens = shell->tokens->next;
-		free(shell->lst_help1);
+		//free(shell->lst_help1);
 	}
 }
 
@@ -69,7 +69,7 @@ void	ft_free_args(t_parsing *shell)
 		return ;
 	shell->free = -1;
 	if (shell->cmds != NULL)
-		free(shell->cmds);
+		//free(shell->cmds);
 	if (shell->temp)
 	{
 		shell->i = 0;
@@ -77,12 +77,12 @@ void	ft_free_args(t_parsing *shell)
 		{
 			if (shell->temp[shell->i] != NULL)
 			{
-				free(shell->temp[shell->i]);
+				//free(shell->temp[shell->i]);
 				shell->temp[shell->i] = NULL;
 			}
 			shell->i++;
 		}
-		free(shell->temp);
+		//free(shell->temp);
 		shell->temp = NULL;
 	}
 }

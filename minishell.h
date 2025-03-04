@@ -8,9 +8,6 @@
 # include <dirent.h>
 # include <stdlib.h>
 # include <string.h>
-#include <signal.h>
-#include <stdio.h>
-#include <unistd.h>
 # include <fnmatch.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
@@ -18,6 +15,7 @@
 # include "./libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+#include "gc/gc.h"
 
 # define SUCCESS 0
 # define FAILED 1
@@ -92,7 +90,7 @@ typedef struct s_exaction
 	int					count_ok;
 	int					is_plus;
 	char				*save_pwd;
-	t_parsing			*shell_c;
+	t_parsing			*shell;
 }						t_exaction;
 
 // Functions Pxaction
@@ -128,7 +126,7 @@ void					ft_here_doc(t_parsing *shell, char *str, t_exaction *data);
 t_ast					*ft_build_command_tree(t_parsing *shell, int start, int end);
 int						is_wildcard_match(const char *wildcard, const char *filename);
 t_ast					*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
-void					print_ast(t_ast *node, int level, char *branch); //////////////////////////////////temp
+void	print_ast(t_ast *node, int level, char *branch); //////////////////////////////////temp
 
 // Functions Exaction
 

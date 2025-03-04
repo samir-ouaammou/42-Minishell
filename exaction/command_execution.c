@@ -19,7 +19,7 @@ static int is_directory(char *cmd)
 	if (stat(cmd, &statbuf) == 0 && S_ISDIR(statbuf.st_mode))
 	{
 		fprintf(stderr, "minishell: %s: Is a directory\n", cmd);
-		exit(126);
+		ft_exit(126);
 	}
 	return (0);
 }
@@ -44,12 +44,12 @@ static void handle_exec_failure(char *cmd, int check_, char *path_args)
 	if (check_)
 	{
 		ft_printf("minishell: %s: No such file or directory\n", cmd);
-		// free(path_args);
-		exit(127);
+		// //free(path_args);
+		ft_exit(127);
 	}
 	fprintf(stderr, "minishell: %s: Command not found\n", cmd);
-	// free(path_args);
-	exit(127);
+	// //free(path_args);
+	ft_exit(127);
 }
 
 int execute_command(char **cmd, t_exaction *data)
@@ -80,13 +80,11 @@ int execute_command(char **cmd, t_exaction *data)
 			if (execve(cmd[0], cmd, data->env) == -1)
 			{
 				ft_printf("minishell: %s: %s\n", cmd[0], strerror(errno));
-				exit(126);
+				ft_exit(126);
 			}
 		}
 		else
-		{
 			handle_exec_failure(cmd[0], contains_slash(cmd[0]), path_args);
-		}
 		return (FAILED);
 	}
 	wait(&status);

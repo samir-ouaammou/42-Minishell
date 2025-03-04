@@ -26,10 +26,10 @@ static void update_shlvl(t_exaction *data)
 			shlvl_value = ft_atoi(data->env[i] + 6) + 1;
 			char *num = ft_itoa(shlvl_value);
 			new_shlvl = ft_strjoin("SHLVL=", num);
-			free(data->env[i]);
+			//free(data->env[i]);
 			data->env[i] = new_shlvl;
-			// free(num);
-			// free(new_shlvl);
+			//free(num);
+			//free(new_shlvl);
 			return;
 		}
 		i++;
@@ -43,7 +43,7 @@ static void copy_envp(t_exaction *data, char **envp)
 	count = 0;
 	while (envp[count])
 		count++;
-	data->env = malloc(sizeof(char *) * (count + 1));
+	data->env = ft_malloc(sizeof(char *) * (count + 1));
 	if (!data->env)
 		return;
 	i = 0;
@@ -64,7 +64,7 @@ static void copy_envp(t_exaction *data, char **envp)
 	count = 0;
 	while (data->env[count])
 		count++;
-	data->export = malloc(sizeof(char *) * (count + 1));
+	data->export = ft_malloc(sizeof(char *) * (count + 1));
 	if (!data->export)
 		return;
 	while (data->env[i])
@@ -97,7 +97,7 @@ static void create_default_env(t_exaction *data)
 		perror("minishell: pwd");
 		return;
 	}
-	data->env = malloc(sizeof(char *) * (2 + add_num + 1));
+	data->env = ft_malloc(sizeof(char *) * (2 + add_num + 1));
 	if (!data->env)
 	{
 		perror("Minishell: malloc");
@@ -122,7 +122,7 @@ static void create_default_env(t_exaction *data)
 		perror("minishell: pwd");
 		return;
 	}
-	data->export = malloc(sizeof(char *) * (2 + add_num + 1));
+	data->export = ft_malloc(sizeof(char *) * (2 + add_num + 1));
 	if (!data->export)
 	{
 		perror("Minishell: malloc");
@@ -133,7 +133,7 @@ static void create_default_env(t_exaction *data)
 	{
 		char *str_j = ft_strjoin("PWD=", pwd_path_export);
 		pwd_path_export = add_double_quotes(str_j);
-		free(str_j);
+		//free(str_j);
 		data->export[add_num] = pwd_path_export;
 	}
 	data->export[add_num + 1] = ft_strdup(add_double_quotes("SHLVL=1"));

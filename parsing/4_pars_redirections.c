@@ -31,7 +31,7 @@ char	*ft_strjoin_and_free(char *s1, const char *s2)
 		return (ft_strdup(s2));
 	if (!s2)
 		return (ft_strdup(s1));
-	res = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	res = ft_malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!res)
 		return (NULL);
 	while (s1[i])
@@ -45,7 +45,7 @@ char	*ft_strjoin_and_free(char *s1, const char *s2)
 		j++;
 	}
 	res[i + j] = '\0';
-	free(s1);
+	//free(s1);
 	return (res);
 }
 
@@ -57,7 +57,7 @@ char    *ft_move_flags(t_parsing *shell, t_list *list)
     int     j;
     int     k;
 
-    redirections = malloc(ft_strlen(shell->input) + 1);
+    redirections = ft_malloc(ft_strlen(shell->input) + 1);
     if (!redirections)
         write(2, "Error: Memory allocation failed.\n", 33);
     redirections[0] = '\0';
@@ -120,11 +120,11 @@ void    ft_pars_redirections(t_parsing *shell, t_list *list)
     char    *redirections;
     int     i;
 
-    str = malloc(ft_strlen(shell->input));
+    str = ft_malloc(ft_strlen(shell->input));
     if (!str)
     {
         write(2, "Error: Memory allocation failed.\n", 33);
-        exit(-1);
+        ft_exit(-1);
     }
     str[0] = '\0';
     tmp = list;
@@ -161,7 +161,7 @@ void    ft_pars_redirections(t_parsing *shell, t_list *list)
             redirections = ft_move_flags(shell, help);
             str = ft_strjoin_and_free(str, redirections);
             str = ft_strjoin_and_free(str, " ");
-            free(redirections);
+            //free(redirections);
             while (tmp && tmp->value && !ft_check_is_operators(tmp->value[0]))
                 tmp = tmp->next;
         }

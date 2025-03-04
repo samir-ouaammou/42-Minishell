@@ -19,9 +19,9 @@ void    free_all(char **args)
     int i = 0;
     while (args[i])
     {
-        free(args[i]);
+        //free(args[i]);
         i++;
     }
-    free(args);
+    //free(args);
 }
 

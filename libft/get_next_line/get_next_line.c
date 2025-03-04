@@ -56,7 +56,7 @@ static char	*ft_strjoin(char *s1, char *s2)
 		s1 = "";
 	if (!s2)
 		s2 = "";
-	res = malloc(ft_strlenw(s1) + ft_strlenw(s2) + 1);
+	res = ft_malloc(ft_strlenw(s1) + ft_strlenw(s2) + 1);
 	if (!res)
 		return (NULL);
 	len = 0;
@@ -72,24 +72,24 @@ static char	*ft_read_to_saved(int fd, char *saved)
 	char	*temp;
 	int		bytes_read;
 
-	buffer = malloc(BUFFER_SIZE + 1);
+	buffer = ft_malloc(BUFFER_SIZE + 1);
 	if (!buffer)
-		return (free(saved), NULL);
+		return (//free(saved), NULL);
 	while (!ft_strchar(saved, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
-			return (free(buffer), free(saved), NULL);
+			return (//free(buffer), //free(saved), NULL);
 		if (bytes_read == 0)
 			break ;
 		buffer[bytes_read] = '\0';
 		temp = ft_strjoin(saved, buffer);
 		if (!temp)
-			return (free(buffer), free(saved), NULL);
-		free(saved);
+			return (//free(buffer), //free(saved), NULL);
+		//free(saved);
 		saved = temp;
 	}
-	free(buffer);
+	//free(buffer);
 	return (saved);
 }
 
@@ -98,7 +98,7 @@ char	*get_next_line(int fd)
 	static char	*saved;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (free(saved), NULL);
+		return (//free(saved), NULL);
 	saved = ft_read_to_saved(fd, saved);
 	if (!saved)
 		return (NULL);
