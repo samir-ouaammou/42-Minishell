@@ -56,7 +56,7 @@ char **ft_split_quots(char *str)
         return (NULL);
     
     int word_count = count_words(str);
-    res = malloc((word_count + 1) * sizeof(char *));
+    res = ft_malloc((word_count + 1) * sizeof(char *));
     if (!res)
         return (NULL);
 
@@ -84,7 +84,7 @@ char **ft_split_quots(char *str)
                 i++;
         }
 
-        res[j] = malloc((i - k + 1) * sizeof(char)); 
+        res[j] = ft_malloc((i - k + 1) * sizeof(char)); 
         if (!res[j])
         {
             // free_split(res);
@@ -144,7 +144,7 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
         len += strlen(str[i]);
         i++;
     }
-    res = malloc((len + 1) * sizeof(char));
+    res = ft_malloc((len + 1) * sizeof(char));
     if (!res)
     {
         // free_split(str);
