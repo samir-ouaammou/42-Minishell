@@ -57,13 +57,10 @@ void ft_move_input(t_parsing *shell, char *str)
     shell->input = ft_strdup(shell->help);
 }
 
-// int pip_p[2];
-
 void sigint_handler(int sig)
 {
     if (sig == SIGINT)
     {
-        // ft_printf("2\n");
         write(1, "\n", 1);
         ft_exit(130);
     }
@@ -126,10 +123,10 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
             }
             if (!str[shell->j] && shell->chr != ' ')
             {
-                // while (1)
-                // {
-                //     shell->line = readline("heredoc> ");
-                // }
+                while (1)
+                {
+                    shell->line = readline("heredoc> ");
+                }
             }
             else
             {

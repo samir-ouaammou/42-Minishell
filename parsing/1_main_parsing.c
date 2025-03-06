@@ -98,9 +98,7 @@ void	ft_replace_tabs_with_spaces(t_parsing *shell, char *input)
 	if (!shell->cmds)
 		return ;
 	ft_convert_tabs_to_spaces(shell, input);
-	//free(shell->input);
 	shell->input = ft_strdup(shell->cmds);
-	//free(shell->cmds);
 	ft_init_parsing(shell);
 }
 

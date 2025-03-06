@@ -30,6 +30,7 @@ typedef struct s_ast
 
 typedef struct s_data	t_exaction_struct;
 
+
 // struct Pxaction
 typedef struct s_parsing
 {
@@ -65,6 +66,7 @@ typedef struct s_parsing
 	t_exaction_struct	*data;
 }						t_parsing;
 
+
 // struct Exaction
 typedef struct s_exaction
 {
@@ -91,16 +93,16 @@ typedef struct s_exaction
 	int					count_ok;
 	int					is_plus;
 	char				*save_pwd;
-	int flag;
-	int pid_child;
-	int bol;
-	int lll;
+	int					flag;
+	int					pid_child;
+	int					bol;
+	int					lll;
 	int					is_foreground;
 	t_parsing			*shell;
 }						t_exaction;
 
-// Functions Pxaction
 
+// Functions Pxaction
 void					ft_free_args(t_parsing *shell);
 void					ft_split_args(t_parsing *shell);
 int						ft_count_tree_nodes(t_ast *tree);
@@ -129,15 +131,20 @@ void					ft_here_doc(t_parsing *shell, char *str, t_exaction *data);
 t_ast					*ft_build_command_tree(t_parsing *shell, int start, int end);
 int						is_wildcard_match(const char *wildcard, const char *filename);
 t_ast					*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
-void	print_ast(t_ast *node, int level, char *branch); //////////////////////////////////temp
+void					print_ast(t_ast *node, int level, char *branch); //////////////////////////////////temp
+
 
 // Functions Exaction
-
 void					free_all(char **args);
 int						is_operator(char *str);
+void					handle_signal(int sig);
+void					*ft_malloc(size_t size);
+struct					s_exaction *data_struc();
 char					*get_str_Dollars(char *str);
 char					*add_double_quotes(char *str);
 int						builtin_pwd(t_exaction *data);
+void					*ft_alloc(size_t size, char c);
+void					*ft_alloc(size_t size, char c);
 int						check_special_chars(char **args);
 void					copy_string(char *str, char *res);
 int						count_args(char **args, int start);
@@ -172,9 +179,4 @@ size_t					handle_env_var_length(char *str, t_exaction *data, int *index);
 char					**merge_command_args(t_ast *node, int count_left, int count_right);
 void					handle_env_var(char *str, char *res, t_exaction *data, int *res_index); // char *process_strings(char *str, t_exaction *data);
 int						execute_redir_RightArrow_redirout(t_ast *node, t_exaction *data, char *type);
-struct s_exaction *data_struc();
-void *ft_alloc(size_t size, char c);
-void handle_signal(int sig);
-void *ft_malloc(size_t size);
-void *ft_alloc(size_t size, char c);
 #endif
