@@ -44,11 +44,9 @@ static void handle_exec_failure(char *cmd, int check_, char *path_args)
 	if (check_)
 	{
 		ft_printf("minishell: %s: No such file or directory\n", cmd);
-		// //free(path_args);
 		ft_exit(127);
 	}
 	fprintf(stderr, "minishell: %s: Command not found\n", cmd);
-	// //free(path_args);
 	ft_exit(127);
 }
 
@@ -68,6 +66,8 @@ int execute_command(char **cmd, t_exaction *data)
 		return (FAILED);
 	if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		is_directory(cmd[0]);
 		char *path_args = get_path_env(cmd[0], data);
 		if ((path_args != NULL && !contains_slash(cmd[0])))
@@ -85,10 +85,20 @@ int execute_command(char **cmd, t_exaction *data)
 		}
 		else
 			handle_exec_failure(cmd[0], contains_slash(cmd[0]), path_args);
-		return (FAILED);
+		ft_exit(0);
 	}
 	wait(&status);
-	if (WIFEXITED(status))
+	if (WIFSIGNALED(status))
+	{
+		data->exit_status = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_putstr_fd("Quit (core dumped)", STDOUT_FILENO);
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		return (SUCCESS);
+	}
+	else
 	{
 		data->exit_status = WEXITSTATUS(status);
 		if (data->exit_status == 0)

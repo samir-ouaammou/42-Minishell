@@ -116,8 +116,8 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
         {
             if (str[i][0] == 34)
             {
-                str[i][strlen(str[i]) - 1] = '\0';
-                tmp = strdup(&str[i][1]);
+                str[i][ft_strlen(str[i]) - 1] = '\0';
+                tmp = ft_strdup(&str[i][1]);
                 if (!tmp)
                 {
                     // free_split(str);
@@ -131,8 +131,8 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
         }
         else
         {
-            str[i][strlen(str[i]) - 1] = '\0';
-            tmp = strdup(&str[i][1]);
+            str[i][ft_strlen(str[i]) - 1] = '\0';
+            tmp = ft_strdup(&str[i][1]);
             if (!tmp)
             {
                 // free_split(str);
@@ -141,7 +141,7 @@ char *ft_str_join(char **str, t_exaction *data, short bol)
             // free(str[i]);
             str[i] = tmp;
         }
-        len += strlen(str[i]);
+        len += ft_strlen(str[i]);
         i++;
     }
     res = ft_malloc((len + 1) * sizeof(char));
@@ -176,7 +176,6 @@ void ft_remove_quots(char **str, t_exaction *data, short bol)
         split = ft_split_quots(str[i]);
         if (!split)
             return;
-        // free(str[i]);
         str[i] = ft_str_join(split, data, bol);
         i++;
     }

@@ -13,7 +13,6 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include "./get_next_line/get_next_line.h"
 # include "./printf/ft_printf.h"
 # include "../malloc/malloc.h"
 # include <limits.h>
@@ -49,7 +48,6 @@ char				*ft_strstr(const char *big, const char *little);
 char				*ft_strncpy(char *dest, const char *src, int len);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);
-char				*ft_strrstr(const char *haystack, const char *needle);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 int					ft_strncmp(const char *str1, const char *str2, size_t len);
 

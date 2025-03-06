@@ -9,7 +9,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fnmatch.h>
-#include <signal.h>
+# include <signal.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/types.h>
@@ -17,6 +17,9 @@
 # include "./libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+
+extern int g_v;
+extern int g_v_child;
 
 # define SUCCESS 0
 # define FAILED 1
@@ -91,6 +94,11 @@ typedef struct s_exaction
 	int					count_ok;
 	int					is_plus;
 	char				*save_pwd;
+	int flag;
+	int pid_child;
+	int bol;
+	int lll;
+	int					is_foreground;
 	t_parsing			*shell;
 }						t_exaction;
 
@@ -167,4 +175,9 @@ size_t					handle_env_var_length(char *str, t_exaction *data, int *index);
 char					**merge_command_args(t_ast *node, int count_left, int count_right);
 void					handle_env_var(char *str, char *res, t_exaction *data, int *res_index); // char *process_strings(char *str, t_exaction *data);
 int						execute_redir_RightArrow_redirout(t_ast *node, t_exaction *data, char *type);
+struct s_exaction *test();
+void *ft_alloc(size_t size, char c);
+void handle_sigint(int sig);
+void *ft_malloc(size_t size);
+void *ft_alloc(size_t size, char c);
 #endif

@@ -156,7 +156,7 @@ static int add_default_export(char *str, t_exaction *data, int len)
 		return (1);
 	while (i < count)
 	{
-		new_export[i] = strdup(data->export[i]);
+		new_export[i] = ft_strdup(data->export[i]);
 		i++;
 	}
 	new_export[i] = ft_strdup(str);
@@ -184,7 +184,7 @@ static int add_new_env_var(char **args, t_exaction *data, int index)
 		return (1);
 	while (i < count)
 	{
-		new_env[i] = strdup(data->env[i]);
+		new_env[i] = ft_strdup(data->env[i]);
 		i++;
 	}
 	new_env[i] = ft_strdup(args[index]);
@@ -211,7 +211,7 @@ static int add_new_export_var(char **args, t_exaction *data, int index)
 		return (1);
 	while (i < count)
 	{
-		new_export[i] = strdup(data->export[i]);
+		new_export[i] = ft_strdup(data->export[i]);
 		i++;
 	}
 	new_export[i] = ft_strdup(args[index]);

@@ -1,6 +1,6 @@
 #include "./minishell.h"
 
-void	ft_init_parsing(t_parsing *shell)
+void ft_init_parsing(t_parsing *shell)
 {
 	shell->i = 0;
 	shell->j = 0;
@@ -28,47 +28,30 @@ void	ft_init_parsing(t_parsing *shell)
 	shell->end_node = NULL;
 }
 
-void ft_init_exaction(t_exaction *data)
+struct s_exaction *test()
 {
-    data->status = 0;
-    data->is_plus = 0;
-    data->fd_file = -1;
-    data->count_ok = 0;
-    data->fd_file2 = -1;
-    data->check_exe = 0;
-    data->check_pipe = 0;
-    data->save_index = 0;
-    data->exit_status = 0;
-    data->check_fmatch = 0;
-    data->stdin_backup = -1;
-    data->stdout_backup = -1;
-    data->check_operator = 0;
-    data->check_parenthese = 0;
-    data->env = NULL;
-    data->input = NULL;
-    data->shell = NULL;
-    data->export = NULL;
-    data->matches = NULL;
-    data->save_pwd = NULL;
-    data->name_pro = NULL;
-    data->env_buffer = NULL;
-    data->DollarSign = NULL;
-    data->export_buffer = NULL;
+	static struct s_exaction data = {0};
+	return &data;
 }
+
+int g_v = 0;
 
 void handle_sigint(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (test()->is_foreground == 1)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
-int	main(int ac, char **av, char **env)
+int main(int ac, char **av, char **env)
 {
-	t_parsing	shell;
-	t_exaction	data;
+	t_parsing shell;
+	t_exaction data;
 
 	if (ac != 1)
 	{
@@ -76,14 +59,16 @@ int	main(int ac, char **av, char **env)
 		ft_exit(-1);
 	}
 	ft_init_parsing(&shell);
-	ft_init_exaction(&data);
+	memset(&data, 0, sizeof(t_exaction));
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	read_env(&data, env);
 	data.name_pro = "➜ Minishell ";
 	while (1)
 	{
+		test()->is_foreground = 1;
 		shell.input = readline(data.name_pro);
+		test()->is_foreground = 0;
 		if (!shell.input)
 		{
 			ft_printf("exit\n");
@@ -91,20 +76,17 @@ int	main(int ac, char **av, char **env)
 		}
 		shell.history = ft_strdup(shell.input);
 		ft_parsing(&shell, 0, &data);
+		g_v = 0;
 		if (shell.free == -1 && (!shell.tokens || !shell.tree))
 			write(2, "minishell: syntax error\n", 24);
-		if (shell.input && shell.tree)
-				exaction(shell.tree, &data);
+		if (shell.input && shell.tree && test()->bol == 0)
+			exaction(shell.tree, &data);
 		if (shell.history)
 		{
 			add_history(shell.history);
 			shell.history = NULL;
-			// if (shell.input)
-			// {
-			// 	free(shell.input);
-			// 	shell.input = NULL;
-			// }
 		}
+		test()->bol = 0;
 	}
 	rl_clear_history();
 	(void)av;

@@ -57,8 +57,21 @@ void ft_move_input(t_parsing *shell, char *str)
     shell->input = ft_strdup(shell->help);
 }
 
+// int pip_p[2];
+
+void sigint_handler(int sig)
+{
+    if (sig == SIGINT)
+    {
+        // ft_printf("2\n");
+        write(1, "\n", 1);
+        ft_exit(130);
+    }
+}
+
 void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
 {
+    g_v = 1;
     int h;
     int dolar;
     if (!str || !str[0])
@@ -73,6 +86,7 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
     if (!shell->stop)
         return;
     shell->stop[1] = NULL;
+
     while (str[shell->i])
     {
         if (str[shell->i] == 34 || str[shell->i] == 39)
@@ -113,10 +127,10 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
             }
             if (!str[shell->j] && shell->chr != ' ')
             {
-                while (1)
-                {
-                    shell->line = readline("heredoc> ");
-                }
+                // while (1)
+                // {
+                //     shell->line = readline("heredoc> ");
+                // }
             }
             else
             {
@@ -135,19 +149,44 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
                 shell->itoa = ft_itoa(shell->nbr);
                 shell->name = ft_strjoin("/tmp/heredoc", shell->itoa);
                 shell->fd = open(shell->name, O_CREAT | O_RDWR | O_TRUNC, 0644);
-                while (1)
+                pid_t pid = fork();
+                if (pid == -1)
                 {
-                    shell->line = readline("heredoc> ");
-                    if (!shell->line)
-                        break;
-                    if (!strcmp(shell->stop[0], shell->line))
-                        break;
-                    if (!dolar)
-                        shell->line = process_strings(shell->line, data);
-                    write(shell->fd, shell->line, ft_strlen(shell->line));
-                    write(shell->fd, "\n", 1);
+                    perror("minishell: fork");
+                    return;
                 }
-                close(shell->fd);
+                else if (pid == 0)
+                {
+                    signal(SIGINT, sigint_handler);
+                    while (1)
+                    {
+                        shell->line = readline("heredoc> ");
+                        if (!shell->line)
+                            break;
+                        if (!ft_strcmp(shell->stop[0], shell->line))
+                            break;
+                        if (!dolar)
+                            shell->line = process_strings(shell->line, data);
+                        write(shell->fd, shell->line, ft_strlen(shell->line));
+                        write(shell->fd, "\n", 1);
+                    }
+                    close(shell->fd);
+                    ft_exit(0);
+                }
+                int status;
+                waitpid(pid, &status, 0);
+                if (WIFEXITED(status))
+                {
+                    int fd = WEXITSTATUS(status);
+                    if (fd == 130)
+                    {
+                        // ft_printf("3\n");
+                        g_v = 0;
+                        data->exit_status = 130;
+                        test()->bol = 1;
+                        return;
+                    }
+                }
             }
             shell->i = shell->j;
             shell->end = shell->j;

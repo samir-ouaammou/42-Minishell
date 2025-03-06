@@ -25,7 +25,7 @@ static int	handle_home_path(t_exaction *data)
 		return (1);
 	}
 	chdir(ft_strchr(home_path, '=') + 1);
-	data->name_pro = strdup("➜ ~ ");
+	data->name_pro = ft_strdup("➜ ~ ");
 	return (0);
 }
 
