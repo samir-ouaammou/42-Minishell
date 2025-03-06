@@ -50,12 +50,10 @@ static int update_env_var(char **args, t_exaction *data, char *str, int i)
 				str_j = ft_strjoin(data_struc()->env[j], str + 1);
 				if (!str_j)
 					return (0);
-				// //free(data_struc()->env[j]);
 				data_struc()->env[j] = str_j;
 			}
 			else
 			{
-				// //free(data_struc()->env[j]);
 				data_struc()->env[j] = ft_strdup(args[i]);
 				if (!data_struc()->env[j])
 					return (0);
@@ -106,21 +104,15 @@ static int update_export_var(char **args, t_exaction *data, char *str, int i)
 			if (data_struc()->is_plus == 1)
 			{
 				char *sss = add_double_quotes_plus((ft_strchr(data_struc()->export[j], '=') + 1), str + 1);
-				// //free(data_struc()->export[j]);
 				char *get_key = get_key_part(args[i], '=');
 				char *str_j = ft_strjoin(get_key, sss);
 				char *ddd = add_double_quotes(str_j);
 				data_struc()->export[j] = ddd;
-				// //free(sss);
-				// //free(str_j);
-				// //free(get_key);
 			}
 			else
 			{
 				str_new = add_double_quotes(args[i]);
-				// //free(data_struc()->export[j]);
 				data_struc()->export[j] = ft_strdup(str_new);
-				// //free(str_new);
 				if (!data_struc()->export[j])
 					return (0);
 			}
@@ -325,7 +317,6 @@ char *add_double_quotes(char *str)
 
 int builtin_export(char **args, t_exaction *data)
 {
-	(void)data;
 	(void)args;
 	int i;
 	int found;
@@ -402,9 +393,7 @@ int builtin_export(char **args, t_exaction *data)
 						j++;
 					}
 					res[k] = '\0';
-					// //free(args[i]);
 					args[i] = ft_strdup(res);
-					// //free(res);
 				}
 				found = update_env_var(args, data, str, i);
 				found_export = update_export_var(args, data, str, i);

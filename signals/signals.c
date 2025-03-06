@@ -18,11 +18,3 @@ void handle_signal(int sig)
 		data_struc()->exit_status = 130;
 	}
 }
-void sigint_handler(int sig)
-{
-    if (sig == SIGINT)
-    {
-        write(1, "\n", 1);
-        ft_exit(130);
-    }
-}

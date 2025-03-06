@@ -2,6 +2,8 @@
 
 int	ft_check_input_is_valid(t_parsing *shell)
 {
+	if (!shell || !shell->input)
+		return (0);
 	shell->i = 0;
 	while (shell->input && shell->input[shell->i])
 	{
@@ -89,3 +91,5 @@ void	ft_count_len_args(t_parsing *shell)
 		shell->len++;
 	}
 }
+
+

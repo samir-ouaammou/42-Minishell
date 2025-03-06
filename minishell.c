@@ -44,7 +44,7 @@ int main(int ac, char **av, char **env)
 	memset(&data, 0, sizeof(t_exaction));
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, SIG_IGN);
-	read_env(&data, env);
+	read_env(env);
 	data.name_pro = "➜ Minishell ";
 	while (1)
 	{

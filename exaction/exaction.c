@@ -22,41 +22,39 @@ char *find_str_env(char *str, t_exaction *data)
 	while (data_struc()->env[i])
 	{
 		if (ft_strncmp(data_struc()->env[i], str, ft_strlen(str)) == 0)
-		{
 			return (data_struc()->env[i]);
-		}
 		i++;
 	}
 	return (NULL);
 }
 
+void update_shlvl()
+{
+	int i;
+	int shlvl_value;
+	char *new_shlvl;
+
+	i = 0;
+	while (data_struc()->env[i])
+	{
+		if (ft_strncmp(data_struc()->env[i], "SHLVL=", 6) == 0)
+		{
+			shlvl_value = ft_atoi(data_struc()->env[i] + 6) + 1;
+			if (shlvl_value >= 1000)
+				shlvl_value = 0;
+			else if (shlvl_value <= 0)
+				shlvl_value = 0;
+			char *num = ft_itoa(shlvl_value);
+			new_shlvl = ft_strjoin("SHLVL=", num);
+			data_struc()->env[i] = new_shlvl;
+			return;
+		}
+		i++;
+	}
+}
+
 void exaction(t_ast *root, t_exaction *data)
 {
-	// if (root == NULL)
-	// 	return;
-	// if (data_struc()->fd_file != -1)
-	// {
-	// 	close(data_struc()->fd_file);
-	// 	data_struc()->fd_file = -1;
-	// }
-	// if (data_struc()->stdout_backup != -1)
-	// {
-	// 	close(data_struc()->stdout_backup);
-	// 	data_struc()->stdout_backup = -1;
-	// }
-	// char *str = process_strings(root->value[0], data);
-	// ft_printf("str: %s\n", str);
-	// link_env_envBuffer(data);
 	execute_ast(root, data);
-	// data_struc()->check_file_1 = 0;
-	// data_struc()->check_file_2 = 0;
 	data_struc()->status = 0;
-	data_struc()->fd_file = 0;
-	// data_struc()->num_proess = 0;
-	// data_struc()->num_proess2 = 0;
-	// free_all(data_struc()->env);
-	// free_all(data_struc()->matches);
-	// free_all(data_struc()->DollarSign);
-	// ft_printf("close 2\n");
-	// ft_printf("exit_status: %d\n", data_struc()->exit_status);
 }

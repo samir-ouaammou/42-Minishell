@@ -12,32 +12,7 @@
 
 #include "../minishell.h"
 
-static void update_shlvl(t_exaction *data)
-{
-	(void)data;
-	int i;
-	int shlvl_value;
-	char *new_shlvl;
-
-	i = 0;
-	while (data_struc()->env[i])
-	{
-		if (ft_strncmp(data_struc()->env[i], "SHLVL=", 6) == 0)
-		{
-			shlvl_value = ft_atoi(data_struc()->env[i] + 6) + 1;
-			char *num = ft_itoa(shlvl_value);
-			new_shlvl = ft_strjoin("SHLVL=", num);
-			//free(data_struc()->env[i]);
-			data_struc()->env[i] = new_shlvl;
-			//free(num);
-			//free(new_shlvl);
-			return;
-		}
-		i++;
-	}
-}
-
-static void copy_envp(t_exaction *data, char **envp)
+static void copy_envp(char **envp)
 {
 	int count, i;
 
@@ -80,12 +55,11 @@ static void copy_envp(t_exaction *data, char **envp)
 		i++;
 	}
 	data_struc()->export[count] = NULL;
-	update_shlvl(data);
+	update_shlvl();
 }
 
-static void create_default_env(t_exaction *data)
+static void create_default_env()
 {
-	(void)data;
 	int add_num;
 	char path[1024], (*pwd_path);
 
@@ -135,17 +109,16 @@ static void create_default_env(t_exaction *data)
 	{
 		char *str_j = ft_strjoin("PWD=", pwd_path_export);
 		pwd_path_export = add_double_quotes(str_j);
-		//free(str_j);
 		data_struc()->export[add_num] = pwd_path_export;
 	}
 	data_struc()->export[add_num + 1] = ft_strdup(add_double_quotes("SHLVL=1"));
 	data_struc()->export[add_num + 2] = NULL;
 }
 
-void read_env(t_exaction *data, char **envp)
+void read_env(char **envp)
 {
 	if (*envp)
-		copy_envp(data, envp);
+		copy_envp(envp);
 	else
-		create_default_env(data);
+		create_default_env();
 }
