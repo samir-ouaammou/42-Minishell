@@ -9,7 +9,7 @@ struct s_exaction *data_struc()
 void handle_signal(int sig)
 {
 	(void)sig;
-// ;	// if (data_struc()->is_foreground == 1)
+	if (data_struc()->is_foreground == 1)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();
