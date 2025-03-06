@@ -58,7 +58,7 @@ int execute_command(char **cmd, t_exaction *data)
 	if (cmd[0][0] == '\0')
 	{
 		ft_printf("minishell: %s: Command not found\n", cmd[0]);
-		data->exit_status = 0;
+		data_struc()->exit_status = 0;
 		return (1);
 	}
 	pid = fork();
@@ -72,12 +72,12 @@ int execute_command(char **cmd, t_exaction *data)
 		char *path_args = get_path_env(cmd[0], data);
 		if ((path_args != NULL && !contains_slash(cmd[0])))
 		{
-			if (execve(path_args, cmd, data->env) == -1)
+			if (execve(path_args, cmd, data_struc()->env) == -1)
 				ft_printf("minishell: %s: %s\n", cmd[0], strerror(errno));
 		}
 		else if (!path_args && contains_slash(cmd[0]))
 		{
-			if (execve(cmd[0], cmd, data->env) == -1)
+			if (execve(cmd[0], cmd, data_struc()->env) == -1)
 			{
 				ft_printf("minishell: %s: %s\n", cmd[0], strerror(errno));
 				ft_exit(126);
@@ -90,7 +90,7 @@ int execute_command(char **cmd, t_exaction *data)
 	wait(&status);
 	if (WIFSIGNALED(status))
 	{
-		data->exit_status = 128 + WTERMSIG(status);
+		data_struc()->exit_status = 128 + WTERMSIG(status);
 		if (WTERMSIG(status) == SIGQUIT)
 			ft_putstr_fd("Quit (core dumped)", STDOUT_FILENO);
 		ft_putchar_fd('\n', STDOUT_FILENO);
@@ -100,8 +100,8 @@ int execute_command(char **cmd, t_exaction *data)
 	}
 	else
 	{
-		data->exit_status = WEXITSTATUS(status);
-		if (data->exit_status == 0)
+		data_struc()->exit_status = WEXITSTATUS(status);
+		if (data_struc()->exit_status == 0)
 			return (SUCCESS);
 	}
 	return (FAILED);

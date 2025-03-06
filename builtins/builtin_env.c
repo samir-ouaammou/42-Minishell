@@ -17,19 +17,19 @@ int builtin_env(char **args, t_exaction *data)
 {
 	int i;
 
-	if (!data || !data->env || !args)
+	if (!data || !data_struc()->env || !args)
 		return (-1);
 	else if (args && args[1])
 	{
 		ft_printf("minishell: env: too many arguments\n");
-		data->exit_status = 1;
+		data_struc()->exit_status = 1;
 	}
 	else
 	{
 		i = 0;
-		while (data->env[i])
+		while (data_struc()->env[i])
 		{
-			printf("%s\n", data->env[i]);
+			printf("%s\n", data_struc()->env[i]);
 			i++;
 		}
 	}

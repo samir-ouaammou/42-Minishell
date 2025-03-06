@@ -71,7 +71,6 @@ void sigint_handler(int sig)
 
 void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
 {
-    g_v = 1;
     int h;
     int dolar;
     if (!str || !str[0])
@@ -180,10 +179,8 @@ void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
                     int fd = WEXITSTATUS(status);
                     if (fd == 130)
                     {
-                        // ft_printf("3\n");
-                        g_v = 0;
-                        data->exit_status = 130;
-                        test()->bol = 1;
+                        data_struc()->exit_status = 130;
+                        data_struc()->bol = 1;
                         return;
                     }
                 }

@@ -21,20 +21,21 @@ static int	handle_home_path(t_exaction *data)
 	if (!home_path)
 	{
 		ft_printf("minishell: cd: HOME not set\n");
-		data->exit_status = 1;
+		data_struc()->exit_status = 1;
 		return (1);
 	}
 	chdir(ft_strchr(home_path, '=') + 1);
-	data->name_pro = ft_strdup("➜ ~ ");
+	data_struc()->name_pro = ft_strdup("➜ ~ ");
 	return (0);
 }
 
 static int	handle_directory_change(char *dir, t_exaction *data)
 {
+	(void)data;
 	if (chdir(dir) == -1)
 	{
 		ft_printf("minishell: %s: %s\n", dir, strerror(errno));
-		data->exit_status = 1;
+		data_struc()->exit_status = 1;
 		return (1);
 	}
 	return (0);
@@ -42,6 +43,7 @@ static int	handle_directory_change(char *dir, t_exaction *data)
 
 static void	update_prompt(t_exaction *data)
 {
+	(void)data;
 	char	buffer[1024];
 	char	*last_slash;
 	char	*new_prompt;
@@ -52,10 +54,10 @@ static void	update_prompt(t_exaction *data)
 	{
 		new_prompt = ft_strjoin("➜ ", last_slash + 1);
 		new_prompt = ft_strjoin(new_prompt, " ");
-		data->name_pro = new_prompt;
+		data_struc()->name_pro = new_prompt;
 	}
 	else
-		data->name_pro = "➜ / ";
+		data_struc()->name_pro = "➜ / ";
 }
 
 int	builtin_cd(char **args, t_exaction *data)
@@ -63,7 +65,7 @@ int	builtin_cd(char **args, t_exaction *data)
 	if (args[2])
 	{
 		ft_printf("minishell: cd: too many arguments\n");
-		data->exit_status = 1;
+		data_struc()->exit_status = 1;
 		return (1);
 	}
 	if (args[0] && !args[1])

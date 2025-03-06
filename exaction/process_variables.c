@@ -61,9 +61,10 @@ void handle_env_var(char *str, char *res, t_exaction *data, int *res_index)
 
 static void handle_exit_status(char *res, t_exaction *data, int *res_index)
 {
+	(void)data;
 	char *exit_status;
 
-	exit_status = ft_itoa(data->exit_status);
+	exit_status = ft_itoa(data_struc()->exit_status);
 	if (exit_status)
 	{
 		ft_strcpy(&res[*res_index], exit_status);

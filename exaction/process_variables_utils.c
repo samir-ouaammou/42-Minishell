@@ -96,11 +96,12 @@ size_t	handle_env_var_length(char *str, t_exaction *data, int *index)
 
 size_t	handle_exit_status_length(t_exaction *data, int *index)
 {
+	(void)data;
 	size_t	len;
 	char	*exit_status;
 
 	len = 0;
-	exit_status = ft_itoa(data->exit_status);
+	exit_status = ft_itoa(data_struc()->exit_status);
 	if (exit_status)
 		len += ft_strlen(exit_status);
 	*index += 2;

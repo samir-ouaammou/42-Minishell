@@ -25,7 +25,7 @@ static void execute_child_first(t_ast *node, t_exaction *data, int *pipefd)
 	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
 	execute_ast(node->left, data);
-	ft_exit(data->exit_status);
+	ft_exit(data_struc()->exit_status);
 }
 
 static void execute_child_second(t_ast *node, t_exaction *data, int *pipefd)
@@ -34,7 +34,7 @@ static void execute_child_second(t_ast *node, t_exaction *data, int *pipefd)
 	dup2(pipefd[0], STDIN_FILENO);
 	close(pipefd[0]);
 	execute_ast(node->right, data);
-	ft_exit(data->exit_status);
+	ft_exit(data_struc()->exit_status);
 }
 
 int execute_pipe(t_ast *node, t_exaction *data)
@@ -61,10 +61,10 @@ int execute_pipe(t_ast *node, t_exaction *data)
 	waitpid(pid2, &status2, 0);
 	if (WIFEXITED(status2))
 	{
-		data->exit_status = WEXITSTATUS(status2);
-		if (data->exit_status == 127 || data->exit_status == 1)
-			data->status = 1;
-		// ft_printf("status: %d\n", data->exit_status);
+		data_struc()->exit_status = WEXITSTATUS(status2);
+		if (data_struc()->exit_status == 127 || data_struc()->exit_status == 1)
+			data_struc()->status = 1;
+		// ft_printf("status: %d\n", data_struc()->exit_status);
 	}
 	return (SUCCESS);
 }

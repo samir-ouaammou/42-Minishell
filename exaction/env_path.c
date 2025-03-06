@@ -25,12 +25,10 @@ static char *get_path_env_utils(char **path, char *cmd)
         if (!path_arg)
             return (NULL);
         temp = ft_strjoin(path_arg, cmd);
-        //free(path_arg);
         if (!temp)
             return (NULL);
         if (access(temp, X_OK) == 0)
             return (temp);
-        //free(temp);
         i++;
     }
     return (NULL);
@@ -39,6 +37,7 @@ static char *get_path_env_utils(char **path, char *cmd)
 
 char *get_path_env(char *cmd, t_exaction *data)
 {
+    (void)data;
     char **path;
     int i, check_path;
     char *path_arg;
@@ -46,14 +45,14 @@ char *get_path_env(char *cmd, t_exaction *data)
     i = 0;
     check_path = 0;
     path = NULL;
-    if (!data->env)
+    if (!data_struc()->env)
         return (NULL);
-    while (data->env[i])
+    while (data_struc()->env[i])
     {
-        if (ft_strncmp(data->env[i], "PATH=", 5) == 0)
+        if (ft_strncmp(data_struc()->env[i], "PATH=", 5) == 0)
         {
             check_path = 1;
-            path = ft_split(data->env[i] + 5, ':');
+            path = ft_split(data_struc()->env[i] + 5, ':');
             break;
         }
         i++;

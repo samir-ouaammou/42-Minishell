@@ -15,41 +15,44 @@
 
 static void	remove_env_var(t_exaction *data, int index)
 {
-	while (data->env[index + 1])
+	(void)data;
+	while (data_struc()->env[index + 1])
 	{
-		data->env[index] = data->env[index + 1];
+		data_struc()->env[index] = data_struc()->env[index + 1];
 		index++;
 	}
-	data->env[index] = NULL;
+	data_struc()->env[index] = NULL;
 }
 
 static void	remove_export_var(t_exaction *data, int index)
 {
-	while (data->export[index + 1])
+	(void)data;
+	while (data_struc()->export[index + 1])
 	{
-		data->export[index] = data->export[index + 1];
+		data_struc()->export[index] = data_struc()->export[index + 1];
 		index++;
 	}
-	data->export[index] = NULL;
+	data_struc()->export[index] = NULL;
 }
 
 int	builtin_unset(char **args, t_exaction *data)
 {
+	(void)data;
 	int	i;
 	int	j;
 
-	if (!args || !data || !data->env || !data->export)
+	if (!args || !data || !data_struc()->env || !data_struc()->export)
 	{
-		data->exit_status = 1;
+		data_struc()->exit_status = 1;
 		return (1);
 	}
 	i = 1;
 	while (args[i])
 	{
 		j = 0;
-		while (data->env[j])
+		while (data_struc()->env[j])
 		{
-			if (ft_strncmp(args[i], data->env[j],
+			if (ft_strncmp(args[i], data_struc()->env[j],
 					ft_strlen(args[i])) == 0)
 			{
 				remove_env_var(data, j);
@@ -58,9 +61,9 @@ int	builtin_unset(char **args, t_exaction *data)
 			j++;
 		}
 		j = 0;
-		while (data->export[j])
+		while (data_struc()->export[j])
 		{
-			if (ft_strncmp(args[i], data->export[j],
+			if (ft_strncmp(args[i], data_struc()->export[j],
 					ft_strlen(args[i])) == 0)
 			{
 				remove_export_var(data, j);

@@ -15,21 +15,23 @@
 
 void print_export(t_exaction *data)
 {
+	(void)data;
 	int i;
 
-	if (!data || !data->export)
+	if (!data || !data_struc()->export)
 		return;
 	i = 0;
-	while (data->export[i])
+	while (data_struc()->export[i])
 	{
-		if (data->export[i])
-			printf("declare -x %s\n", data->export[i]);
+		if (data_struc()->export[i])
+			printf("declare -x %s\n", data_struc()->export[i]);
 		i++;
 	}
 }
 
 static int update_env_var(char **args, t_exaction *data, char *str, int i)
 {
+	(void)data;
 	int j;
 	int found;
 	char *str_j;
@@ -37,25 +39,25 @@ static int update_env_var(char **args, t_exaction *data, char *str, int i)
 	j = 0;
 	found = 0;
 	str_j = NULL;
-	if (!data->env)
+	if (!data_struc()->env)
 		return (0);
-	while (data->env[j])
+	while (data_struc()->env[j])
 	{
-		if (ft_strncmp(data->env[j], args[i], (ft_strlen(args[i]) - ft_strlen(str))) == 0)
+		if (ft_strncmp(data_struc()->env[j], args[i], (ft_strlen(args[i]) - ft_strlen(str))) == 0)
 		{
-			if (data->is_plus == 1)
+			if (data_struc()->is_plus == 1)
 			{
-				str_j = ft_strjoin(data->env[j], str + 1);
+				str_j = ft_strjoin(data_struc()->env[j], str + 1);
 				if (!str_j)
 					return (0);
-				// //free(data->env[j]);
-				data->env[j] = str_j;
+				// //free(data_struc()->env[j]);
+				data_struc()->env[j] = str_j;
 			}
 			else
 			{
-				// //free(data->env[j]);
-				data->env[j] = ft_strdup(args[i]);
-				if (!data->env[j])
+				// //free(data_struc()->env[j]);
+				data_struc()->env[j] = ft_strdup(args[i]);
+				if (!data_struc()->env[j])
 					return (0);
 			}
 			found = 1;
@@ -88,26 +90,27 @@ char *get_key_part(char *str, char delimiter)
 
 static int update_export_var(char **args, t_exaction *data, char *str, int i)
 {
+	(void)data;
 	int j;
 	int found;
 	char *str_new;
 
-	if (!data->export)
+	if (!data_struc()->export)
 		return (0);
 	j = 0;
 	found = 0;
-	while (data->export[j])
+	while (data_struc()->export[j])
 	{
-		if (ft_strncmp(data->export[j], args[i], (ft_strlen(args[i]) - ft_strlen(str))) == 0)
+		if (ft_strncmp(data_struc()->export[j], args[i], (ft_strlen(args[i]) - ft_strlen(str))) == 0)
 		{
-			if (data->is_plus == 1)
+			if (data_struc()->is_plus == 1)
 			{
-				char *sss = add_double_quotes_plus((ft_strchr(data->export[j], '=') + 1), str + 1);
-				// //free(data->export[j]);
+				char *sss = add_double_quotes_plus((ft_strchr(data_struc()->export[j], '=') + 1), str + 1);
+				// //free(data_struc()->export[j]);
 				char *get_key = get_key_part(args[i], '=');
 				char *str_j = ft_strjoin(get_key, sss);
 				char *ddd = add_double_quotes(str_j);
-				data->export[j] = ddd;
+				data_struc()->export[j] = ddd;
 				// //free(sss);
 				// //free(str_j);
 				// //free(get_key);
@@ -115,10 +118,10 @@ static int update_export_var(char **args, t_exaction *data, char *str, int i)
 			else
 			{
 				str_new = add_double_quotes(args[i]);
-				// //free(data->export[j]);
-				data->export[j] = ft_strdup(str_new);
+				// //free(data_struc()->export[j]);
+				data_struc()->export[j] = ft_strdup(str_new);
 				// //free(str_new);
-				if (!data->export[j])
+				if (!data_struc()->export[j])
 					return (0);
 			}
 			found = 1;
@@ -131,6 +134,7 @@ static int update_export_var(char **args, t_exaction *data, char *str, int i)
 
 static int add_default_export(char *str, t_exaction *data, int len)
 {
+	(void)data;
 	(void)str;
 	char **new_export;
 	int count;
@@ -139,16 +143,16 @@ static int add_default_export(char *str, t_exaction *data, int len)
 	count = 0;
 	i = 0;
 	new_export = NULL;
-	while (data->export[i])
+	while (data_struc()->export[i])
 	{
-		if (ft_strncmp(data->export[i], str, len) == 0)
+		if (ft_strncmp(data_struc()->export[i], str, len) == 0)
 			return (1);
 		i++;
 	}
 	i = 0;
-	if (data->export)
+	if (data_struc()->export)
 	{
-		while (data->export[count])
+		while (data_struc()->export[count])
 			count++;
 	}
 	new_export = ft_malloc(sizeof(char *) * (count + 2));
@@ -156,17 +160,18 @@ static int add_default_export(char *str, t_exaction *data, int len)
 		return (1);
 	while (i < count)
 	{
-		new_export[i] = ft_strdup(data->export[i]);
+		new_export[i] = ft_strdup(data_struc()->export[i]);
 		i++;
 	}
 	new_export[i] = ft_strdup(str);
 	new_export[i + 1] = NULL;
-	data->export = new_export;
+	data_struc()->export = new_export;
 	return (0);
 }
 
 static int add_new_env_var(char **args, t_exaction *data, int index)
 {
+	(void)data;
 	char **new_env;
 	int count;
 	int i;
@@ -174,9 +179,9 @@ static int add_new_env_var(char **args, t_exaction *data, int index)
 	count = 0;
 	i = 0;
 
-	if (data->env)
+	if (data_struc()->env)
 	{
-		while (data->env[count])
+		while (data_struc()->env[count])
 			count++;
 	}
 	new_env = ft_malloc(sizeof(char *) * (count + 2));
@@ -184,26 +189,27 @@ static int add_new_env_var(char **args, t_exaction *data, int index)
 		return (1);
 	while (i < count)
 	{
-		new_env[i] = ft_strdup(data->env[i]);
+		new_env[i] = ft_strdup(data_struc()->env[i]);
 		i++;
 	}
 	new_env[i] = ft_strdup(args[index]);
 	new_env[i + 1] = NULL;
-	data->env = new_env;
+	data_struc()->env = new_env;
 	return (0);
 }
 
 static int add_new_export_var(char **args, t_exaction *data, int index)
 {
+	(void)data;
 	char **new_export;
 	int count;
 	int i;
 
 	count = 0;
 	i = 0;
-	if (data->export)
+	if (data_struc()->export)
 	{
-		while (data->export[count])
+		while (data_struc()->export[count])
 			count++;
 	}
 	new_export = ft_malloc(sizeof(char *) * (count + 2));
@@ -211,12 +217,12 @@ static int add_new_export_var(char **args, t_exaction *data, int index)
 		return (1);
 	while (i < count)
 	{
-		new_export[i] = ft_strdup(data->export[i]);
+		new_export[i] = ft_strdup(data_struc()->export[i]);
 		i++;
 	}
 	new_export[i] = ft_strdup(args[index]);
 	new_export[i + 1] = NULL;
-	data->export = new_export;
+	data_struc()->export = new_export;
 	return (0);
 }
 
@@ -319,18 +325,19 @@ char *add_double_quotes(char *str)
 
 int builtin_export(char **args, t_exaction *data)
 {
+	(void)data;
 	(void)args;
 	int i;
 	int found;
 	int found_export;
 	char *str;
 
-	if (!args || !data || !data->env || !data->export)
+	if (!args || !data || !data_struc()->env || !data_struc()->export)
 		return (1);
 	i = 1;
 	found = 0;
 	found_export = 0;
-	data->is_plus = 0;
+	data_struc()->is_plus = 0;
 	str = NULL;
 
 	if (!args[1])
@@ -347,7 +354,7 @@ int builtin_export(char **args, t_exaction *data)
 			{
 				ft_printf("minishell: export: `%s': not a valid identifier\n", args[i]);
 				check_error = 1;
-				data->exit_status = 1;
+				data_struc()->exit_status = 1;
 				free_all(split_str);
 			}
 			str = ft_strchr(args[i], '=');
@@ -363,12 +370,12 @@ int builtin_export(char **args, t_exaction *data)
 				while (args[i][j])
 				{
 					if (args[i][j] == '+')
-						data->is_plus = 1;
+						data_struc()->is_plus = 1;
 					if (args[i][j] == '=')
 						break;
 					j++;
 				}
-				if (data->is_plus == 1)
+				if (data_struc()->is_plus == 1)
 				{
 					char *res;
 					int len;

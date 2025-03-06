@@ -14,13 +14,14 @@
 
 int builtin_pwd(t_exaction *data)
 {
-	if (data->save_pwd)
+	(void)data;
+	if (data_struc()->save_pwd)
 	{
-		printf("%s\n", data->save_pwd);
-		data->exit_status = 0;
+		printf("%s\n", data_struc()->save_pwd);
+		data_struc()->exit_status = 0;
 		return (0);
 	}
-	data->exit_status = 1;
+	data_struc()->exit_status = 1;
 	return (1);
 }
 

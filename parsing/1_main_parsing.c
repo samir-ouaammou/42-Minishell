@@ -308,7 +308,7 @@ void	ft_parsing(t_parsing *shell, int bol, t_exaction *data)
 	// }   //-------------------
 }
 
-// *************** test parsing **********
+// *************** data parsing **********
 
 void	print_ast(t_ast *node, int level, char *branch)
 {

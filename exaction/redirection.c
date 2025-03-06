@@ -15,7 +15,7 @@ int execute_redirection(t_ast *root, t_exaction *data)
         if (fd_out == -1)
         {
             ft_printf("minishell: %s: %s\n", root->right->value[0], strerror(errno));
-            data->exit_status = 1;
+            data_struc()->exit_status = 1;
             return (1);
         }
     }
@@ -25,7 +25,7 @@ int execute_redirection(t_ast *root, t_exaction *data)
         if (fd_in == -1)
         {
             ft_printf("minishell: %s: %s\n", root->right->value[0], strerror(errno));
-            data->exit_status = 1;
+            data_struc()->exit_status = 1;
             return (1);
         }
     }
@@ -35,7 +35,7 @@ int execute_redirection(t_ast *root, t_exaction *data)
         if (fd_out == -1)
         {
             ft_printf("minishell: %s: %s\n", root->right->value[0], strerror(errno));
-            data->exit_status = 1;
+            data_struc()->exit_status = 1;
             return (1);
         }
     }
@@ -48,7 +48,7 @@ int execute_redirection(t_ast *root, t_exaction *data)
             if (fd_out == -1)
             {
                 ft_printf("minishell: %s: %s\n", root->right->value[i], strerror(errno));
-                data->exit_status = 1;
+                data_struc()->exit_status = 1;
                 return (1);
             }
         }
@@ -59,7 +59,7 @@ int execute_redirection(t_ast *root, t_exaction *data)
             if (fd_out == -1)
             {
                 ft_printf("minishell: %s: %s\n", root->right->value[i], strerror(errno));
-                data->exit_status = 1;
+                data_struc()->exit_status = 1;
                 return (1);
             }
         }
@@ -70,7 +70,7 @@ int execute_redirection(t_ast *root, t_exaction *data)
             if (fd_in == -1)
             {
                 ft_printf("minishell: %s: %s\n", root->right->value[i], strerror(errno));
-                data->exit_status = 1;
+                data_struc()->exit_status = 1;
                 return (1);
             }
         }
@@ -95,15 +95,15 @@ int execute_redirection(t_ast *root, t_exaction *data)
             dup2(fd_in, STDIN_FILENO);
             close(fd_in);
         }
-        data->status = execute_ast(root->left, data);
-        ft_exit(data->status);
+        data_struc()->status = execute_ast(root->left, data);
+        ft_exit(data_struc()->status);
     }
     else
     {
         int status;
         waitpid(pid, &status, 0);
         if (WIFEXITED(status))
-            data->status = WEXITSTATUS(status);
+            data_struc()->status = WEXITSTATUS(status);
         if (fd_out != -1)
             close(fd_out);
         if (fd_in != -1)

@@ -28,25 +28,7 @@ void ft_init_parsing(t_parsing *shell)
 	shell->end_node = NULL;
 }
 
-struct s_exaction *test()
-{
-	static struct s_exaction data = {0};
-	return &data;
-}
 
-int g_v = 0;
-
-void handle_sigint(int sig)
-{
-	(void)sig;
-	if (test()->is_foreground == 1)
-	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
 
 int main(int ac, char **av, char **env)
 {
@@ -60,15 +42,15 @@ int main(int ac, char **av, char **env)
 	}
 	ft_init_parsing(&shell);
 	memset(&data, 0, sizeof(t_exaction));
-	signal(SIGINT, handle_sigint);
+	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, SIG_IGN);
 	read_env(&data, env);
 	data.name_pro = "➜ Minishell ";
 	while (1)
 	{
-		test()->is_foreground = 1;
+		data_struc()->is_foreground = 1;
 		shell.input = readline(data.name_pro);
-		test()->is_foreground = 0;
+		data_struc()->is_foreground = 0;
 		if (!shell.input)
 		{
 			ft_printf("exit\n");
@@ -76,17 +58,16 @@ int main(int ac, char **av, char **env)
 		}
 		shell.history = ft_strdup(shell.input);
 		ft_parsing(&shell, 0, &data);
-		g_v = 0;
 		if (shell.free == -1 && (!shell.tokens || !shell.tree))
 			write(2, "minishell: syntax error\n", 24);
-		if (shell.input && shell.tree && test()->bol == 0)
+		if (shell.input && shell.tree && data_struc()->bol == 0)
 			exaction(shell.tree, &data);
 		if (shell.history)
 		{
 			add_history(shell.history);
 			shell.history = NULL;
 		}
-		test()->bol = 0;
+		data_struc()->bol = 0;
 	}
 	rl_clear_history();
 	(void)av;

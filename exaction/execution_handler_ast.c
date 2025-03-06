@@ -37,13 +37,13 @@ static void handle_operator(t_ast *root, t_exaction *data)
 	if (ft_strcmp(root->value[0], "&&") == 0)
 	{
 		execute_ast(root->left, data);
-		if (data->status == 0)
+		if (data_struc()->status == 0)
 			execute_ast(root->right, data);
 	}
 	else if (ft_strcmp(root->value[0], "||") == 0)
 	{
 		execute_ast(root->left, data);
-		if (data->status != 0)
+		if (data_struc()->status != 0)
 			execute_ast(root->right, data);
 	}
 	else if (ft_strcmp(root->value[0], "|") == 0)
@@ -51,9 +51,9 @@ static void handle_operator(t_ast *root, t_exaction *data)
 	else if (ft_strcmp(root->value[0], ">") == 0
 	|| ft_strcmp(root->value[0], "<") == 0
 	|| ft_strcmp(root->value[0], ">>") == 0)
-		data->status = execute_redirection(root, data);
+		data_struc()->status = execute_redirection(root, data);
 	else if (ft_strcmp(root->value[0], "<<") == 0)
-		data->status = execute_heredoc(root, data);
+		data_struc()->status = execute_heredoc(root, data);
 }
 
 static int handle_builtin(t_ast *root, t_exaction *data)
@@ -61,12 +61,12 @@ static int handle_builtin(t_ast *root, t_exaction *data)
 	char path[1024];
 
 	if (getcwd(path, sizeof(path)))
-		data->save_pwd = ft_strdup(path);
+		data_struc()->save_pwd = ft_strdup(path);
 	if (check_special_chars(root->value) == 1)
 	{
 		handle_wildcards(root->value, data);
 		ft_remove_quots(root->value, data, 1);
-		return (execute_builtin(data->matches, data));
+		return (execute_builtin(data_struc()->matches, data));
 	}
 	else
 	{
@@ -80,18 +80,18 @@ static int handle_command(t_ast *root, t_exaction *data)
 	if (check_special_chars(root->value) == 1)
 	{
 		handle_wildcards(root->value, data);
-		ft_remove_quots(data->matches, data, 1);
-		if (is_builtin(data->matches[0], data))
-			data->status = handle_builtin(root, data);
+		ft_remove_quots(data_struc()->matches, data, 1);
+		if (is_builtin(data_struc()->matches[0], data))
+			data_struc()->status = handle_builtin(root, data);
 		else
-			data->status = execute_command(data->matches, data);
+			data_struc()->status = execute_command(data_struc()->matches, data);
 	}
 	else
 	{
 		ft_remove_quots(root->value, data, 1);
-		data->status = execute_command(root->value, data);
+		data_struc()->status = execute_command(root->value, data);
 	}
-	return (data->status);
+	return (data_struc()->status);
 }
 
 int execute_ast(t_ast *root, t_exaction *data)
@@ -101,8 +101,8 @@ int execute_ast(t_ast *root, t_exaction *data)
 	if (is_operator(root->value[0]))
 		handle_operator(root, data);
 	else if (is_builtin(root->value[0], data))
-		data->status = handle_builtin(root, data);
+		data_struc()->status = handle_builtin(root, data);
 	else
-		data->status = handle_command(root, data);
-	return (data->status);
+		data_struc()->status = handle_command(root, data);
+	return (data_struc()->status);
 }

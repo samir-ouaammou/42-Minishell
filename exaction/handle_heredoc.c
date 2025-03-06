@@ -21,7 +21,7 @@ int	open_input_file(t_ast *node, t_exaction *data)
 	if (fd_file == -1)
 	{
 		ft_printf("minishella: %s: %s\n", node->right->value[0], strerror(errno));
-		data->exit_status = 1;
+		data_struc()->exit_status = 1;
 	}
 	return (fd_file);
 }

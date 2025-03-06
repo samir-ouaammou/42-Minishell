@@ -58,6 +58,7 @@ static int count_wildcards(char *str)
 
 static int expand_wildcards(char *pattern, t_exaction *data, int *index)
 {
+	(void)data;
 	DIR *dir;
 	struct dirent *entry;
 
@@ -68,8 +69,8 @@ static int expand_wildcards(char *pattern, t_exaction *data, int *index)
 	{
 		if (is_wildcard_match(pattern, entry->d_name))
 		{
-			data->count_ok++;
-			data->matches[*index] = ft_strdup(entry->d_name);
+			data_struc()->count_ok++;
+			data_struc()->matches[*index] = ft_strdup(entry->d_name);
 			(*index)++;
 		}
 	}
@@ -100,21 +101,21 @@ int handle_wildcards(char **args, t_exaction *data)
 	match_index = 0;
 
 	count = count_total_matches(args);
-	data->matches = ft_malloc(sizeof(char *) * (count + 1));
-	if (!data->matches)
+	data_struc()->matches = ft_malloc(sizeof(char *) * (count + 1));
+	if (!data_struc()->matches)
 		return (-1);
 	while (args[i])
 	{
-		data->count_ok = 0;
+		data_struc()->count_ok = 0;
 		if (check_for_wildcards(args[i]) == 0)
 			expand_wildcards(args[i], data, &match_index);
-		if (data->count_ok <= 0)
+		if (data_struc()->count_ok <= 0)
 		{
-			data->matches[match_index] = ft_strdup(args[i]);
+			data_struc()->matches[match_index] = ft_strdup(args[i]);
 			match_index++;
 		}
 		i++;
 	}
-	data->matches[match_index] = NULL;
+	data_struc()->matches[match_index] = NULL;
 	return (0);
 }
