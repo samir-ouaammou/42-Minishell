@@ -59,9 +59,20 @@ static void handle_operator(t_ast *root, t_exaction *data)
 static int handle_builtin(t_ast *root, t_exaction *data)
 {
 	char path[1024];
+		int	i = 0;
 
 	if (getcwd(path, sizeof(path)))
 		data_struc()->save_pwd = ft_strdup(path);
+	while (root->value && root->value[i])
+		i++;
+	data->copy = ft_malloc((i + 1) * sizeof(char *));
+	i = 0;
+	while (root->value && root->value[i])
+	{
+		data->copy[i] = ft_strdup(root->value[i]);
+		i++;
+	}
+	data->copy[i] = NULL;
 	if (check_special_chars(root->value) == 1)
 	{
 		handle_wildcards(root->value, data);
