@@ -6,7 +6,7 @@
 /*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:28:01 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 13:53:40 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/06 22:54:52 by souaammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ size_t calculate_length(char *str, t_exaction *data)
 void handle_env_var(char *str, char *res, t_exaction *data, int *res_index)
 {
 	char(*var), (*chrstr), (*env_var);
+	int		(i), (j);
 	var = get_str_Dollars(str);
 	if (var)
 	{
@@ -47,6 +48,26 @@ void handle_env_var(char *str, char *res, t_exaction *data, int *res_index)
 			return;
 
 		env_var = find_str_env(str_j, data);
+		if (data->space)
+		{
+			j = 0;
+			i = 0;
+			char *tmp = ft_malloc(ft_strlen(env_var) + 1);
+			while (env_var && env_var[i])
+			{
+				if (env_var[i] == ' ')
+				{
+					tmp[j++] = env_var[i];
+					while (env_var[i] && env_var[i] == ' ')
+						i++;
+				}
+				if (env_var[i] && env_var[i] != ' ')
+					tmp[j++] = env_var[i];
+				i++;
+			}
+			tmp[j] = '\0';
+			env_var = ft_strdup(tmp);
+		}
 		if (env_var)
 		{
 			chrstr = ft_strchr(env_var, '=');
