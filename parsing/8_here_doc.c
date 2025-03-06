@@ -57,15 +57,6 @@ void ft_move_input(t_parsing *shell, char *str)
     shell->input = ft_strdup(shell->help);
 }
 
-void sigint_handler(int sig)
-{
-    if (sig == SIGINT)
-    {
-        write(1, "\n", 1);
-        ft_exit(130);
-    }
-}
-
 void ft_here_doc(t_parsing *shell, char *str, t_exaction *data)
 {
     int h;

@@ -137,6 +137,7 @@ void					print_ast(t_ast *node, int level, char *branch); //////////////////////
 // Functions Exaction
 void					free_all(char **args);
 int						is_operator(char *str);
+void					sigint_handler(int sig);
 void					handle_signal(int sig);
 void					*ft_malloc(size_t size);
 struct					s_exaction *data_struc();
