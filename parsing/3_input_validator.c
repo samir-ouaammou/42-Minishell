@@ -1,5 +1,31 @@
 #include "../minishell.h"
 
+void	ft_cleanup_tokens(t_parsing *shell, t_list *head)
+{
+	if (shell->tmp)
+		shell->tmp = NULL;
+	shell->tokens = NULL;
+	shell->lst_help1 = NULL;
+	shell->lst_help2 = NULL;
+	shell->tokens = head;
+}
+
+void	ft_handle_redirections(t_parsing *shell, t_list **head, int *j, int *k)
+{
+	t_list	*new;
+
+	if (shell->tmp[0])
+	{
+		new = ft_lstnew(shell->tmp);
+		ft_lstadd_back(head, new);
+		if (shell->tmp)
+			shell->tmp = NULL;
+	}
+	shell->tokens = shell->tokens->next;
+	*k = 0;
+	ft_handle_redirect_content(shell, j, k);
+}
+
 void	ft_check_the_brackets(t_parsing *shell)
 {
 	if (shell->free == -1)

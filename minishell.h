@@ -55,6 +55,7 @@ typedef struct s_parsing
 	char				*line;
 	char				*history;
 	char				*help;
+	char				**tmp;
 	char				**temp;
 	t_ast				*tree;
 	t_list				*tokens;
@@ -102,22 +103,31 @@ typedef struct s_exaction
 }						t_exaction;
 
 // Functions Pxaction
-char	*ft_strjoin_and_free(char *s1, const char *s2);
-int ft_check_is_redirections(char *str);
-int ft_check_is_operators(char *str);
-char	**ft_split_quots(char *str, char **res, int i, int j);
-void	ft_extract_word(char *str, int *i, char *c);
-char	**ft_allocate_result(char *str);
-int	count_words(char *str, int count, int i, char c);
-int	ft_count_brackets(t_list *list);
-int	ft_count_heredoc(t_parsing *shell);
-void	ft_check_other_errors(t_parsing *shell);
-void	ft_replace_newline_with_space(t_parsing *shell);
-int	ft_is_symbol(t_parsing *shell);
-void	ft_tokens_list(t_parsing *shell);
-int	ft_count_nodes_list(t_list *list);
-void	ft_replace_tabs_with_spaces(t_parsing *shell, char *input);
-t_list	*ft_creat_new_node(t_parsing *shell, int start, int end);
+void					ft_create_temp_array(t_parsing *shell, int *i, int *j);
+void					ft_init_move_vars(t_parsing *shell, int *i, int *j, int *k);
+void					ft_handle_redirect_content(t_parsing *shell, int *j, int *k);
+void					ft_handle_redirections(t_parsing *shell, t_list **head, int *j, int *k);
+void					ft_cleanup_tokens(t_parsing *shell, t_list *head);
+void					ft_count_len_list(t_parsing *shell);
+char					*ft_move_flags(t_parsing *shell, t_list *list);
+char					*ft_strjoin_and_free(char *s1, const char *s2);
+int 					ft_check_is_redirections(char *str);
+int 					ft_check_is_operators(char *str);
+char					**ft_split_quots(char *str, char **res, int i, int j);
+void					ft_extract_word(char *str, int *i, char *c);
+char					**ft_allocate_result(char *str);
+int						count_words(char *str, int count, int i, char c);
+int						ft_count_brackets(t_list *list);
+int						ft_count_heredoc(t_parsing *shell);
+void					ft_check_other_errors(t_parsing *shell);
+void					ft_replace_newline_with_space(t_parsing *shell);
+int						ft_is_symbol(t_parsing *shell);
+void					ft_tokens_list(t_parsing *shell);
+int						ft_count_nodes_list(t_list *list);
+void					ft_replace_tabs_with_spaces(t_parsing *shell, char *input);
+t_list					*ft_creat_new_node(t_parsing *shell, int start, int end);
+
+
 void					ft_free_args(t_parsing *shell);
 void					ft_split_args(t_parsing *shell);
 int						ft_count_tree_nodes(t_ast *tree);

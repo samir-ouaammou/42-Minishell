@@ -34,3 +34,49 @@ t_list	*ft_creat_new_node(t_parsing *shell, int start, int end)
 	new->next = NULL;
 	return (new);
 }
+
+void	ft_initialize_tab(t_parsing *shell)
+{
+	shell->j = 0;
+	shell->i = -1;
+	while (++shell->i < 999)
+		shell->tab[shell->i] = 0;
+	shell->lst_help1 = shell->tokens;
+}
+
+void	ft_process_redirections(t_parsing *shell)
+{
+	shell->lst_help1 = shell->lst_help1->next;
+	shell->j++;
+	while (shell->lst_help1)
+	{
+		if (ft_check_is_operators(shell->lst_help1->value[0]))
+			break ;
+		shell->i = -1;
+		while (shell->lst_help1->value[++shell->i])
+			;
+		shell->tab[shell->j] += shell->i;
+		shell->lst_help1 = shell->lst_help1->next;
+	}
+	shell->j++;
+}
+
+void	ft_count_len_list(t_parsing *shell)
+{
+	ft_initialize_tab(shell);
+	while (shell->lst_help1)
+	{
+		shell->i = -1;
+		while (shell->lst_help1->value[++shell->i])
+			;
+		shell->tab[shell->j] = shell->i;
+		if (ft_check_is_redirections(shell->lst_help1->value[0]))
+			ft_process_redirections(shell);
+		else
+		{
+			shell->lst_help1 = shell->lst_help1->next;
+			shell->j++;
+		}
+	}
+	shell->len = shell->j;
+}

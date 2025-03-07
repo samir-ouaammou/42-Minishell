@@ -1,49 +1,96 @@
 #include "../minishell.h"
 
-
-int ft_check_is_operators(char *str)
+static void	ft_process_next_node(t_list *list, char **redirections)
 {
-    if (!str || !str[0])
-        return (0);
+	int	i;
 
-    return (!ft_strcmp(str, "|")
-        || !ft_strcmp(str, "||") || !ft_strcmp(str, "&&")
-        || !ft_strcmp(str, "(") || !ft_strcmp(str, ")"));
+	i = 0;
+	while (list->next->value[++i])
+	{
+		*redirections = ft_strjoin_and_free
+			(*redirections, list->next->value[i]);
+		*redirections = ft_strjoin_and_free(*redirections, " ");
+		list->next->value[i] = NULL;
+	}
 }
 
-int ft_check_is_redirections(char *str)
+static void	ft_process_current_node(t_list *list, char **redirections)
 {
-    if (!str || !str[0])
-        return (0);
-
-    return (!ft_strcmp(str, "<") || !ft_strcmp(str, ">")
-        || !ft_strcmp(str, "<<") || !ft_strcmp(str, ">>"));
-}
-
-char	*ft_strjoin_and_free(char *s1, const char *s2)
-{
-	char	*res;
-	int		i;
-	int		j;
+	int	i;
 
 	i = -1;
-	j = 0;
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup(s2));
-	if (!s2)
-		return (ft_strdup(s1));
-	res = ft_malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!res)
-		return (NULL);
-	while (s1[++i])
-		res[i] = s1[i];
-	while (s2[j])
+	while (list->value[++i])
 	{
-		res[i + j] = s2[j];
-		j++;
+		*redirections = ft_strjoin_and_free(*redirections, list->value[i]);
+		*redirections = ft_strjoin_and_free(*redirections, " ");
+		list->value[i] = NULL;
 	}
-	res[i + j] = '\0';
-	return (res);
+}
+
+static void	ft_process_help_list(t_list *help, char **redirections)
+{
+	int	i;
+
+	while (help)
+	{
+		if (help && help->value && ft_check_is_operators(help->value[0]))
+			break ;
+		i = 0;
+		while (help->value && help->value[i])
+		{
+			*redirections = ft_strjoin_and_free(*redirections, help->value[i]);
+			*redirections = ft_strjoin_and_free(*redirections, " ");
+			i++;
+		}
+		help = help->next;
+	}
+}
+
+static void	ft_process_list(t_list *list, char **redirections, int *j, int *k)
+{
+	while (list)
+	{
+		if (list && list->value && ft_check_is_operators(list->value[0]))
+			break ;
+		if (list && list->next && list->next->value[1]
+			&& ft_check_is_redirections(list->value[0])
+			&& !ft_check_is_redirections(list->next->value[0]))
+		{
+			ft_process_next_node(list, redirections);
+			(*j)++;
+		}
+		else if ((list && list->value[1]
+				&& !ft_check_is_operators(list->value[0])
+				&& !ft_check_is_redirections(list->value[0]))
+			|| (list && *j == 0 && *k == 0 && list->next
+				&& !list->next->value[1]
+				&& !ft_check_is_redirections(list->value[0])))
+		{
+			ft_process_current_node(list, redirections);
+			(*j)++;
+		}
+		if (list)
+			list = list->next;
+		(*k)++;
+	}
+}
+
+char	*ft_move_flags(t_parsing *shell, t_list *list)
+{
+	t_list	*help;
+	char	*redirections;
+	int		j;
+	int		k;
+
+	redirections = ft_malloc(ft_strlen(shell->input) + 1);
+	if (!redirections)
+		return (NULL);
+	redirections[0] = '\0';
+	j = 0;
+	k = 0;
+	help = list;
+	ft_process_list(list, &redirections, &j, &k);
+	ft_process_help_list(help, &redirections);
+	redirections[ft_strlen(redirections) - 1] = '\0';
+	return (redirections);
 }

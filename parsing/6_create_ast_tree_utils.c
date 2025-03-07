@@ -20,6 +20,21 @@ int	ft_ast_contains_brackets(t_ast *node)
 	return (0);
 }
 
+void	ft_create_temp_array(t_parsing *shell, int *i, int *j)
+{
+	if (shell->tmp)
+		shell->tmp = NULL;
+	shell->tmp = ft_malloc((shell->tab[(*j)++] + 1) * sizeof(char *));
+	*i = 0;
+	while (shell->tokens->value[*i])
+	{
+		shell->tmp[*i] = ft_strdup(shell->tokens->value[*i]);
+		(*i)++;
+	}
+	if (*i != -1)
+		shell->tmp[*i] = NULL;
+}
+
 t_ast	*ft_creat_ast_node(t_parsing *shell, char **value)
 {
 	t_ast	*new_node;
