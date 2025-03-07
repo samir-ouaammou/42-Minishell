@@ -87,6 +87,7 @@ void	ft_count_len_list(t_parsing *shell)
 	shell->len = shell->j;
 }
 */
+
 void	ft_move_redirections(t_parsing *shell)
 {
 	int	i = 0;
