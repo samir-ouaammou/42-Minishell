@@ -84,7 +84,6 @@ void	ft_delete_commits(t_parsing *shell)
 	}
 }
 
-
 void	ft_split_args(t_parsing *shell)
 {
 	ft_count_len_args(shell);

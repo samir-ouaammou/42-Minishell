@@ -2,8 +2,6 @@
 
 int	ft_check_input_is_valid(t_parsing *shell)
 {
-	if (!shell || !shell->input)
-		return (0);
 	shell->i = 0;
 	while (shell->input && shell->input[shell->i])
 	{
@@ -13,7 +11,7 @@ int	ft_check_input_is_valid(t_parsing *shell)
 			break ;
 		shell->i++;
 	}
-	shell->len = ft_strlen(shell->input);   
+	shell->len = ft_strlen(shell->input);
 	if (shell->len != shell->i)
 	{
 		shell->i = 0;
@@ -48,7 +46,8 @@ int	ft_check_double_operators(t_parsing *shell)
 			|| (shell->input[shell->i] == '&' && shell->input
 				[shell->i + 1] == '&') || (shell->input[shell->i] == '>'
 				&& shell->input[shell->i + 1] == '>')
-			|| (shell->input[shell->i] == '<' && shell->input[shell->i + 1] == '<')))
+			|| (shell->input[shell->i] == '<'
+				&& shell->input[shell->i + 1] == '<')))
 		return (1);
 	return (0);
 }
@@ -91,5 +90,3 @@ void	ft_count_len_args(t_parsing *shell)
 		shell->len++;
 	}
 }
-
-

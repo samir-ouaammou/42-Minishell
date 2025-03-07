@@ -86,6 +86,7 @@ typedef struct s_exaction
 	int					stdin_backup;
 	char				*name_pro;
 	char				*input;
+	char				**copy;
 	int					fd_file;
 	int					fd_file2;
 	int					count_ok;
@@ -95,12 +96,21 @@ typedef struct s_exaction
 	int pid_child;
 	int bol;
 	int lll;
+	int	space;
 	int					is_foreground;
 	t_parsing			*shell;
 }						t_exaction;
 
 // Functions Pxaction
-
+int	ft_count_brackets(t_list *list);
+int	ft_count_heredoc(t_parsing *shell);
+void	ft_check_other_errors(t_parsing *shell);
+void	ft_replace_newline_with_space(t_parsing *shell);
+int	ft_is_symbol(t_parsing *shell);
+void	ft_tokens_list(t_parsing *shell);
+int	ft_count_nodes_list(t_list *list);
+void	ft_replace_tabs_with_spaces(t_parsing *shell, char *input);
+t_list	*ft_creat_new_node(t_parsing *shell, int start, int end);
 void					ft_free_args(t_parsing *shell);
 void					ft_split_args(t_parsing *shell);
 int						ft_count_tree_nodes(t_ast *tree);
@@ -174,4 +184,5 @@ int						execute_redir_RightArrow_redirout(t_ast *node, t_exaction *data, char *
 struct s_exaction *data_struc();
 void handle_signal(int sig);
 void update_shlvl();
+void sigint_handler(int sig);
 #endif

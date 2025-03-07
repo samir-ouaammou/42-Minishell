@@ -34,7 +34,7 @@ t_ast	*ft_creat_ast_node(t_parsing *shell, char **value)
 		shell->len++;
 	new_node->value = ft_malloc((shell->len + 1) * sizeof(char *));
 	if (!new_node->value)
-		return ( new_node = NULL, ft_free_args(shell), NULL);
+		return (new_node = NULL, ft_free_args(shell), NULL);
 	shell->len = 0;
 	while (value && value[shell->len])
 	{
@@ -45,19 +45,6 @@ t_ast	*ft_creat_ast_node(t_parsing *shell, char **value)
 	new_node->left = NULL;
 	new_node->right = NULL;
 	return (new_node);
-}
-
-t_list	*ft_get_list_node(t_list *tokens, int index)
-{
-	int	i;
-
-	i = 0;
-	while (tokens && i < index)
-	{
-		tokens = tokens->next;
-		i++;
-	}
-	return (tokens);
 }
 
 int	ft_get_symbol_type(t_parsing *shell)
@@ -78,7 +65,9 @@ int	ft_get_symbol_type(t_parsing *shell)
 }
 
 t_ast	*ft_create_and_build_ast_node(t_parsing *shell,
-		int start, int i, int end)
+									int start,
+									int i,
+									int end)
 {
 	t_ast	*node;
 

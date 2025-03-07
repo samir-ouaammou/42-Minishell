@@ -1,10 +1,10 @@
 #include "../minishell.h"
 
-int ft_count_tree_nodes(t_ast *tree)
+int	ft_count_tree_nodes(t_ast *tree)
 {
-    if (!tree)
-        return (0);
-    return (1 + ft_count_tree_nodes(tree->left)
+	if (!tree)
+		return (0);
+	return (1 + ft_count_tree_nodes(tree->left)
 		+ ft_count_tree_nodes(tree->right));
 }
 

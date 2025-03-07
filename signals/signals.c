@@ -6,6 +6,15 @@ struct s_exaction *data_struc()
 	return &data_struc;
 }
 
+void sigint_handler(int sig)
+{
+    if (sig == SIGINT)
+    {
+        write(1, "\n", 1);
+        ft_exit(130);
+    }
+}
+
 void handle_signal(int sig)
 {
 	(void)sig;
