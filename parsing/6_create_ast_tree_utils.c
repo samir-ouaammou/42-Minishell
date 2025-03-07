@@ -65,9 +65,7 @@ int	ft_get_symbol_type(t_parsing *shell)
 }
 
 t_ast	*ft_create_and_build_ast_node(t_parsing *shell,
-									int start,
-									int i,
-									int end)
+									int start, int i, int end)
 {
 	t_ast	*node;
 

@@ -102,6 +102,13 @@ typedef struct s_exaction
 }						t_exaction;
 
 // Functions Pxaction
+char	*ft_strjoin_and_free(char *s1, const char *s2);
+int ft_check_is_redirections(char *str);
+int ft_check_is_operators(char *str);
+char	**ft_split_quots(char *str, char **res, int i, int j);
+void	ft_extract_word(char *str, int *i, char *c);
+char	**ft_allocate_result(char *str);
+int	count_words(char *str, int count, int i, char c);
 int	ft_count_brackets(t_list *list);
 int	ft_count_heredoc(t_parsing *shell);
 void	ft_check_other_errors(t_parsing *shell);
