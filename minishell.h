@@ -94,6 +94,7 @@ typedef struct s_exaction
 	int					bol;
 	int					is_foreground;
 	int					space;
+	int					num_proess;
 }						t_exaction;
 
 int						ft_is_single_operator(char c);
@@ -246,9 +247,15 @@ int						calculate_length(char *str, t_exaction *data);
 int						calculate_length_(char *str);
 void					remove_extra_spaces(char *env_var);
 int						handle_file_redirection_utils(t_ast *root, int *fd_out);
-int						handle_file_redirection(t_ast *root, int *fd_in,
-							int *fd_out);
+int						handle_file_redirection(t_ast *root,
+							int *fd_in, int *fd_out);
 int						is_assignment_format(char *str);
 int						strlen_without_quotes(char *str_export);
+int						handle_redirection(t_ast *root, int *i, int *fd_out,
+							int *fd_in);
+int						setup_redirections(t_ast *root, t_exaction *data,
+							int fd_out, int fd_in);
+int						handle_redirection_utils(t_ast *root, int *i,
+							int *fd_in);
 
 #endif

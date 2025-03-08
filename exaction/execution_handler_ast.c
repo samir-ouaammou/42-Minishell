@@ -56,10 +56,6 @@ static void	handle_operator(t_ast *root, t_exaction *data)
 
 static int	handle_builtin(t_ast *root, t_exaction *data)
 {
-	char	path[PATH_MAX];
-
-	if (getcwd(path, sizeof(path)))
-		data->save_pwd = ft_strdup(path);
 	duplicate_value_array(root, data);
 	if (check_special_chars(root->value) == 1)
 	{

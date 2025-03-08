@@ -23,7 +23,8 @@ void	update_pwd_in_export(t_exaction *data, char *path)
 		if (ft_strncmp(data->export[i], "PWD=", 4) == 0)
 		{
 			str_j = ft_strjoin("PWD=", path);
-			data->export[i] = str_j;
+			if (str_j)
+				data->export[i] = str_j;
 			break ;
 		}
 		i++;
@@ -77,13 +78,16 @@ void	update_env_export(t_exaction *data)
 	char	*str_j;
 
 	path = getcwd(buf, sizeof(buf));
+	if (!path)
+		path = data->save_pwd;
 	i = 0;
 	while (data->env[i])
 	{
 		if (ft_strncmp(data->env[i], "PWD=", 4) == 0)
 		{
 			str_j = ft_strjoin("PWD=", path);
-			data->env[i] = str_j;
+			if (str_j)
+				data->env[i] = str_j;
 			break ;
 		}
 		i++;
@@ -95,6 +99,10 @@ void	update_env_export(t_exaction *data)
 
 void	exaction(t_ast *root, t_exaction *data)
 {
+	char	path[PATH_MAX];
+
+	if (getcwd(path, sizeof(path)))
+		data->save_pwd = ft_strdup(path);
 	execute_ast(root, data);
 	update_env_export(data);
 	check_shlvl(data);

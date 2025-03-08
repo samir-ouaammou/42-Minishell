@@ -28,19 +28,25 @@ int	open_input_file(t_ast *node, t_exaction *data)
 
 int	execute_heredoc(t_ast *node, t_exaction *data)
 {
-	int	fd_file;
-	int	stdinp_backup;
+	int	i;
+	int	fd_out;
+	int	fd_in;
 
-	fd_file = open_input_file(node, data);
-	if (fd_file == -1)
+	i = 0;
+	fd_in = open_input_file(node, data);
+	if (fd_in == -1)
 	{
 		data_struc()->exit_status = 1;
 		return (1);
 	}
-	stdinp_backup = dup(STDIN_FILENO);
-	dup2(fd_file, STDIN_FILENO);
-	data->status = execute_ast(node->left, data);
-	dup2(stdinp_backup, STDIN_FILENO);
-	close(stdinp_backup);
-	return (data->status);
+	while (node->right->value[i])
+	{
+		if (handle_redirection(node, &i, &fd_out, &fd_in))
+		{
+			data_struc()->exit_status = 1;
+			return (1);
+		}
+		i++;
+	}
+	return (setup_redirections(node, data, fd_out, fd_in));
 }

@@ -12,22 +12,11 @@
 
 #include "../minishell.h"
 
-int	handle_redirection_utils(t_ast *root, int *i, int *fd_in)
-{
-	(*i)++;
-	*fd_in = open(root->right->value[(*i)], O_RDONLY);
-	if (*fd_in == -1)
-	{
-		ft_printf("minishell: %s: %s\n", root->right->value[(*i)],
-			strerror(errno));
-		return (1);
-	}
-	return (0);
-}
-
 int	handle_redirection_utils2(t_ast *root, int *i, int *fd_out)
 {
 	(*i)++;
+	if (root->right->value[(*i)][0] == '$')
+		return (2);
 	*fd_out = open(root->right->value[(*i)], O_WRONLY | O_CREAT | O_APPEND,
 			0644);
 	if (*fd_out == -1)
@@ -44,6 +33,8 @@ int	handle_redirection(t_ast *root, int *i, int *fd_out, int *fd_in)
 	if (ft_strcmp(root->right->value[(*i)], ">") == 0)
 	{
 		(*i)++;
+		if (root->right->value[(*i)][0] == '$')
+			return (2);
 		*fd_out = open(root->right->value[(*i)], O_WRONLY | O_CREAT | O_TRUNC,
 				0644);
 		if (*fd_out == -1)
@@ -83,6 +74,21 @@ int	setup_redirections(t_ast *root, t_exaction *data, int fd_out, int fd_in)
 	return (data->status);
 }
 
+int	check_invalid_redirection(t_ast *root, int fd_in,
+		int fd_out)
+{
+	if (handle_file_redirection(root, &fd_in, &fd_out)
+		|| root->right->value[0][0] == '$')
+	{
+		if (root->right->value[0][0] == '$')
+			ft_printf("minishell: %s: ambiguous redirect\n",
+				root->right->value[0]);
+		data_struc()->exit_status = 1;
+		return (1);
+	}
+	return (0);
+}
+
 int	execute_redirection(t_ast *root, t_exaction *data)
 {
 	int	i;
@@ -94,15 +100,16 @@ int	execute_redirection(t_ast *root, t_exaction *data)
 	fd_in = -1;
 	if (!root)
 		return (0);
-	if (handle_file_redirection(root, &fd_in, &fd_out))
-	{
-		data_struc()->exit_status = 1;
+	if (check_invalid_redirection(root, fd_in, fd_out))
 		return (1);
-	}
 	while (root->right->value[i])
 	{
-		if (handle_redirection(root, &i, &fd_out, &fd_in))
+		data->num_proess = handle_redirection(root, &i, &fd_out, &fd_in);
+		if (data->num_proess)
 		{
+			if (data->num_proess == 2)
+				ft_printf("minishell: %s: ambiguous redirect\n",
+					root->right->value[i]);
 			data_struc()->exit_status = 1;
 			return (1);
 		}

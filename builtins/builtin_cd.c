@@ -23,24 +23,6 @@ static int	handle_directory_change(char *dir)
 	return (0);
 }
 
-static void	update_prompt(t_exaction *data)
-{
-	char	*last_slash;
-	char	*new_prompt;
-	char	buffer[PATH_MAX];
-
-	getcwd(buffer, sizeof(buffer));
-	last_slash = ft_strrchr(buffer, '/');
-	if (last_slash[0] == '/' && last_slash[1] != '\0')
-	{
-		new_prompt = ft_strjoin("➜ ", last_slash + 1);
-		new_prompt = ft_strjoin(new_prompt, " ");
-		data->name_pro = new_prompt;
-	}
-	else
-		data->name_pro = "➜ / ";
-}
-
 int	builtin_cd(char **args, t_exaction *data)
 {
 	char	buffer[PATH_MAX];
@@ -61,7 +43,6 @@ int	builtin_cd(char **args, t_exaction *data)
 	}
 	if (handle_directory_change(args[1]) != 0)
 		return (1);
-	update_prompt(data);
 	data_struc()->exit_status = 0;
 	return (0);
 }

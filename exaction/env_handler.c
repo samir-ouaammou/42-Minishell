@@ -72,7 +72,8 @@ static void	initialize_environment_variables(t_exaction *data, int add_num,
 	if (add_num)
 	{
 		str_j = ft_strjoin("PWD=", pwd_path_export);
-		pwd_path_export = add_double_quotes(str_j);
+		if (str_j)
+			pwd_path_export = add_double_quotes(str_j);
 		data->export[add_num] = pwd_path_export;
 	}
 	data->export[add_num + 1] = ft_strdup(add_double_quotes("SHLVL=1"));

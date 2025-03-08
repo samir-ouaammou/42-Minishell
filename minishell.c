@@ -56,12 +56,13 @@ void	ft_init_exaction(t_exaction *exec)
 	exec->bol = 0;
 	exec->is_foreground = 1;
 	exec->space = 0;
+	exec->num_proess = 0;
 }
 
 void	get_shell_context(t_parsing shell, t_exaction *data)
 {
 	data_struc()->is_foreground = 1;
-	shell.input = readline(data->name_pro);
+	shell.input = readline("minishell$ ");
 	data_struc()->is_foreground = 0;
 	if (!shell.input)
 	{
@@ -97,7 +98,6 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, SIG_IGN);
 	read_env(env, &data);
-	data.name_pro = "➜ Minishell ";
 	while (1)
 		get_shell_context(shell, &data);
 	rl_clear_history();

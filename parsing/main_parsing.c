@@ -89,43 +89,49 @@ void	ft_parsing(t_parsing *shell, int bol, t_exaction *data)
 		ft_parsing(shell, 1337, data);
 		return ;
 	}
+	// if (shell->free != -1 && shell->tree)	//	temp
+	// 	{
+	// 		printf("\n----------Parsing----------\n\n");
+	// 		print_ast(shell->tree, 0, "root");  //	temp
+	// 		printf("\n\n\n----------exacution----------\n\n");
+		// }
 }
 
-/*
-// *************** data parsing **********
-		// if (shell->free != -1 && shell->tree)	//	temp
-		// {
-		// 	printf("\n----------Parsing----------\n\n");
-		// 	print_ast(shell->tree, 0, "root");  //	temp
-		// 	printf("\n\n\n----------exacution----------\n\n");
-		// }
 
-// void	print_ast(t_ast *node, int level, char *branch)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	if (!node)
-// 		return ;
-
-// 	i = 0;
-// 	while (i < level)
-// 	{
-// 		printf("   ");
-// 		i++;
-// 	}
-// 	printf("[%s]   ", branch);
-// 	if (node->value)
-// 	{
-// 		j = 0;
-// 		while (node->value[j])
+// // *************** data parsing **********
+// 		if (shell->free != -1 && shell->tree)	//	temp
 // 		{
-// 			printf("{%s} ", node->value[j]);
-// 			j++;
+// 			printf("\n----------Parsing----------\n\n");
+// 			print_ast(shell->tree, 0, "root");  //	temp
+// 			printf("\n\n\n----------exacution----------\n\n");
 // 		}
-// 	}
-// 	printf("\n");
-// 	print_ast(node->left, level + 1, "left");
-// 	print_ast(node->right, level + 1, "right");
-// }
-*/
+
+void	print_ast(t_ast *node, int level, char *branch)
+{
+	int	i;
+	int	j;
+
+	if (!node)
+		return ;
+
+	i = 0;
+	while (i < level)
+	{
+		printf("   ");
+		i++;
+	}
+	printf("[%s]   ", branch);
+	if (node->value)
+	{
+		j = 0;
+		while (node->value[j])
+		{
+			printf("{%s} ", node->value[j]);
+			j++;
+		}
+	}
+	printf("\n");
+	print_ast(node->left, level + 1, "left");
+	print_ast(node->right, level + 1, "right");
+}
+

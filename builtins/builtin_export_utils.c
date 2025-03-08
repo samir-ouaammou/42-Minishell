@@ -53,7 +53,7 @@ char	*add_double_quotes_plus(char *str_export, char *str)
 	return (res);
 }
 
-char	*test(char *str, char *res)
+char	*add_quotes_after_equal(char *str, char *res)
 {
 	int	i;
 	int	j;
@@ -92,7 +92,7 @@ char	*add_double_quotes(char *str)
 	res = ft_malloc(len + 3);
 	if (!res)
 		return (NULL);
-	return (test(str, res));
+	return (add_quotes_after_equal(str, res));
 }
 
 void	handle_plus_operator(int index, char **args)
