@@ -100,7 +100,8 @@ int	is_valid_export_identifier(char *str)
 		if (str[0] == '-' || str[0] == '+' || str[0] == '='
 			|| ft_isdigit(str[0]) || !ft_isalpha(str[0]))
 			return (1);
-		else if ((!ft_isalpha(str[i]) && !ft_isdigit(str[i]) && str[i] != '+'))
+		else if ((!ft_isalpha(str[i]) && !ft_isdigit(str[i]) && str[i] != '+'
+				&& str[i] != '_'))
 			return (1);
 		i++;
 	}
