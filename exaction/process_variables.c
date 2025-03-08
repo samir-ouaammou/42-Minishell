@@ -3,71 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   process_variables.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:28:01 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/06 22:54:52 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by aahaded         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-size_t calculate_length(char *str, t_exaction *data)
+void	handle_env_var(char *str, char *res, t_exaction *data, int *res_index)
 {
-	(void)data;
-	(void)str;
-	size_t len;
-	int i;
+	char	*str_j;
+	char	*var;
+	char	*chrstr;
+	char	*env_var;
 
-	len = 0;
-	i = 0;
-	while (str[i])
-	{
-		if ((str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0') && str[i + 1] != '$' && str[i + 1] != '*')
-			len += handle_env_var_length(str, data, &i);
-		else if (str[i] == '$' && str[i + 1] == '?' && str[i + 1] != '$')
-			len += handle_exit_status_length(data, &i);
-		else
-		{
-			len++;
-			i++;
-		}
-	}
-	return (len);
-}
-
-void handle_env_var(char *str, char *res, t_exaction *data, int *res_index)
-{
-	char(*var), (*chrstr), (*env_var);
-	int		(i), (j);
-	var = get_str_Dollars(str);
+	var = get_str_dollars(str);
 	if (var)
 	{
-		char *str_j = ft_strjoin(var, "=");
+		str_j = ft_strjoin(var, "=");
 		if (!str_j)
-			return;
-
+			return ;
 		env_var = find_str_env(str_j, data);
 		if (data->space)
-		{
-			j = 0;
-			i = 0;
-			char *tmp = ft_malloc(ft_strlen(env_var) + 1);
-			while (env_var && env_var[i])
-			{
-				if (env_var[i] == ' ')
-				{
-					tmp[j++] = env_var[i];
-					while (env_var[i] && env_var[i] == ' ')
-						i++;
-				}
-				if (env_var[i] && env_var[i] != ' ')
-					tmp[j++] = env_var[i];
-				i++;
-			}
-			tmp[j] = '\0';
-			env_var = ft_strdup(tmp);
-		}
+			remove_extra_spaces(env_var);
 		if (env_var)
 		{
 			chrstr = ft_strchr(env_var, '=');
@@ -80,10 +40,9 @@ void handle_env_var(char *str, char *res, t_exaction *data, int *res_index)
 	}
 }
 
-static void handle_exit_status(char *res, t_exaction *data, int *res_index)
+static void	handle_exit_status(char *res, int *res_index)
 {
-	(void)data;
-	char *exit_status;
+	char	*exit_status;
 
 	exit_status = ft_itoa(data_struc()->exit_status);
 	if (exit_status)
@@ -93,40 +52,39 @@ static void handle_exit_status(char *res, t_exaction *data, int *res_index)
 	}
 }
 
-void process_variable(char *str, char *res, t_exaction *data)
+int	process_exit_status(char *res, int *res_index)
 {
-	int i, res_index;
+	handle_exit_status(res, res_index);
+	return (2);
+}
+
+void	process_variable(char *str, char *res, t_exaction *data)
+{
+	int	i;
+	int	res_index;
 
 	i = 0;
 	res_index = 0;
-	
 	while (str[i])
 	{
-
-		if ((str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0') && str[i + 1] != '$' && str[i + 1] != '*')
+		if ((str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0')
+			&& str[i + 1] != '$' && str[i + 1] != '*')
 		{
 			handle_env_var(&str[i], res, data, &res_index);
-			i += ft_strlen(get_str_Dollars(&str[i])) + 1;
+			i += ft_strlen(get_str_dollars(&str[i])) + 1;
 		}
 		else if (str[i] == '$' && str[i + 1] == '?' && str[i + 1] != '$')
-		{
-			handle_exit_status(res, data, &res_index);
-			i += 2;
-		}
+			i += process_exit_status(res, &res_index);
 		else
-		{
-			res[res_index] = str[i];
-			res_index++;
-			i++;
-		}
+			res[res_index++] = str[i++];
 	}
 	res[res_index] = '\0';
 }
 
-char  *process_strings(char *str, t_exaction *data)
+char	*process_strings(char *str, t_exaction *data)
 {
 	char	*res_str;
-	int		len = 0;
+	int		len;
 
 	len = calculate_length(str, data);
 	res_str = ft_malloc(len + 1);

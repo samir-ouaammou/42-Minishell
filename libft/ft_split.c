@@ -11,16 +11,6 @@
 /* ************************************************************************** */
 #include "libft.h"
 
-char	**free_prev(char **res, int i)
-{
-	(void)i;
-
-	// while (i--)
-		//free(res[i]);
-	//free(res);
-	return (res);
-}
-
 int	count_word(const char *str, char c)
 {
 	int	i;
@@ -56,7 +46,7 @@ char	**ft_util(char **res, const char *s, char c, int c_word)
 		len = j - e;
 		res[i] = ft_malloc(len + 1);
 		if (!res[i])
-			return (free_prev(res, i));
+			return (NULL);
 		ft_memcpy(res[i], s + e, len);
 		res[i][len] = '\0';
 		i++;

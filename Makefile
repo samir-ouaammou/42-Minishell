@@ -22,19 +22,23 @@ SRCS_PARSING =  $(PATH_PARSING)/1_main_parsing.c \
 
 # SRCS_EXACTION
 SRCS_EXACTION = $(PATH_EXACTION)/exaction.c \
+                $(PATH_EXACTION)/exaction_utils.c \
                 $(PATH_EXACTION)/is_operator.c \
                 $(PATH_EXACTION)/env_path.c \
                 $(PATH_EXACTION)/command_execution.c \
+                $(PATH_EXACTION)/command_execution_utils.c \
                 $(PATH_EXACTION)/execution_pipes.c \
                 $(PATH_EXACTION)/wildcard_expansion.c \
                 $(PATH_EXACTION)/redirection.c \
+                $(PATH_EXACTION)/redirection_utils.c \
                 $(PATH_EXACTION)/execution_handler_ast.c \
                 $(PATH_EXACTION)/env_handler.c \
+                $(PATH_EXACTION)/env_handler_utils.c \
                 $(PATH_EXACTION)/process_variables.c \
                 $(PATH_EXACTION)/execution_handler_ast_utils.c \
                 $(PATH_EXACTION)/process_variables_utils.c \
+                $(PATH_EXACTION)/process_variables_utils2.c \
                 $(PATH_EXACTION)/handle_heredoc.c \
-		$(PATH_EXACTION)/memory_cleanup.c
 
 # SRCS_BUILTINS
 SRCS_BUILTINS = $(PATH_BUILTINS)/builtin_echo.c \
@@ -42,8 +46,13 @@ SRCS_BUILTINS = $(PATH_BUILTINS)/builtin_echo.c \
                 $(PATH_BUILTINS)/builtin_cd.c\
                 $(PATH_BUILTINS)/builtin_exit.c \
                 $(PATH_BUILTINS)/builtin_export.c \
+                $(PATH_BUILTINS)/builtin_export_utils.c \
+                $(PATH_BUILTINS)/builtin_export_utils2.c \
+                $(PATH_BUILTINS)/builtin_export_utils3.c \
+                $(PATH_BUILTINS)/builtin_export_utils4.c \
                 $(PATH_BUILTINS)/builtin_pwd.c \
-                $(PATH_BUILTINS)/builtin_unset.c
+                $(PATH_BUILTINS)/builtin_unset.c \
+                $(PATH_BUILTINS)/builtin_unset_utils.c
 
 # SRCS_MALLOC
 SRCS_MALLOC = $(PATH_MALLOC)/malloc.c \
@@ -83,7 +92,7 @@ PRINTF_PATH = $(LIBFT_PATH)/printf
 PRINTF_AR = $(PRINTF_PATH)/libftprintf.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-g3  -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g #-g3  -fsanitize=address
 
 all: $(NAME)
 
@@ -112,5 +121,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all bonus clean fclean
-
-

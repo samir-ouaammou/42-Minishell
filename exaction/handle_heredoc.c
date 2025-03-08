@@ -20,23 +20,27 @@ int	open_input_file(t_ast *node, t_exaction *data)
 	fd_file = open(node->right->value[0], O_RDONLY);
 	if (fd_file == -1)
 	{
-		ft_printf("minishella: %s: %s\n", node->right->value[0], strerror(errno));
-		data_struc()->exit_status = 1;
+		ft_printf("minishella: %s: %s\n", node->right->value[0],
+			strerror(errno));
 	}
 	return (fd_file);
 }
 
-int execute_heredoc(t_ast *node, t_exaction *data)
+int	execute_heredoc(t_ast *node, t_exaction *data)
 {
-    int fd_file;
+	int	fd_file;
+	int	stdinp_backup;
 
-    fd_file = open_input_file(node, data);
-    if (fd_file == -1)
-        return (1);
-    int stdinp_backup = dup(STDIN_FILENO);
-    dup2(fd_file, STDIN_FILENO);
-    execute_ast(node->left, data);
-    dup2(stdinp_backup, STDIN_FILENO);
-    close(stdinp_backup);
-    return (0);
+	fd_file = open_input_file(node, data);
+	if (fd_file == -1)
+	{
+		data_struc()->exit_status = 1;
+		return (1);
+	}
+	stdinp_backup = dup(STDIN_FILENO);
+	dup2(fd_file, STDIN_FILENO);
+	data->status = execute_ast(node->left, data);
+	dup2(stdinp_backup, STDIN_FILENO);
+	close(stdinp_backup);
+	return (data->status);
 }

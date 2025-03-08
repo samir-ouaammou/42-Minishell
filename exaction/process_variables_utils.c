@@ -3,53 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   process_variables_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:27:50 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 13:53:40 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by aahaded         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int is_valid_char(char c)
+int	calculate_length(char *str, t_exaction *data)
 {
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_')
-	   return (1);
-	return (0);
-}
+	int	len;
+	int	i;
 
-void	copy_string(char *str, char *res)
-{
-	int(i), (j);
-	i = 1;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] != '$' && is_valid_char(str[i]) == 1)
-			res[j++] = str[i];
-		else
-			break ;
-		i++;
-	}
-	res[j] = '\0';
-}
-
-static int	calculate_length_(char *str)
-{
-	int(len), (i);
 	len = 0;
-	i = 1;
+	i = 0;
 	while (str[i])
 	{
-		if (str[i] != '$' && is_valid_char(str[i]) == 1)
+		if ((str[i] == '$' && str[i + 1] != '?' && str[i + 1] != '\0')
+			&& str[i + 1] != '$' && str[i + 1] != '*')
+			len += handle_env_var_length(str, data, &i);
+		else if (str[i] == '$' && str[i + 1] == '?' && str[i + 1] != '$')
+			len += handle_exit_status_length(&i);
+		else
+		{
 			len++;
-		i++;
+			i++;
+		}
 	}
 	return (len);
 }
 
-char	*get_str_Dollars(char *str)
+char	*get_str_dollars(char *str)
 {
 	int		len;
 	char	*res;
@@ -62,24 +48,21 @@ char	*get_str_Dollars(char *str)
 	return (res);
 }
 
-size_t	handle_env_var_length(char *str, t_exaction *data, int *index)
+int	handle_env_var_length(char *str, t_exaction *data, int *index)
 {
-	(void)data;
-	(void)index;
-	(void)str;
-	size_t	len;
+	int		len;
 	char	*var;
 	char	*env_var;
 	char	*chrstr;
+	char	*str_j;
 
 	len = 0;
-	// ft_printf("str: %s\n", str);
-	var = get_str_Dollars(&str[*index]);
+	var = get_str_dollars(&str[*index]);
 	if (!var)
-	   return (-1);
+		return (-1);
 	if (var)
 	{
-		char *str_j = ft_strjoin(var, "=");
+		str_j = ft_strjoin(var, "=");
 		if (!str_j)
 			return (1);
 		env_var = find_str_env(str_j, data);
@@ -94,10 +77,9 @@ size_t	handle_env_var_length(char *str, t_exaction *data, int *index)
 	return (len);
 }
 
-size_t	handle_exit_status_length(t_exaction *data, int *index)
+int	handle_exit_status_length(int *index)
 {
-	(void)data;
-	size_t	len;
+	int		len;
 	char	*exit_status;
 
 	len = 0;

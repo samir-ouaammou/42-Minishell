@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   execution_pipes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:35:04 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 13:53:40 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by aahaded         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int create_pipe(int pipefd[2])
+static int	create_pipe(int pipefd[2])
 {
 	if (pipe(pipefd) == -1)
 		return (FAILED);
 	return (SUCCESS);
 }
 
-static void execute_child_first(t_ast *node, t_exaction *data, int *pipefd)
+static void	execute_child_first(t_ast *node, t_exaction *data, int *pipefd)
 {
 	close(pipefd[0]);
 	dup2(pipefd[1], STDOUT_FILENO);
@@ -28,7 +28,7 @@ static void execute_child_first(t_ast *node, t_exaction *data, int *pipefd)
 	ft_exit(data_struc()->exit_status);
 }
 
-static void execute_child_second(t_ast *node, t_exaction *data, int *pipefd)
+static void	execute_child_second(t_ast *node, t_exaction *data, int *pipefd)
 {
 	close(pipefd[1]);
 	dup2(pipefd[0], STDIN_FILENO);
@@ -37,12 +37,24 @@ static void execute_child_second(t_ast *node, t_exaction *data, int *pipefd)
 	ft_exit(data_struc()->exit_status);
 }
 
-int execute_pipe(t_ast *node, t_exaction *data)
+void	handle_exit_status(t_exaction *data, int status2)
 {
-	int pipefd[2];
+	if (WIFEXITED(status2))
+	{
+		data_struc()->exit_status = WEXITSTATUS(status2);
+		if (data_struc()->exit_status == 127 || data_struc()->exit_status == 1)
+			data->status = 1;
+	}
+}
 
-	int(status1), (status2);
-	pid_t(pid1), (pid2);
+int	execute_pipe(t_ast *node, t_exaction *data)
+{
+	int		pipefd[2];
+	int		status1;
+	int		status2;
+	pid_t	pid1;
+	pid_t	pid2;
+
 	if (create_pipe(pipefd) == FAILED)
 		return (FAILED);
 	pid1 = fork();
@@ -59,12 +71,6 @@ int execute_pipe(t_ast *node, t_exaction *data)
 	close(pipefd[1]);
 	waitpid(pid1, &status1, 0);
 	waitpid(pid2, &status2, 0);
-	if (WIFEXITED(status2))
-	{
-		data_struc()->exit_status = WEXITSTATUS(status2);
-		if (data_struc()->exit_status == 127 || data_struc()->exit_status == 1)
-			data_struc()->status = 1;
-		// ft_printf("status: %d\n", data_struc()->exit_status);
-	}
+	handle_exit_status(data, status2);
 	return (SUCCESS);
 }

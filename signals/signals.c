@@ -1,18 +1,19 @@
 #include "../minishell.h"
 
-struct s_exaction *data_struc()
+struct s_exaction	*data_struc(void)
 {
-	static struct s_exaction data_struc = {0};
-	return &data_struc;
+	static struct s_exaction	data_struc = {0};
+
+	return (&data_struc);
 }
 
-void sigint_handler(int sig)
+void	sigint_handler(int sig)
 {
-    if (sig == SIGINT)
-    {
-        write(1, "\n", 1);
-        ft_exit(130);
-    }
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		ft_exit(130);
+	}
 }
 
 int	handle_child_exit_status(int status)
@@ -33,7 +34,7 @@ int	handle_child_exit_status(int status)
 	return (0);
 }
 
-void handle_signal(int sig)
+void	handle_signal(int sig)
 {
 	(void)sig;
 	if (data_struc()->is_foreground == 1)

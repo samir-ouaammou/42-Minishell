@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static int execute_builtin(char **args, t_exaction *data)
+static int	execute_builtin(char **args, t_exaction *data)
 {
 	if (ft_strcmp(args[0], "pwd") == 0)
 		return (builtin_pwd(data));
@@ -31,53 +31,41 @@ static int execute_builtin(char **args, t_exaction *data)
 	return (0);
 }
 
-static void handle_operator(t_ast *root, t_exaction *data)
+static void	handle_operator(t_ast *root, t_exaction *data)
 {
-	// ft_printf("lsssss\n");
 	if (ft_strcmp(root->value[0], "&&") == 0)
 	{
 		execute_ast(root->left, data);
-		if (data_struc()->status == 0)
+		if (data->status == 0)
 			execute_ast(root->right, data);
 	}
 	else if (ft_strcmp(root->value[0], "||") == 0)
 	{
 		execute_ast(root->left, data);
-		if (data_struc()->status != 0)
+		if (data->status != 0)
 			execute_ast(root->right, data);
 	}
 	else if (ft_strcmp(root->value[0], "|") == 0)
 		execute_pipe(root, data);
-	else if (ft_strcmp(root->value[0], ">") == 0
-	|| ft_strcmp(root->value[0], "<") == 0
-	|| ft_strcmp(root->value[0], ">>") == 0)
-		data_struc()->status = execute_redirection(root, data);
+	else if (ft_strcmp(root->value[0], ">") == 0 || ft_strcmp(root->value[0],
+			"<") == 0 || ft_strcmp(root->value[0], ">>") == 0)
+		data->status = execute_redirection(root, data);
 	else if (ft_strcmp(root->value[0], "<<") == 0)
-		data_struc()->status = execute_heredoc(root, data);
+		data->status = execute_heredoc(root, data);
 }
 
-static int handle_builtin(t_ast *root, t_exaction *data)
+static int	handle_builtin(t_ast *root, t_exaction *data)
 {
-	char path[1024];
-		int	i = 0;
+	char	path[PATH_MAX];
 
 	if (getcwd(path, sizeof(path)))
-		data_struc()->save_pwd = ft_strdup(path);
-	while (root->value && root->value[i])
-		i++;
-	data->copy = ft_malloc((i + 1) * sizeof(char *));
-	i = 0;
-	while (root->value && root->value[i])
-	{
-		data->copy[i] = ft_strdup(root->value[i]);
-		i++;
-	}
-	data->copy[i] = NULL;
+		data->save_pwd = ft_strdup(path);
+	duplicate_value_array(root, data);
 	if (check_special_chars(root->value) == 1)
 	{
 		handle_wildcards(root->value, data);
 		ft_remove_quots(root->value, data, 1);
-		return (execute_builtin(data_struc()->matches, data));
+		return (execute_builtin(data->matches, data));
 	}
 	else
 	{
@@ -86,34 +74,34 @@ static int handle_builtin(t_ast *root, t_exaction *data)
 	}
 }
 
-static int handle_command(t_ast *root, t_exaction *data)
+static int	handle_command(t_ast *root, t_exaction *data)
 {
 	if (check_special_chars(root->value) == 1)
 	{
 		handle_wildcards(root->value, data);
-		ft_remove_quots(data_struc()->matches, data, 1);
-		if (is_builtin(data_struc()->matches[0], data))
-			data_struc()->status = handle_builtin(root, data);
+		ft_remove_quots(data->matches, data, 1);
+		if (is_builtin(data->matches[0], data))
+			data->status = handle_builtin(root, data);
 		else
-			data_struc()->status = execute_command(data_struc()->matches, data);
+			data->status = execute_command(data->matches, data);
 	}
 	else
 	{
 		ft_remove_quots(root->value, data, 1);
-		data_struc()->status = execute_command(root->value, data);
+		data->status = execute_command(root->value, data);
 	}
-	return (data_struc()->status);
+	return (data->status);
 }
 
-int execute_ast(t_ast *root, t_exaction *data)
+int	execute_ast(t_ast *root, t_exaction *data)
 {
 	if (!root)
 		return (FAILED);
 	if (is_operator(root->value[0]))
 		handle_operator(root, data);
 	else if (is_builtin(root->value[0], data))
-		data_struc()->status = handle_builtin(root, data);
+		data->status = handle_builtin(root, data);
 	else
-		data_struc()->status = handle_command(root, data);
-	return (data_struc()->status);
+		data->status = handle_command(root, data);
+	return (data->status);
 }

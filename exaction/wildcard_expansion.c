@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:34:38 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 13:53:40 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by aahaded         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int check_for_wildcards(char *pattern)
+static int	check_for_wildcards(char *pattern)
 {
-	int(i), (count);
+	int	i;
+	int	count;
+
 	i = 0;
 	count = 0;
 	if (!pattern)
@@ -30,20 +32,23 @@ static int check_for_wildcards(char *pattern)
 	return (0);
 }
 
-static int count_wildcards(char *str)
+static int	count_wildcards(char *str)
 {
-	DIR *dir;
-	struct dirent *entry;
-	int count;
-	int check_count;
+	DIR				*dir;
+	struct dirent	*entry;
+	int				count;
+	int				check_count;
 
 	count = 0;
 	check_count = 0;
 	dir = opendir(".");
 	if (!dir)
 		return (1);
-	while ((entry = readdir(dir)) != NULL)
+	while (1)
 	{
+		entry = readdir(dir);
+		if (!entry)
+			break ;
 		if (is_wildcard_match(str, entry->d_name))
 		{
 			check_count += 1;
@@ -56,21 +61,23 @@ static int count_wildcards(char *str)
 	return (count);
 }
 
-static int expand_wildcards(char *pattern, t_exaction *data, int *index)
+static int	expand_wildcards(char *pattern, t_exaction *data, int *index)
 {
-	(void)data;
-	DIR *dir;
-	struct dirent *entry;
+	DIR				*dir;
+	struct dirent	*entry;
 
 	dir = opendir(".");
 	if (!dir)
 		return (1);
-	while ((entry = readdir(dir)) != NULL)
+	while (1)
 	{
+		entry = readdir(dir);
+		if (!entry)
+			break ;
 		if (is_wildcard_match(pattern, entry->d_name))
 		{
-			data_struc()->count_ok++;
-			data_struc()->matches[*index] = ft_strdup(entry->d_name);
+			data->count_ok++;
+			data->matches[*index] = ft_strdup(entry->d_name);
 			(*index)++;
 		}
 	}
@@ -78,9 +85,11 @@ static int expand_wildcards(char *pattern, t_exaction *data, int *index)
 	return (0);
 }
 
-static int count_total_matches(char **args)
+static int	count_total_matches(char **args)
 {
-	int(i), (count);
+	int	i;
+	int	count;
+
 	i = 0;
 	count = 0;
 	while (args[i])
@@ -94,28 +103,30 @@ static int count_total_matches(char **args)
 	return (count);
 }
 
-int handle_wildcards(char **args, t_exaction *data)
+int	handle_wildcards(char **args, t_exaction *data)
 {
-	int(i), (count), (match_index);
+	int	i;
+	int	count;
+	int	match_index;
+
 	i = 0;
 	match_index = 0;
-
 	count = count_total_matches(args);
-	data_struc()->matches = ft_malloc(sizeof(char *) * (count + 1));
-	if (!data_struc()->matches)
+	data->matches = ft_malloc(sizeof(char *) * (count + 1));
+	if (!data->matches)
 		return (-1);
 	while (args[i])
 	{
-		data_struc()->count_ok = 0;
+		data->count_ok = 0;
 		if (check_for_wildcards(args[i]) == 0)
 			expand_wildcards(args[i], data, &match_index);
-		if (data_struc()->count_ok <= 0)
+		if (data->count_ok <= 0)
 		{
-			data_struc()->matches[match_index] = ft_strdup(args[i]);
+			data->matches[match_index] = ft_strdup(args[i]);
 			match_index++;
 		}
 		i++;
 	}
-	data_struc()->matches[match_index] = NULL;
+	data->matches[match_index] = NULL;
 	return (0);
 }

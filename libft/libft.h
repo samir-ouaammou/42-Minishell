@@ -18,6 +18,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
+
 typedef struct s_list
 {
 	char			**value;
@@ -28,7 +29,7 @@ char				*ft_itoa(int n);
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
 int					ft_atoi(const char *str);
-size_t				ft_strlen(const char *s);
+int					ft_strlen(const char *s);
 t_list				*ft_lstnew(char **value);
 char				*ft_strdup(const char *s);
 void				ft_putnbr_fd(int n, int fd);
@@ -42,9 +43,7 @@ char				**ft_split(char const *s, char c);
 int					count_word(const char *str, char c);
 void				ft_lstadd_back(t_list **lst, t_list *new);
 char				*ft_strjoin(char const *s1, char const *s2);
-char				*ft_strtrim(char const *s1, char const *set);
 int					ft_strcmp(const char *str1, const char *str2);
-char				*ft_strstr(const char *big, const char *little);
 char				*ft_strncpy(char *dest, const char *src, int len);
 void				*ft_memcpy(void *dest, const void *src, size_t n);
 size_t				ft_strlcpy(char *dest, const char *src, size_t size);

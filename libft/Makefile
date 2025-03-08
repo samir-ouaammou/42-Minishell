@@ -1,9 +1,9 @@
 NAME =	libft.a
 
-SRC =	ft_strlen.c  ft_memcpy.c ft_strcmp.c ft_isdigit.c ft_strlcpy.c ft_strstr.c ft_strrchr.c \
+SRC =	ft_strlen.c  ft_memcpy.c ft_strcmp.c ft_isdigit.c ft_strlcpy.c ft_strrchr.c \
 	ft_split.c ft_putchar_fd.c ft_itoa.c ft_atoi.c ft_strjoin.c ft_strdup.c  \
 	ft_putchar_fd.c  ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_strncmp.c ft_strchr.c \
-	ft_strtrim.c ft_substr.c ft_strcpy.c ft_lstnew.c ft_lstadd_back.c ft_strncpy.c ft_isalpha.c
+	ft_substr.c ft_strcpy.c ft_lstnew.c ft_lstadd_back.c ft_strncpy.c ft_isalpha.c
 	
 OBJS = $(SRC:.c=.o)
 

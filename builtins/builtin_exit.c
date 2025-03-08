@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: souaammo <souaammo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:06:26 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 12:19:54 by souaammo         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:19:54 by aahaded         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-int is_numeric(const char *str)
+int	is_numeric(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str || !str[0])
@@ -31,7 +30,7 @@ int is_numeric(const char *str)
 	return (1);
 }
 
-static int handle_exit_args(char **args, int *exit_code, t_exaction *data)
+static int	handle_exit_args(char **args, int *exit_code, t_exaction *data)
 {
 	(void)data;
 	if (args[1])
@@ -46,18 +45,19 @@ static int handle_exit_args(char **args, int *exit_code, t_exaction *data)
 		if (!is_numeric(args[1]))
 		{
 			ft_printf("minishell: exit: %s: numeric argument required\n",
-					  args[1]);
+				args[1]);
 			ft_exit(2);
 		}
 	}
 	return (0);
 }
 
-int builtin_exit(char **args, t_exaction *data)
+int	builtin_exit(char **args, t_exaction *data)
 {
-	(void)data;
-	int exit_code;
+	int	exit_code;
+	int	status;
 
+	(void)data;
 	exit_code = 0;
 	if (!args)
 		return (1);
@@ -65,7 +65,7 @@ int builtin_exit(char **args, t_exaction *data)
 	exit_code = handle_exit_args(args, &exit_code, data);
 	if (!exit_code)
 	{
-		int status = 0;
+		status = 0;
 		if (args[1])
 			status = ft_atoi(args[1]);
 		else

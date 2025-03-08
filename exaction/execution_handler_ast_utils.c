@@ -14,9 +14,11 @@
 
 int	check_special_chars(char **args)
 {
-	int(i), (j);
+	int	i;
+	int	j;
+
 	i = 0;
-	j = 0;	
+	j = 0;
 	if (!*args)
 		return (1);
 	while (args[i])
@@ -33,3 +35,19 @@ int	check_special_chars(char **args)
 	return (0);
 }
 
+void	duplicate_value_array(t_ast *root, t_exaction *data)
+{
+	int	i;
+
+	i = 0;
+	while (root->value && root->value[i])
+		i++;
+	data->copy = ft_malloc((i + 1) * sizeof(char *));
+	i = 0;
+	while (root->value && root->value[i])
+	{
+		data->copy[i] = ft_strdup(root->value[i]);
+		i++;
+	}
+	data->copy[i] = NULL;
+}
