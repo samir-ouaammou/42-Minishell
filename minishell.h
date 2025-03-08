@@ -148,26 +148,37 @@ int						ft_check_unclosed_quotes(t_parsing *shell, char *str);
 char					**ft_split_quots(char *str, char **res, int i, int j);
 void					ft_create_temp_array(t_parsing *shell, int *i, int *j);
 void					ft_parsing(t_parsing *shell, int bol, t_exaction *data);
-t_list					*ft_creat_new_node(t_parsing *shell, int start, int end);
-void					ft_remove_quots(char **str, t_exaction *data, short bol);
-void					ft_replace_tabs_with_spaces(t_parsing *shell, char *input);
-void					ft_init_move_vars(t_parsing *shell, int *i, int *j, int *k);
-void					ft_handle_redirect_content(t_parsing *shell, int *j, int *k);
-t_ast					*ft_build_command_tree(t_parsing *shell, int start, int end);
-void					ft_here_doc(t_parsing *shell, t_exaction *data, char *str, int dolar);
-void					ft_handle_redirections(t_parsing *shell, t_list **head, int *j, int *k);
-t_ast					*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
-int						ft_process_delimiter(t_parsing *shell, char *str, t_exaction *data, int *dolar);
-void					ft_read_and_process_heredoc_input(t_parsing *shell, int dolar, t_exaction *data);
+t_list					*ft_creat_new_node(t_parsing *shell, int start,
+							int end);
+void					ft_remove_quots(char **str, t_exaction *data,
+							short bol);
+void					ft_replace_tabs_with_spaces(t_parsing *shell,
+							char *input);
+void					ft_init_move_vars(t_parsing *shell, int *i, int *j,
+							int *k);
+void					ft_handle_redirect_content(t_parsing *shell, int *j,
+							int *k);
+t_ast					*ft_build_command_tree(t_parsing *shell, int start,
+							int end);
+void					ft_here_doc(t_parsing *shell, t_exaction *data,
+							char *str, int dolar);
+void					ft_handle_redirections(t_parsing *shell, t_list **head,
+							int *j, int *k);
+t_ast					*ft_create_and_build_ast_node(t_parsing *shell,
+							int start, int i, int end);
+int						ft_process_delimiter(t_parsing *shell, char *str,
+							t_exaction *data, int *dolar);
+void					ft_read_and_process_heredoc_input(t_parsing *shell,
+							int dolar, t_exaction *data);
 void					print_ast(t_ast *node, int level, char *branch);
 
 int						handle_child_exit_status(int status);
-int						handle_forked_process(t_parsing *shell, int dolar, t_exaction *data);
-void	sigint_handler(int sig);
-
+int						handle_forked_process(t_parsing *shell, int dolar,
+							t_exaction *data);
 
 
 int						is_operator(char *str);
+void					sigint_handler(int sig);
 char					*get_str_dollars(char *str);
 char					*add_double_quotes(char *str);
 int						builtin_pwd(t_exaction *data);
