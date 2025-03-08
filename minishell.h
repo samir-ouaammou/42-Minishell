@@ -176,7 +176,6 @@ int						handle_child_exit_status(int status);
 int						handle_forked_process(t_parsing *shell, int dolar,
 							t_exaction *data);
 
-
 int						is_operator(char *str);
 void					sigint_handler(int sig);
 char					*get_str_dollars(char *str);
