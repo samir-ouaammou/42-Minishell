@@ -1,5 +1,12 @@
 #include "../minishell.h"
 
+int	ft_is_single_operator(char c)
+{
+	if (c == '<' || c == '>' || c == '|' || c == '&')
+		return (1);
+	return (0);
+}
+
 static int	ft_calculate_new_length(t_parsing *shell, char *input)
 {
 	shell->i = 0;

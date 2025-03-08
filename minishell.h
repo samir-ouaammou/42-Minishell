@@ -93,73 +93,84 @@ typedef struct s_exaction
 	int					count_ok;
 	int					is_plus;
 	char				*save_pwd;
-	int flag;
-	int pid_child;
-	int bol;
-	int lll;
-	int	space;
+	int					flag;
+	int					pid_child;
+	int					bol;
+	int					lll;
+	int					space;
 	int					is_foreground;
 	t_parsing			*shell;
 }						t_exaction;
 
 // Functions Pxaction
-void					ft_create_temp_array(t_parsing *shell, int *i, int *j);
-void					ft_init_move_vars(t_parsing *shell, int *i, int *j, int *k);
-void					ft_handle_redirect_content(t_parsing *shell, int *j, int *k);
-void					ft_handle_redirections(t_parsing *shell, t_list **head, int *j, int *k);
-void					ft_cleanup_tokens(t_parsing *shell, t_list *head);
-void					ft_count_len_list(t_parsing *shell);
-char					*ft_move_flags(t_parsing *shell, t_list *list);
-char					*ft_strjoin_and_free(char *s1, const char *s2);
-int 					ft_check_is_redirections(char *str);
-int 					ft_check_is_operators(char *str);
-char					**ft_split_quots(char *str, char **res, int i, int j);
-void					ft_extract_word(char *str, int *i, char *c);
-char					**ft_allocate_result(char *str);
-int						count_words(char *str, int count, int i, char c);
-int						ft_count_brackets(t_list *list);
-int						ft_count_heredoc(t_parsing *shell);
-void					ft_check_other_errors(t_parsing *shell);
-void					ft_replace_newline_with_space(t_parsing *shell);
-int						ft_is_symbol(t_parsing *shell);
-void					ft_tokens_list(t_parsing *shell);
-int						ft_count_nodes_list(t_list *list);
-void					ft_replace_tabs_with_spaces(t_parsing *shell, char *input);
-t_list					*ft_creat_new_node(t_parsing *shell, int start, int end);
-
-
+int						ft_is_single_operator(char c);
 void					ft_free_args(t_parsing *shell);
+int						ft_is_symbol(t_parsing *shell);
+char					**ft_allocate_result(char *str);
+int						ft_count_brackets(t_list *list);
 void					ft_split_args(t_parsing *shell);
+void					ft_tokens_list(t_parsing *shell);
+int 					ft_check_is_operators(char *str);
 int						ft_count_tree_nodes(t_ast *tree);
 int						ft_check_is_operators(char *str);
 void					ft_skip_string(t_parsing *shell);
 void					ft_init_parsing(t_parsing *shell);
+int						ft_count_nodes_list(t_list *list);
 void					ft_free_parsing(t_parsing *shell);
+void					ft_init_here_doc(t_parsing *shell);
+int						ft_count_heredoc(t_parsing *shell);
+void					ft_count_len_list(t_parsing *shell);
+int 					ft_check_is_redirections(char *str);
 int						ft_check_is_redirections(char *str);
 void					ft_count_len_args(t_parsing *shell);
 int						ft_get_symbol_type(t_parsing *shell);
 t_ast					*ft_creat_ast_tree(t_parsing *shell);
 int						ft_ast_contains_brackets(t_ast *tree);
+void					ft_check_other_errors(t_parsing *shell);
 void					ft_check_syntax_errors(t_parsing *shell);
 int						ft_check_input_is_valid(t_parsing *shell);
+void					process_input(t_parsing *shell, char *str);
+void					ft_move_input(t_parsing *shell, char *str);
+void					ft_extract_word(char *str, int *i, char *c);
 int						ft_check_single_operators(t_parsing *shell);
 int						ft_check_double_operators(t_parsing *shell);
 void					ft_check_operator_position(t_parsing *shell);
 t_list					*ft_get_list_node(t_list *tokens, int index);
+void					ft_handle_quotes(t_parsing *shell, char *str);
+char					*ft_move_flags(t_parsing *shell, t_list *list);
+char					*ft_strjoin_and_free(char *s1, const char *s2);
+void 					ft_update_position(t_parsing *shell, char *str);
+void					ft_replace_newline_with_space(t_parsing *shell);
 int						ft_is_redirections(t_parsing *shell, int index);
+int 					ft_check_delimiter(t_parsing *shell, char *str);
+int						count_words(char *str, int count, int i, char c);
+void 					ft_finalize_here_doc(t_parsing *shell, char *str);
+void					ft_cleanup_tokens(t_parsing *shell, t_list *head);
 t_ast					*ft_creat_ast_node(t_parsing *shell, char **value);
+void 					ft_find_delimiter_end(t_parsing *shell, char *str);
 int						ft_is_logical_operators(t_parsing *shell, int index);
 void					ft_pars_redirections(t_parsing *shell, t_list *list);
+int 					ft_check_unclosed_quotes(t_parsing *shell, char *str);
+char					**ft_split_quots(char *str, char **res, int i, int j);
+void					ft_create_temp_array(t_parsing *shell, int *i, int *j);
 void					ft_parsing(t_parsing *shell, int bol, t_exaction *data);
+t_list					*ft_creat_new_node(t_parsing *shell, int start, int end);
 void					ft_remove_quots(char **str, t_exaction *data, short bol);
-void					ft_here_doc(t_parsing *shell, char *str, t_exaction *data);
+void					ft_replace_tabs_with_spaces(t_parsing *shell, char *input);
+void					ft_init_move_vars(t_parsing *shell, int *i, int *j, int *k);
+void					ft_handle_redirect_content(t_parsing *shell, int *j, int *k);
 t_ast					*ft_build_command_tree(t_parsing *shell, int start, int end);
 int						is_wildcard_match(const char *wildcard, const char *filename);
+void					ft_here_doc(t_parsing *shell, t_exaction *data, char *str, int dolar);
+void					ft_handle_redirections(t_parsing *shell, t_list **head, int *j, int *k);
 t_ast					*ft_create_and_build_ast_node(t_parsing *shell, int start, int i, int end);
-void	print_ast(t_ast *node, int level, char *branch); //////////////////////////////////temp
+int 					ft_process_delimiter(t_parsing *shell, char *str, t_exaction *data, int *dolar);
+void					ft_read_and_process_heredoc_input(t_parsing *shell, int dolar, t_exaction *data);
+void					print_ast(t_ast *node, int level, char *branch); //////////////////////////////////temp
 
+int						handle_child_exit_status(int status); //ex
+int						handle_forked_process(t_parsing *shell, int dolar, t_exaction *data); // ex
 // Functions Exaction
-
 void					free_all(char **args);
 int						is_operator(char *str);
 char					*get_str_Dollars(char *str);

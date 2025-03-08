@@ -48,7 +48,7 @@ void	ft_parsing_preprocessing(t_parsing *shell, int bol, t_exaction *data)
 	{
 		ft_replace_newline_with_space(shell);
 		ft_replace_tabs_with_spaces(shell, shell->input);
-		ft_here_doc(shell, shell->input, data);
+		ft_here_doc(shell, data, shell->input, 0);
 	}
 	ft_split_args(shell);
 	ft_check_syntax_errors(shell);
