@@ -74,11 +74,9 @@ int	setup_redirections(t_ast *root, t_exaction *data, int fd_out, int fd_in)
 	return (data->status);
 }
 
-int	check_invalid_redirection(t_ast *root, int fd_in,
-		int fd_out)
+int	check_invalid_redirection(t_ast *root, int *fd_in, int *fd_out)
 {
-	if (handle_file_redirection(root, &fd_in, &fd_out)
-		|| root->right->value[0][0] == '$')
+	if (handle_file_redirection(root, fd_in, fd_out))
 	{
 		if (root->right->value[0][0] == '$')
 			ft_printf("minishell: %s: ambiguous redirect\n",
@@ -100,7 +98,7 @@ int	execute_redirection(t_ast *root, t_exaction *data)
 	fd_in = -1;
 	if (!root)
 		return (0);
-	if (check_invalid_redirection(root, fd_in, fd_out))
+	if (check_invalid_redirection(root, &fd_in, &fd_out))
 		return (1);
 	while (root->right->value[i])
 	{
