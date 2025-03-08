@@ -56,13 +56,12 @@ void	ft_init_exaction(t_exaction *exec)
 	exec->bol = 0;
 	exec->is_foreground = 1;
 	exec->space = 0;
-	exec->num_proess = 0;
 }
 
 void	get_shell_context(t_parsing shell, t_exaction *data)
 {
 	data_struc()->is_foreground = 1;
-	shell.input = readline("minishell$ ");
+	shell.input = readline(data->name_pro);
 	data_struc()->is_foreground = 0;
 	if (!shell.input)
 	{
@@ -71,9 +70,9 @@ void	get_shell_context(t_parsing shell, t_exaction *data)
 	}
 	shell.history = ft_strdup(shell.input);
 	ft_parsing(&shell, 0, data);
-	if (shell.free == -1 && (!shell.tokens || !shell.tree))
+	if (shell.free == -1)
 		write(2, "minishell: syntax error\n", 24);
-	if (shell.input && shell.tree && data_struc()->bol == 0)
+	if (shell.input && shell.tree && data_struc()->bol == 0 && shell.free != -1)
 		exaction(shell.tree, data);
 	if (shell.history)
 	{
@@ -98,6 +97,7 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, SIG_IGN);
 	read_env(env, &data);
+	data.name_pro = "➜ Minishell ";
 	while (1)
 		get_shell_context(shell, &data);
 	rl_clear_history();

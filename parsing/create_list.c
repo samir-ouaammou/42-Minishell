@@ -111,6 +111,7 @@ int	ft_count_heredoc(t_parsing *shell)
 	if (shell->len >= 17)
 	{
 		ft_free_parsing(shell);
+		ft_free_args(shell);
 		return (0);
 	}
 	return (1);
