@@ -66,6 +66,8 @@ void	handle_redirections(t_parsing *shell, t_list **tmp, char **str)
 
 	help = *tmp;
 	redirections = ft_move_flags(shell, help);
+	if (!redirections)
+		return;
 	*str = ft_strjoin_and_free(*str, redirections);
 	*str = ft_strjoin_and_free(*str, " ");
 	while (*tmp && (*tmp)->value && !ft_check_is_operators((*tmp)->value[0]))
