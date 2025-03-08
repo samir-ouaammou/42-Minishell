@@ -2,23 +2,24 @@
 SRCS_MAIN   = minishell.c
 
 # SRCS_PARSING
-SRCS_PARSING =  $(PATH_PARSING)/1_main_parsing.c \
-                $(PATH_PARSING)/1_main_parsing_utils.c \
-                $(PATH_PARSING)/2_input_splitter.c \
-                $(PATH_PARSING)/2_input_splitter_utils.c \
-                $(PATH_PARSING)/3_input_validator.c \
-                $(PATH_PARSING)/3_input_validator_utils.c \
-                $(PATH_PARSING)/4_pars_redirections.c \
-                $(PATH_PARSING)/4_pars_redirections_utils.c \
-                $(PATH_PARSING)/5_create_list.c \
-                $(PATH_PARSING)/5_create_list_utils.c \
-                $(PATH_PARSING)/6_create_ast_tree.c \
-                $(PATH_PARSING)/6_create_ast_tree_utils.c \
-                $(PATH_PARSING)/7_remove_qouts.c \
-                $(PATH_PARSING)/7_remove_qouts_utils.c \
-                $(PATH_PARSING)/8_here_doc.c \
-                $(PATH_PARSING)/8_here_doc_utils.c \
-                $(PATH_PARSING)/8_here_doc_utils2.c \
+SRCS_PARSING =  $(PATH_PARSING)/main_parsing.c \
+                $(PATH_PARSING)/main_parsing_utils.c \
+                $(PATH_PARSING)/input_splitter.c \
+                $(PATH_PARSING)/input_splitter_utils.c \
+                $(PATH_PARSING)/input_validator.c \
+                $(PATH_PARSING)/input_validator_utils.c \
+                $(PATH_PARSING)/pars_redirections.c \
+                $(PATH_PARSING)/pars_redirections_utils.c \
+                $(PATH_PARSING)/create_list.c \
+                $(PATH_PARSING)/create_list_utils.c \
+                $(PATH_PARSING)/create_ast_tree.c \
+                $(PATH_PARSING)/create_ast_tree_utils.c \
+                $(PATH_PARSING)/remove_qouts.c \
+                $(PATH_PARSING)/remove_qouts_utils.c \
+                $(PATH_PARSING)/here_doc.c \
+                $(PATH_PARSING)/here_doc_utils.c \
+                $(PATH_PARSING)/here_doc_utils1.c \
+                $(PATH_PARSING)/here_doc_utils2.c 
 
 # SRCS_EXACTION
 SRCS_EXACTION = $(PATH_EXACTION)/exaction.c \
