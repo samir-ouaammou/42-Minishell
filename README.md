@@ -10,6 +10,22 @@ Breaks user input into meaningful tokens.
 
 Identifies commands, arguments, operators (`()`, `||`, `&&`, `|`, `>`, `<`, `>>`, `<<`), and environment variables (`$HOME`).
 
+- **()** : Executes the commands inside a subshell, separated from the main shell environment.
+
+- **||** : Executes the next command only if the previous one fails (returns a non-zero exit status).
+
+- **&&** : Executes the next command only if the previous one succeeds (returns a zero exit status).
+  
+- **|**  : Used to connect the output (stdout) of one command to the input (stdin) of another command (creates a pipeline).
+
+- **>** : Redirects the output of a command to a file, overwriting the file if it already exists.
+
+- **<** : Redirects the input of a command from a file.
+
+- **>>** : Redirects the output of a command to a file, appending to the file without overwriting it.
+
+- **<<** : Used to create a here-document input for a command, allowing multi-line text to be passed directly.
+
 **Example:**    
 ls | wc -l || cat file.txt && echo "Hello world!"
 
