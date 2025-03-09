@@ -8,7 +8,7 @@ Minishell is a simplified Unix shell that mimics the behavior of Bash. It implem
 ### 🔸 Lexer (Tokenizer)
 Breaks user input into meaningful tokens.
 
-Identifies commands, arguments, operators (`|`, `||`, `&&`, `>`, `<`, `>>`, `<<`), and environment variables (`$HOME`).
+Identifies commands, arguments, operators (`()`, `||`, `&&`, `|`, `>`, `<`, `>>`, `<<`), and environment variables (`$HOME`).
 
 **Example:**    
 ls | wc -l || cat file.txt && echo "Hello world!"
@@ -28,8 +28,6 @@ For the command:
            |     cat file.txt
         ls   wc -l  
         
-PIPE /
-COMMAND REDIRECT (ls -la) (>) (output.txt)
 
 ### ⚙️ System Calls
 
