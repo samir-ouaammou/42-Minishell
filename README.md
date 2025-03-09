@@ -19,13 +19,22 @@ ls -la | grep minishell > output.txt
 
 
 **This is tokenized into:**            
-[ls] [-la] [|] [grep] [minishell] [>] [output.txt]
+[ls] [|] [wc -l] [||] [cat file.txt] [&&] [echo "Hello world!"]
 
-Tree Representation:       
+**AST Tree Representation**        
 
+For the command:                 
+[ls] [|] [wc -l] [||] [cat file.txt] [&&] [echo "Hello world!"]
+
+                    &&
+                 /      \
+               ||       echo "Hello world!"
+             /    \
+           |     cat file.txt
+        ls   wc -l  
+        
 PIPE /
-COMMAND REDIRECT (ls -la) (> output.txt) | COMMAND (grep minishell)
-
+COMMAND REDIRECT (ls -la) (>) (output.txt)
 
 ### ⚙️ System Calls
 
