@@ -1,8 +1,10 @@
 # 🚀 Minishell - 1337 School Project
----
+
 ## 🔹 Introduction
 Minishell is a simplified Unix shell that mimics the behavior of Bash. It implements core functionalities such as command execution, pipelines, redirections, and environment variable handling. This project leverages system programming techniques and key system calls like `execve()`, `fork()`, `pipe()`, `dup2()`, and `readline()`.
+
 ---
+
 ## 🏗️ Key Components
 
 ### 🔸 Lexer (Tokenizer)
@@ -96,7 +98,9 @@ For the command:
 Manages signals like `SIGINT` (Ctrl+C), `SIGQUIT` (Ctrl+D), and `SIGTSTP` (Ctrl+Z).
 
 Uses system calls: `signal()`, `sigaction()`, `kill()`
+
 ---
+
 ## 🏗️ Project Structure
 
 minishell/                 
@@ -150,104 +154,45 @@ minishell/
    ```
 
 ---
-## 🚀 Features to Implement
-✅  Command Execution
-- **Implement fork() and execve() to run external commands.**                  
-- **Implement input/output redirection using dup2() for handling >, >>, <, <<.**                      
-
-
-✅  Pipes & Redirections
-- **Implement pipe handling (|) using pipe(), fork(), and dup2().**
-- **Handle redirections for >, >>, <, and << using file descriptors.**
-
-           
-✅  Environment Variables
-- **Expand environment variables like $HOME, $PATH, and $?.**
-- **Use getenv() for handling built-in variables and implement custom expansion for $?.**
-
-
-✅  Built-in Commands
-- **Handle commands like cd, exit, echo, and others within the shell.**
-
-                                     
-✅  Error Handling
-- **Provide meaningful error messages for invalid commands, syntax errors, and redirection failures.**
-
-                
-✅  Signal Handling
-- **Implement signal handling for SIGINT (Ctrl+C) and SIGQUIT (Ctrl+D) for clean process terminations.**
-
-
-✅  Memory Management
-- **Ensure proper memory management using malloc() and free() to avoid leaks.**
+## 🚀 Features to Implement                               
+✅ Command Execution (Using fork(), execve(), and redirections)                          
+✅ Pipes & Redirections (Handling |, <, >, >>, <<)                      
+✅ Environment Variables (Expanding $HOME, $PATH, $?)                     
+✅ Built-in Commands (cd, echo, pwd, export, unset, env, exit)                        
+✅ Error Handling (Invalid commands, syntax errors)                     
+✅ Signal Handling (Ctrl+C, Ctrl+D)                     
+✅ Memory Management (Avoiding memory leaks)                   
+                           
+---
+          
+## 📌 Operators to Handle                          
+✅ () - Subshell execution                  
+✅ && - AND Operator               
+✅ || - OR Operator                   
+✅ | - Pipe Operator                           
+✅ < - Input Redirection             
+✅ > - Output Redirection             
+✅ << - Here Document                  
+✅ >> - Append Output Redirection                
+✅ $ - Variable Expansion               
+✅ $? - Last Exit Status             
+✅ $HOME - Home Directory Expansion                                    
 
 ---
-## 📌 Operators to Handle
-✅  ()  Subshell (Grouping Commands)
-- **Execute commands inside parentheses in a new subshell using fork().**
 
-
-✅  &&  AND Operator
-- **Ensure the command after && runs only if the previous command succeeds (exit code 0).**
-
-
-✅  ||  OR Operator
-- **Ensure the command after || runs only if the previous command fails (exit code non-zero).**
-
-
-✅  |  Pipe Operator
-- **Pass the output of one command as the input to another using pipes (pipe()) and dup2().**
-
-
-✅  <  Input Redirection
-- **Redirect input from a file using < and dup2() to change file descriptors.**
-
-
-✅  >  Output Redirection
-- **Redirect output to a file using > and dup2(). Overwrite the file contents.**
-
-
-✅  <<  Here Document (Input Redirection)
-- **Implement here-document input redirection to allow multiline input redirection with a specified delimiter.**
-
-
-✅  >>  Append Output Redirection
-- **Append output to a file using >> and dup2() instead of overwriting the file.**
-
-
-✅  $  Variable Expansion
-- **Expand environment variables such as $HOME, $PATH, $?, and custom ones using getenv().**
-
-
-✅  $?  Last Exit Status
-- **Track and expand $? to represent the exit status of the last executed command.**
-
-
-✅  $HOME  Home Directory Expansion
-- **Replace $HOME with the user’s home directory retrieved via getenv("HOME").**
-
----
 ## 📌 Next Steps
-✅  Add Support for Logical Operators (&&, ||)
-- **Implement parsing and execution logic for && and || to ensure conditional execution based on success or failure.**
+✅ Add Logical Operators (&&, ||)                       
+✅ Implement Command History (readline())                           
+✅ Improve Error Messages                       
+✅ Implement Job Control (fg, bg)           
 
-
-✅  Implement Command History (Using readline())
-- **Enable command history with readline(), allowing users to scroll through previously entered commands.**
-
-
-✅  Improve Error Messages
-- **Provide clear error messages for syntax errors, command failures, and invalid operators.**
-
-
-✅  Implement Job Control (fg, bg)
-- **Implement job control for managing foreground (fg) and background (bg) processes using signals and process IDs.**
 
 ---
+
 ## 🎯 Reflection
 This project provides a deep understanding of process creation, parsing, and system calls. Implementing pipes, redirections, and a custom shell is both challenging and rewarding. It offers hands-on experience with key concepts in system programming and shell development.
+
 ---
+
 ## 🤝 Contributing
 Fork the repository and submit a pull request. Contributions to error handling, new features, and performance improvements are always welcome! 🚀
-
-   
