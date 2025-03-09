@@ -1,8 +1,8 @@
 # 🚀 Minishell - 1337 School Project
-
+---
 ## 🔹 Introduction
 Minishell is a simplified Unix shell that mimics the behavior of Bash. It implements core functionalities such as command execution, pipelines, redirections, and environment variable handling. This project leverages system programming techniques and key system calls like `execve()`, `fork()`, `pipe()`, `dup2()`, and `readline()`.
-
+---
 ## 🏗️ Key Components
 
 ### 🔸 Lexer (Tokenizer)
@@ -28,7 +28,7 @@ For the command:
            |     cat file.txt
         ls   wc -l  
         
-
+---
 ### ⚙️ System Calls
 
 - **Process Management:** `fork()`, `execve()`, `wait()`, `waitpid()`, `exit()`
@@ -38,7 +38,7 @@ For the command:
 - **Memory Management:** `malloc()`, `free()`
 - **Error Handling:** `strerror()`, `perror()`
 - **Environment Variables:** `getenv()`
-
+---
 ## ⚡ Operators & Features
 
 ### 🔹 Redirections
@@ -82,7 +82,7 @@ For the command:
   
 - **`$USER`** - Expands to the current user:  
   Example: `echo $USER`
-
+---
 ## 📌 Built-in Commands
 
 - `cd` - Change directory
@@ -91,12 +91,12 @@ For the command:
 - `unset` - Remove environment variables
 - `env` - Print environment variables
 - `exit` - Terminate the shell
-
+---
 ## 📌 Signal Handling
-Manages signals like `SIGINT` (Ctrl+C), `SIGQUIT` (Ctrl+\), and `SIGTSTP` (Ctrl+Z).
+Manages signals like `SIGINT` (Ctrl+C), `SIGQUIT` (Ctrl+D), and `SIGTSTP` (Ctrl+Z).
 
 Uses system calls: `signal()`, `sigaction()`, `kill()`
-
+---
 ## 🏗️ Project Structure
 
 minishell/                 
@@ -116,7 +116,7 @@ minishell/
 ├── tests/ # Test cases          
 
 
-
+---
 ## 🛠️ Installation
 
 1. Clone the repository to your local machine:
@@ -149,7 +149,7 @@ minishell/
    make re
    ```
 
-
+---
 ## 🚀 Features to Implement
 ✅  Command Execution
 - **Implement fork() and execve() to run external commands.**                  
@@ -181,7 +181,7 @@ minishell/
 ✅  Memory Management
 - **Ensure proper memory management using malloc() and free() to avoid leaks.**
 
-                      
+---
 ## 📌 Operators to Handle
 ✅  ()  Subshell (Grouping Commands)
 - **Execute commands inside parentheses in a new subshell using fork().**
@@ -226,7 +226,7 @@ minishell/
 ✅  $HOME  Home Directory Expansion
 - **Replace $HOME with the user’s home directory retrieved via getenv("HOME").**
 
-
+---
 ## 📌 Next Steps
 ✅  Add Support for Logical Operators (&&, ||)
 - **Implement parsing and execution logic for && and || to ensure conditional execution based on success or failure.**
@@ -243,10 +243,10 @@ minishell/
 ✅  Implement Job Control (fg, bg)
 - **Implement job control for managing foreground (fg) and background (bg) processes using signals and process IDs.**
 
-
+---
 ## 🎯 Reflection
 This project provides a deep understanding of process creation, parsing, and system calls. Implementing pipes, redirections, and a custom shell is both challenging and rewarding. It offers hands-on experience with key concepts in system programming and shell development.
-
+---
 ## 🤝 Contributing
 Fork the repository and submit a pull request. Contributions to error handling, new features, and performance improvements are always welcome! 🚀
 
