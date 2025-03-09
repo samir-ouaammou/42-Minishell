@@ -97,7 +97,7 @@ Uses system calls: `signal()`, `sigaction()`, `kill()`
 
 ## 🏗️ Project Structure
 
-minishell/ 
+minishell/                 
 ├── src/ # Source files        
 │ ├── lexer/ # Tokenization logic            
 │ ├── parser/ # Parsing logic          
