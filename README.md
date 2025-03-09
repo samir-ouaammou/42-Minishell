@@ -1,6 +1,3 @@
-# Let's create the README content again in a markdown file for the user to download.
-
-readme_content = """
 # 🚀 Minishell - 1337 School Project
 
 ## 🔹 Introduction
