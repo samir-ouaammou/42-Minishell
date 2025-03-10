@@ -102,24 +102,25 @@ Uses system calls: `signal()`, `sigaction()`, `kill()`
 ---
 
 ## 🏗️ Project Structure
-
+```
 minishell/                 
-├── src/ # Source files        
-│ ├── lexer/ # Tokenization logic            
-│ ├── parser/ # Parsing logic          
-│ ├── ast/ # Abstract Syntax Tree            
-│ ├── executor/ # Command execution          
-│ ├── builtins/ # Built-in commands           
-│ ├── signals/ # Signal handling            
-│ ├── readline/ # User input handling          
-│ ├── utils/ # Utility functions          
-├── include/ # Header files              
-│ └── minishell.h # Main header file          
-├── Makefile # Build script             
-├── README.md # Documentation              
-├── tests/ # Test cases          
+├── src/                    # Source files        
+│   ├── lexer/              # Tokenization logic            
+│   ├── parser/             # Parsing logic          
+│   ├── tokens/             # Token parsing logic          
+│   ├── tree/               # Binary Tree implementation          
+│   ├── AST/                # Abstract Syntax Tree logic            
+│   ├── executor/           # Command execution logic          
+│   ├── builtins/           # Built-in commands           
+│   ├── signals/            # Signal handling logic            
+│   ├── readline/           # User input handling logic          
+│   ├── utils/              # Utility functions          
+├── include/                # Header files              
+│   └── minishell.h         # Main header file          
+├── Makefile                # Build script             
+├── README.md               # Documentation                     
 
-
+```
 ---
 ## 🛠️ Installation
 
