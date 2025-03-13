@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../minishell.h"
 
 void	ft_handle_redirect_content(t_parsing *shell, int *j, int *k)

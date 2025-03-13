@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../minishell.h"
 
 int	add_default_export(char *str, t_exaction *data, int len)

@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../minishell.h"
 
 static char	*get_path_env_utils(char **path, char *cmd)

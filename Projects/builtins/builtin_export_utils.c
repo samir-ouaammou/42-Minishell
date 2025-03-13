@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../minishell.h"
 
 int	remove_quotes_from_string(char *str_export, char *res)

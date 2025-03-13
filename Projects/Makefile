@@ -101,7 +101,7 @@ $(NAME): $(OBJS_MAIN) $(OBJS_MALLOC) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUI
 	@make --no-print-directory -C $(LIBFT_PATH)
 	@make --no-print-directory -C $(PRINTF_PATH)
 	@$(CC) $(CFLAGS) $(OBJS_MAIN) $(OBJS_MALLOC) $(OBJS_PARSING) $(OBJS_EXACTION) $(OBJS_BUILTINS) $(OBJS_SIGNALS) $(OBJS_WILDCARDS) $(LIBFT_AR) $(PRINTF_AR) -o $(NAME) -lreadline
-	@echo "\033[1;32m✅ Compilation finished successfully!\033[0m"
+	@./.script.sh
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -110,13 +110,13 @@ clean:
 	@make clean --no-print-directory -C $(LIBFT_PATH)
 	@make clean --no-print-directory -C $(PRINTF_PATH)
 	@find . -name "*.o" -delete
-	@echo "\033[1;34m🧹 Clean completed.\033[0m"
+	@echo "\033[1;34m✔\033[0m Clean completed."
 
 fclean: clean
 	@make fclean --no-print-directory -C $(LIBFT_PATH)
 	@make fclean --no-print-directory -C $(PRINTF_PATH)
 	@rm -f $(NAME)
-	@echo "\033[1;31m🗑️ Full clean completed.\033[0m"
+	@echo "\033[1;31m✔\033[0m Full clean completed."
 
 
 re: fclean all

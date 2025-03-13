@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../minishell.h"
 
 char	*find_str_env(char *str, t_exaction *data)

@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "./libft.h"
 
 char	*ft_strncpy(char *dest, const char *src, int len)

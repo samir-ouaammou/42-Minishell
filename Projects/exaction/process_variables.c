@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../minishell.h"
 
 void	handle_env_var(char *str, char *res, t_exaction *data, int *res_index)

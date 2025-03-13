@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../minishell.h"
 
 void	add_pwd_if_missing(t_exaction *data, int check_pwd, int index)

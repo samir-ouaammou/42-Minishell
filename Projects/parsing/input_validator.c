@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../minishell.h"
 
 void	ft_cleanup_tokens(t_parsing *shell, t_list *head)

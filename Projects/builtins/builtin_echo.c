@@ -16,16 +16,15 @@ static int	handle_newline_option(char **str, int *i)
 {
 	int	j;
 
+	if (!str || !str[*i])
+		return (1);
 	j = 1;
-	if (str[1][0] == '-' && str[1][1] == 'n')
+	if (str[*i][0] == '-' && str[*i][1] == 'n')
 	{
-		while (str[1][0] == '-' && str[1][j] == 'n')
+		while (str[*i][0] == '-' && str[*i][j] == 'n')
 			j++;
-		if (j == ft_strlen(str[1]))
-		{
-			*i = 2;
+		if (j == ft_strlen(str[*i]))
 			return (0);
-		}
 	}
 	return (1);
 }
@@ -102,6 +101,15 @@ int	builtin_echo(char **str, t_exaction *data)
 	process_copy_with_quotes(data, str);
 	if (str[1] && str[1][0] == '-' && str[1][1] == 'n')
 		newline = handle_newline_option(str, &i);
+	if (str[1] && str[1][0] == '-' && str[1][1] == 'n')
+	{
+		while (!newline && str[i] && str[i][0] == '-' && str[i][1] == 'n')
+		{
+			newline = handle_newline_option(str, &i);
+			i++;
+		}
+		newline = 0;
+	}
 	print_arguments(str, i);
 	if (newline)
 		write(1, "\n", 1);

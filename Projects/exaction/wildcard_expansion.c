@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
+
 #include "../minishell.h"
 
 static int	check_for_wildcards(char *pattern)

@@ -29,7 +29,8 @@ For the command:
              /    \
            |     cat file.txt
         ls   wc -l  
-        
+      
+
 ---
 ### ⚙️ System Calls
 
