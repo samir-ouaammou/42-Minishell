@@ -23,7 +23,10 @@ static int	handle_newline_option(char **str, int *i)
 		while (str[*i][0] == '-' && str[*i][j] == 'n')
 			j++;
 		if (j == ft_strlen(str[*i]))
+		{
+			(*i)++;
 			return (0);
+		}
 	}
 	return (1);
 }
@@ -103,10 +106,7 @@ int	builtin_echo(char **str, t_exaction *data)
 	if (str[1] && str[1][0] == '-' && str[1][1] == 'n')
 	{
 		while (!newline && str[i] && str[i][0] == '-' && str[i][1] == 'n')
-		{
 			newline = handle_newline_option(str, &i);
-			i++;
-		}
 		newline = 0;
 	}
 	print_arguments(str, i);
