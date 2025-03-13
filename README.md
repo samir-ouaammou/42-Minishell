@@ -216,3 +216,4 @@ I worked on this project as part of a group of two students, which provided valu
 ---
 
 Thank you for checking out my **minishell** project! 🚀 Stay tuned for more updates as I continue to enhance my skills and tackle new challenges.
+

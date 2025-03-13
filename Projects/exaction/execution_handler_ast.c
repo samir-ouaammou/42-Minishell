@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
 static int	execute_builtin(char **args, t_exaction *data)

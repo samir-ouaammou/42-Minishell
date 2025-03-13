@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
 int	open_input_file(t_ast *node, t_exaction *data)

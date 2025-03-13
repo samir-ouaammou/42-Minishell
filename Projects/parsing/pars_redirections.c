@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
 void	handle_operators(t_list **tmp, char **str)

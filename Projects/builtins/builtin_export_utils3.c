@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
 int	update_env_var(char **args, t_exaction *data, char *str, int i)

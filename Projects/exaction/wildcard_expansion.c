@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aahaded <aahaded@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aahaded <aahaded@student.42.fr>          +#+  +:+       +#+          */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:34:38 by aahaded           #+#    #+#             */
-/*   Updated: 2025/03/03 13:53:40 by aahaded         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:53:40 by aahaded         ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "../minishell.h"
 

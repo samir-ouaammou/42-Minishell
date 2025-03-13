@@ -31,3 +31,4 @@ for i in {1..3}; do
 done
 
 printf "$LINE_UP$CLEAR_LINE$GREEN$BOLD✔$RESET Compilation finished successfully!$WHITE$BOLD\n"
+

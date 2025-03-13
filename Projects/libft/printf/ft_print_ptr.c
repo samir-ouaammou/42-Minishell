@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_printf.h"
 
 static int	ft_lkmala_ta3ptr(unsigned long va)

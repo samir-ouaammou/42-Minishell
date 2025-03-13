@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
 void	ft_handle_quotes(t_parsing *shell, char *str)

@@ -9,7 +9,6 @@
 /*   Updated: 2025/03/06 23:35:10 by aahaded         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../minishell.h"
 
 static int	handle_newline_option(char **str, int *i)

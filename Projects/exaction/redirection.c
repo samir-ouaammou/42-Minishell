@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
 
 int	handle_redirection_utils2(t_ast *root, int *i, int *fd_out)
