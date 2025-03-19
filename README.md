@@ -155,6 +155,11 @@ minishell/
    make re
    ```
 
+7. Run the program:
+   ```bash
+   ./minishell
+   ```
+
 ---
 ## 🚀 Features to Implement                               
 ✅ Command Execution (Using fork(), execve(), and redirections)                          
