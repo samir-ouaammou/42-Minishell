@@ -101,13 +101,13 @@ int	builtin_echo(char **str, t_exaction *data)
 	if (!str || !str[0])
 		return (1);
 	process_copy_with_quotes(data, str);
+	newline = 0;
 	if (str[1] && str[1][0] == '-' && str[1][1] == 'n')
 		newline = handle_newline_option(str, &i);
 	if (str[1] && str[1][0] == '-' && str[1][1] == 'n')
 	{
 		while (!newline && str[i] && str[i][0] == '-' && str[i][1] == 'n')
 			newline = handle_newline_option(str, &i);
-		newline = 0;
 	}
 	print_arguments(str, i);
 	if (newline)
