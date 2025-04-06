@@ -100,8 +100,8 @@ int	builtin_echo(char **str, t_exaction *data)
 	newline = 1;
 	if (!str || !str[0])
 		return (1);
+	newline = 1;
 	process_copy_with_quotes(data, str);
-	newline = 0;
 	if (str[1] && str[1][0] == '-' && str[1][1] == 'n')
 		newline = handle_newline_option(str, &i);
 	if (str[1] && str[1][0] == '-' && str[1][1] == 'n')
