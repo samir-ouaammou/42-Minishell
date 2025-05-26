@@ -127,7 +127,7 @@ minishell/
 
 2. Navigate to the project directory:
    ```bash
-   cd 1337-Minishell/Projects
+   cd 1337-Minishell/Project
    ```
 
 3. Compile the source files using `make`:
